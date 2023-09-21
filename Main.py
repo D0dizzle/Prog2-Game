@@ -14,6 +14,8 @@ rot = (255, 0, 0)
 blau = (0, 255, 0)
 gruen = (0, 0, 255)
 
+
+
 FPS = pygame.time.Clock()
 screen_hoehe = 400                  #hier setzen wir hoehe und breite des Spielfensters
 screen_breite = 500
@@ -29,6 +31,8 @@ def exit_game():
 
 
 #Platz für Klassen:
+
+
 
 #Main-Loop
 while True:
