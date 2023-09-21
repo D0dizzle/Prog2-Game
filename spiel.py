@@ -7,10 +7,12 @@ import random
 
 FPS = pg.time.Clock()
 
-schwarz = pg.color(0, 0, 0)
-weiss = pg.color(255, 255, 255)
+schwarz = (0, 0, 0)
+weiss = (255, 255, 255)
+cyan = (100, 100, 255)
 
-screen = pg.display.set_mode(300, 300)
+screen = pg.display.set_mode(size=(300, 300))
+screen.fill(cyan)
 
 #Funktion, um Tastendruck des Spielers auszuwerten und entsprechende Aktionen auszuführen
 #kommt später vermutlich als Methode in die "Player"-Klasse
@@ -25,3 +27,18 @@ def update(a):                                     #a ist die derzeitige Positio
         a.move_ip(-5, 0)
     if gedrueckte_Taste[pg.K_RIGHT]:                #5 pixel nach rechts
         a.move_ip(5, 0)
+
+def exit_game():
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()                       #Quelle für pygame.quit(): coderslegacy.com/python/python-pygame-tutorial
+            sys.exit()
+
+
+#Main Loop:
+while True:
+
+    
+    exit_game()
+    pg.display.update()
+
