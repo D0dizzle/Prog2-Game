@@ -16,7 +16,7 @@ screen = pygame.display.set_mode(screen_hoehe, screen_breite)   #hier initialisi
 def exit_game():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.locals.quit()                       #Quelle für pygame.quit(): coderslegacy.com/python/python-pygame-tutorial
+            pygame.quit()                       #Quelle für pygame.quit(): coderslegacy.com/python/python-pygame-tutorial
             sys.exit()
 
 
