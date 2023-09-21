@@ -18,7 +18,7 @@ background.fill(cyan)
 #Funktion, um Tastendruck des Spielers auszuwerten und entsprechende Aktionen auszuführen
 #kommt später vermutlich als Methode in die "Player"-Klasse
 
-def update(a):                                     #a ist die derzeitige Position des Player-Sprites
+"""def update(a):                                     #a ist die derzeitige Position des Player-Sprites
     gedrueckte_Taste = pg.key.get_pressed()            
     if gedrueckte_Taste[pg.K_UP]:                   #wir schauen: wurde Pfeiltaste nach oben gedrückt?
         a.move_ip(0, -5)                            #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
@@ -27,7 +27,7 @@ def update(a):                                     #a ist die derzeitige Positio
     if gedrueckte_Taste[pg.K_LEFT]:                 #-5 pixel nach links
         a.move_ip(-5, 0)
     if gedrueckte_Taste[pg.K_RIGHT]:                #5 pixel nach rechts
-        a.move_ip(5, 0)
+        a.move_ip(5, 0)"""
 
 def exit_game():
     for event in pg.event.get():
@@ -46,7 +46,7 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
         self.rect.center = (150, 150)
         self.position = self.rect
     
-    """def update(self):
+    def update(self):
         gedrueckte_Taste = pg.key.get_pressed()            
         if gedrueckte_Taste[pg.K_UP]:                   #wir schauen: wurde Pfeiltaste nach oben gedrückt?
             self.rect.move_ip(0, -5)                            #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
@@ -55,7 +55,7 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
         if gedrueckte_Taste[pg.K_LEFT]:                 #-5 pixel nach links
             self.rect.move_ip(-5, 0)
         if gedrueckte_Taste[pg.K_RIGHT]:                #5 pixel nach rechts
-            self.rect.move_ip(5, 0)"""
+            self.rect.move_ip(5, 0)
 
 
 
@@ -65,7 +65,7 @@ screen.blit(spieler.image, spieler.position)
 #Main Loop:
 while True:
     exit_game()
-    update(spieler.position)
+    spieler.update()
     screen.blit(background, (0,0))
     screen.blit(spieler.image, spieler.position)
 
