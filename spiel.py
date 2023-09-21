@@ -3,6 +3,7 @@ Hier gibt's ne kleine Default MainLoop, in der man Funktionen ausprobieren kann"
 
 import pygame as pg
 import sys
+import random
 
 FPS = pg.time.Clock()
 
