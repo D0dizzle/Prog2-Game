@@ -4,6 +4,7 @@
 #Packages:
 import pygame
 import sys
+import random
 
 #Variablen (todo: später hier drunter reinschreiben, haha)
 FPS = pygame.time.Clock()
