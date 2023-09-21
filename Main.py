@@ -7,10 +7,18 @@ import sys
 import random
 
 #Variablen (todo: später hier drunter reinschreiben, haha)
+#Farben:
+schwarz = (255,255, 255)
+weiss = (0,0,0)
+rot = (255, 0, 0)
+blau = (0, 255, 0)
+gruen = (0, 0, 255)
+
 FPS = pygame.time.Clock()
-screen_hoehe = 400                  #hier setzen wir hoehe und breite des Spielfensters
-screen_breite = 500
-screen = pygame.display.set_mode(size=(2000, 700))   #hier initialisieren wir das Spielfenster (erstmal ohne Grafik)
+screen_hoehe = 700                          #hier setzen wir hoehe und breite des Spielfensters
+screen_breite = 600
+screen = pygame.display.set_mode(size=(screen_hoehe, screen_breite))   #hier initialisieren wir das Spielfenster (erstmal ohne Grafik)
+screen.fill(gruen)              #kann man benutzen, um den Hintergrund mit irgendwas zu fuellen
 
 #allgemeine Funktionen:
 #Spiel durch "x" in der Ecke schließen
