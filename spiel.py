@@ -12,8 +12,8 @@ schwarz = (0, 0, 0)
 weiss = (255, 255, 255)
 cyan = (100, 100, 255)
 
-screen = pg.display.set_mode(size=(300, 300))
-background = pg.surface.Surface(size=(300, 300))
+screen = pg.display.set_mode(size=(500, 500))
+background = pg.surface.Surface(size=(500, 500))
 background.fill(cyan)
 #Funktion, um Tastendruck des Spielers auszuwerten und entsprechende Aktionen auszuführen
 #kommt später vermutlich als Methode in die "Player"-Klasse
@@ -38,23 +38,25 @@ def exit_game():
 #Klassen:
 #Spieler Klasse
 class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pygame doc
+    
     def __init__(self, x, y, color):
         super().__init__()
         self.image = pg.Surface(size= (x, y))
         self.image.fill(color)
         self.rect = self.image.get_rect()
-        self.rect.center = (150, 150)
+        self.rect.center = (250, 400)
         self.position = self.rect
     
     def update(self):
-        gedrueckte_Taste = pg.key.get_pressed()            
-        if gedrueckte_Taste[pg.K_UP]:                   #wir schauen: wurde Pfeiltaste nach oben gedrückt?
+        gedrueckte_Taste = pg.key.get_pressed()         
+                                    #wir schauen: wurde Pfeiltaste nach oben gedrückt?
+        if gedrueckte_Taste[pg.K_UP] and self.position.y > 400:
             self.rect.move_ip(0, -5)                            #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
-        if gedrueckte_Taste[pg.K_DOWN]:                  # hier 5 pixel nach unten
+        if gedrueckte_Taste[pg.K_DOWN] and self.position.y < 480:                     # hier 5 pixel nach unten
             self.rect.move_ip(0, 5)
-        if gedrueckte_Taste[pg.K_LEFT]:                 #-5 pixel nach links
+        if gedrueckte_Taste[pg.K_LEFT] and self.position.x > 0:                 #-5 pixel nach links
             self.rect.move_ip(-5, 0)
-        if gedrueckte_Taste[pg.K_RIGHT]:                #5 pixel nach rechts
+        if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 480:                #5 pixel nach rechts
             self.rect.move_ip(5, 0)
 
 
@@ -68,7 +70,6 @@ while True:
     spieler.update()
     screen.blit(background, (0,0))
     screen.blit(spieler.image, spieler.position)
-
 
     pg.display.update()
     FPS.tick(60)
