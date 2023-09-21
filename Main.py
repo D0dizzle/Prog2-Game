@@ -10,7 +10,7 @@ import random
 FPS = pygame.time.Clock()
 screen_hoehe = 400                  #hier setzen wir hoehe und breite des Spielfensters
 screen_breite = 500
-screen = pygame.display.set_mode(screen_hoehe, screen_breite)   #hier initialisieren wir das Spielfenster (erstmal ohne Grafik)
+screen = pygame.display.set_mode(size=(2000, 700))   #hier initialisieren wir das Spielfenster (erstmal ohne Grafik)
 
 #allgemeine Funktionen:
 #Spiel durch "x" in der Ecke schließen
