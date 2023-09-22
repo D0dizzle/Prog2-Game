@@ -13,11 +13,13 @@ weiss = (255, 255, 255)
 cyan = (100, 100, 255)
 
 screen = pg.display.set_mode(size=(500, 500))
-background1 = pg.image.load("Assets\parallax-background.png").convert()
+background1 = pg.image.load("Assets\hintergrund\parallax-background.png").convert()
 background = pg.transform.scale(background1, (500, 500))
-background2 = pg.image.load("Assets\parallax-space-ring-planet.png").convert_alpha()
-background3 = pg.image.load("Assets\parallax-space-stars.png").convert_alpha()
+background2 = pg.image.load("Assets\hintergrund\parallax-space-ring-planet.png").convert_alpha()
+background3 = pg.image.load("Assets\hintergrund\parallax-space-stars.png").convert_alpha()
 background4 = pg.transform.scale(background3, (500, 500))
+
+# Background Asset Quelle: https://opengameart.org/content/space-background-3
 
 
 #Funktion, um Tastendruck des Spielers auszuwerten und entsprechende Aktionen auszuführen
@@ -46,8 +48,9 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
     
     def __init__(self, x, y, color):
         super().__init__()
-        self.image = pg.Surface(size= (x, y))
-        self.image.fill(color)
+
+        self.image1 = pg.image.load("Assets\ship\ship-1.png") #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
+        self.image = pg.transform.scale(self.image1, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (250, 400)
         self.position = self.rect
@@ -57,11 +60,11 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
                                     #wir schauen: wurde Pfeiltaste nach oben gedrückt?
         if gedrueckte_Taste[pg.K_UP] and self.position.y > 400:
             self.rect.move_ip(0, -5)                            #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
-        if gedrueckte_Taste[pg.K_DOWN] and self.position.y < 480:                     # hier 5 pixel nach unten
+        if gedrueckte_Taste[pg.K_DOWN] and self.position.y < 450:                     # hier 5 pixel nach unten
             self.rect.move_ip(0, 5)
         if gedrueckte_Taste[pg.K_LEFT] and self.position.x > 0:                 #-5 pixel nach links
             self.rect.move_ip(-5, 0)
-        if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 480:                #5 pixel nach rechts
+        if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 450:                #5 pixel nach rechts
             self.rect.move_ip(5, 0)
 
 
