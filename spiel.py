@@ -1,4 +1,4 @@
-"""Das hier ist für verschiedene Tests gekapert, nicht wundern!
+"""Das hier ist für verschiedene Tests gekapert, nicht wundern! test test
 Hier gibt's ne kleine Default MainLoop, in der man Funktionen ausprobieren kann"""
 
 import pygame as pg
