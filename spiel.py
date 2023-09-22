@@ -13,8 +13,13 @@ weiss = (255, 255, 255)
 cyan = (100, 100, 255)
 
 screen = pg.display.set_mode(size=(500, 500))
-background = pg.surface.Surface(size=(500, 500))
-background.fill(cyan)
+background1 = pg.image.load("Assets\parallax-background.png").convert()
+background = pg.transform.scale(background1, (500, 500))
+background2 = pg.image.load("Assets\parallax-space-ring-planet.png").convert_alpha()
+background3 = pg.image.load("Assets\parallax-space-stars.png").convert_alpha()
+background4 = pg.transform.scale(background3, (500, 500))
+
+
 #Funktion, um Tastendruck des Spielers auszuwerten und entsprechende Aktionen auszuführen
 #kommt später vermutlich als Methode in die "Player"-Klasse
 
@@ -69,6 +74,8 @@ while True:
     exit_game()
     spieler.update()
     screen.blit(background, (0,0))
+    screen.blit(background2, (20,50))
+    screen.blit(background4, (20,50))
     screen.blit(spieler.image, spieler.position)
 
     pg.display.update()
