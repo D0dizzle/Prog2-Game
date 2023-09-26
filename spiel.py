@@ -5,7 +5,7 @@ import pygame as pg
 import sys
 import random
 
-pg.display.set_caption("Snake")
+pg.display.set_caption("Centipeter")
 FPS = pg.time.Clock()
 
 schwarz = (0, 0, 0)
