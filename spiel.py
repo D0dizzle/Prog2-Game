@@ -55,24 +55,18 @@ def exit_game():
 #Spieler Klasse
 class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pygame doc
     
-    def __init__(self, x, y, vx, vy, bullet):
+    def __init__(self, x, y, vx, vy):
         super().__init__()
         self.vx = vx
         self.vy = vy
         self.x = x
         self.y = y
-        self.bullet = bullet
         self.image1 = pg.image.load(os.path.join(game_folder,"Assets","ship","ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
         self.image = pg.transform.scale(self.image1, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (250, 400)
         self.position = self.rect
         
-    def shoot(self):
-        gedrueckte_Taste = pg.key.get_pressed()         
-                
-        if gedrueckte_Taste[pg.K_SPACE]:
-            self.bullet = projectile(player.x, player.y, 20)
         
     
     def update(self):
@@ -165,9 +159,7 @@ spieler2 = player(20, 20, 10, 10)
 while True:
     exit_game()
     spieler2.update()
-    spieler.update()
-    spieler2.update()
-    bullet.update()
+    spieler.update()    
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
