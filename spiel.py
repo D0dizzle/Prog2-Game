@@ -87,7 +87,14 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
         if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 450:                #5 pixel nach rechts
             self.rect.move_ip(self.vx, 0)
        
-       
+        if gedrueckte_Taste[pg.K_w] and self.position.y > 400:
+            self.rect.move_ip(0, -1 * self.vy)
+        if gedrueckte_Taste[pg.K_s] and self.position.y < 450:                     # hier 5 pixel nach unten
+            self.rect.move_ip(0, self.vy)
+        if gedrueckte_Taste[pg.K_a] and self.position.x > 0:                 #-5 pixel nach links
+            self.rect.move_ip(-1 * self.vx, 0) 
+        if gedrueckte_Taste[pg.K_d] and self.position.x < 450:                #5 pixel nach rechts
+            self.rect.move_ip(self.vx, 0)
        
        
        
