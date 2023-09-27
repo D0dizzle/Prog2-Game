@@ -8,11 +8,13 @@ import random
 pg.display.set_caption("Centipeter")
 FPS = pg.time.Clock()
 
+#TODO: Variablen in settings.py Datei auslagern!
 schwarz = (0, 0, 0)
 weiss = (255, 255, 255)
 cyan = (100, 100, 255)
 
 screen = pg.display.set_mode(size=(500, 500))
+#TODO: mit os.path.join den os-path vereinheitlichen!
 background1 = pg.image.load("Assets\hintergrund\parallax-background.png").convert()
 background = pg.transform.scale(background1, (500, 500))
 background2 = pg.image.load("Assets\hintergrund\parallax-space-ring-planet.png").convert_alpha()
