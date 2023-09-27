@@ -5,6 +5,7 @@
 import pygame
 import sys
 import random
+import os
 
 #Variablen (todo: später hier drunter reinschreiben, haha)
 #Farben:
