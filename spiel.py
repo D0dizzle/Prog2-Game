@@ -80,7 +80,7 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
 
 
 
-spieler = player(20, 20, weiss)
+spieler = player(20, 20, 5, 5)
 screen.blit(spieler.image, spieler.position)
 #Main Loop:
 while True:
