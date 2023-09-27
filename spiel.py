@@ -20,10 +20,10 @@ screen = pg.display.set_mode(size=(500, 500))
 #TODO os.path.join um os path zu verallgrmrinrtn
 
 
-background1 = pg.image.load(os.path.join(game_folder,"parallax-background.png")).convert()
+background1 = pg.image.load(os.path.join(game_folder, "Assets\hintergrund\parallax-background.png")).convert()
 background = pg.transform.scale(background1, (500, 500))
-background2 = pg.image.load(os.path.join(game_folder,"parallax-space-ring-planet.png")).convert_alpha()
-background3 = pg.image.load(os.path.join(game_folder,"parallax-space-stars.png")).convert_alpha()
+background2 = pg.image.load(os.path.join(game_folder,"Assets\hintergrund\parallax-space-ring-planet.png")).convert_alpha()
+background3 = pg.image.load(os.path.join(game_folder,"Assets\hintergrund\parallax-space-stars.png")).convert_alpha()
 background4 = pg.transform.scale(background3, (500, 500))
 
 # Background Asset Quelle: https://opengameart.org/content/space-background-3
@@ -56,7 +56,7 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
     def __init__(self, x, y, color):
         super().__init__()
 
-        self.image1 = pg.image.load(os.path.join(game_folder,"ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
+        self.image1 = pg.image.load(os.path.join(game_folder,"Assets\ship\ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
         self.image = pg.transform.scale(self.image1, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (250, 400)
