@@ -69,13 +69,13 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
         gedrueckte_Taste = pg.key.get_pressed()         
                                     #wir schauen: wurde Pfeiltaste nach oben gedrückt?
         if gedrueckte_Taste[pg.K_UP] and self.position.y > 400:
-            self.rect.move_ip(0, -5)                            #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
+            self.rect.move_ip(0, -1 * self.vy)                            #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
         if gedrueckte_Taste[pg.K_DOWN] and self.position.y < 450:                     # hier 5 pixel nach unten
-            self.rect.move_ip(0, 5)
+            self.rect.move_ip(0, self.vy)
         if gedrueckte_Taste[pg.K_LEFT] and self.position.x > 0:                 #-5 pixel nach links
-            self.rect.move_ip(-5, 0)
+            self.rect.move_ip(-1 * self.vx, 0)
         if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 450:                #5 pixel nach rechts
-            self.rect.move_ip(5, 0)
+            self.rect.move_ip(self.vx, 0)
 
 
 
