@@ -109,7 +109,7 @@ while True:
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
-    screen.blit(spieler2.image, spieler2.position)
+    screen.blit(spieler.image, spieler.position)
 
     pg.display.update()
     FPS.tick(60)
