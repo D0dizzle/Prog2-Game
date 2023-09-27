@@ -81,7 +81,8 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
 
 
 spieler = player(20, 20, 5, 5)
-screen.blit(spieler.image, spieler.position)
+spieler2 = player(20, 20, 10, 10)
+screen.blit(spieler2.image, spieler2.position)
 #Main Loop:
 while True:
     exit_game()
@@ -89,7 +90,7 @@ while True:
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
-    screen.blit(spieler.image, spieler.position)
+    screen.blit(spieler2.image, spieler2.position)
 
     pg.display.update()
     FPS.tick(60)
