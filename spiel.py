@@ -14,6 +14,7 @@ weiss = (255, 255, 255)
 cyan = (100, 100, 255)
 
 screen = pg.display.set_mode(size=(500, 500))
+#TODO os.path.join um os path zu verallgemeinern
 background1 = pg.image.load("Assets\hintergrund\parallax-background.png").convert()
 background = pg.transform.scale(background1, (500, 500))
 background2 = pg.image.load("Assets\hintergrund\parallax-space-ring-planet.png").convert_alpha()
