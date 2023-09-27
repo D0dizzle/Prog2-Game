@@ -1,7 +1,7 @@
 """Das hier ist für verschiedene Tests gekapert, nicht wundern!
 Hier gibt's ne kleine Default MainLoop, in der man Funktionen ausprobieren kann"""
 
-
+#wenn das hier klappt ist gut
 
 import pygame as pg
 import sys
