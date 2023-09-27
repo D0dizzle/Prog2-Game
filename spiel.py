@@ -77,21 +77,26 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
         if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 450:                #5 pixel nach rechts
             self.rect.move_ip(self.vx, 0)
 
-
+        if gedrueckte_Taste[pg.K_w] and self.position.y > 400:
+            self.rect.move_ip(0, -1 * self.vy)
+        if gedrueckte_Taste[pg.K_s] and self.position.y < 450:                     # hier 5 pixel nach unten
+            self.rect.move_ip(0, self.vy)
+        if gedrueckte_Taste[pg.K_a] and self.position.x > 0:                 #-5 pixel nach links
+            self.rect.move_ip(-1 * self.vx, 0) 
+        if gedrueckte_Taste[pg.K_d] and self.position.x < 450:                #5 pixel nach rechts
+            self.rect.move_ip(self.vx, 0)
 
 
 spieler = player(20, 20, 5, 5)
-#spieler2 = player(20, 20, 10, 10)
-#screen.blit(spieler2.image, spieler2.position)
+spieler2 = player(20, 20, 10, 10)
 #Main Loop:
 while True:
     exit_game()
-    #spieler2.update()
+    spieler2.update()
     spieler.update()
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
-    #screen.blit(spieler2.image, spieler2.position)
     screen.blit(spieler.image, spieler.position)
 
     pg.display.update()
