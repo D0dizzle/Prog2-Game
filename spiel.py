@@ -55,20 +55,25 @@ def exit_game():
 #Spieler Klasse
 class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pygame doc
     
-    def __init__(self, x, y, vx, vy):
+    def __init__(self, x, y, vx, vy, bullet):
         super().__init__()
         self.vx = vx
         self.vy = vy
         self.x = x
         self.y = y
+        self.bullet = bullet
         self.image1 = pg.image.load(os.path.join(game_folder,"Assets","ship","ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
         self.image = pg.transform.scale(self.image1, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (250, 400)
         self.position = self.rect
         
-    def shoot(self,vy):
-        pass
+    def shoot(self):
+        gedrueckte_Taste = pg.key.get_pressed()         
+                
+        if gedrueckte_Taste[pg.K_SPACE]:
+            self.bullet = projectile(player.x, player.y, 20)
+        
     
     def update(self):
         gedrueckte_Taste = pg.key.get_pressed()         
@@ -81,6 +86,50 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
             self.rect.move_ip(-1 * self.vx, 0)
         if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 450:                #5 pixel nach rechts
             self.rect.move_ip(self.vx, 0)
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
             
 class projectile(pg.sprite.Sprite):
     
@@ -92,7 +141,10 @@ class projectile(pg.sprite.Sprite):
         self.image1 = pg.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
         self.image = pg.transform.scale(self.image1, (10, 10))
         self.rect = self.image.get_rect()
+        self.rect.center = player.position
         
+        
+    
         
         
 
@@ -101,16 +153,19 @@ class projectile(pg.sprite.Sprite):
 
 spieler = player(20, 20, 5, 5)
 spieler2 = player(20, 20, 10, 10)
+
 #Main Loop:
 while True:
     exit_game()
     spieler.update()
     spieler2.update()
+    bullet.update()
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
     screen.blit(spieler.image, spieler.position)
-
+    screen.blit(spieler.image, spieler.position)
+    
     pg.display.update()
     FPS.tick(60)
 
