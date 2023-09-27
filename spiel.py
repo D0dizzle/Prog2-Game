@@ -7,6 +7,8 @@ import random
 import os
 from abc import ABC, abstractclassmethod
 
+from pygame.sprite import* 
+
 pg.display.set_caption("Centipeter")
 FPS = pg.time.Clock()
 
@@ -64,6 +66,9 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
         self.rect = self.image.get_rect()
         self.rect.center = (250, 400)
         self.position = self.rect
+        
+    def shoot(self,vy):
+        pass
     
     def update(self):
         gedrueckte_Taste = pg.key.get_pressed()         
@@ -76,17 +81,31 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
             self.rect.move_ip(-1 * self.vx, 0)
         if gedrueckte_Taste[pg.K_RIGHT] and self.position.x < 450:                #5 pixel nach rechts
             self.rect.move_ip(self.vx, 0)
+            
+class projectile(pg.sprite.Sprite):
+    
+    def __init__(self,x,y,vy):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.vy = vy
+        self.image1 = pg.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
+        self.image = pg.transform.scale(self.image1, (10, 10))
+        self.rect = self.image.get_rect()
+        
+        
+        
 
 
 
 
 spieler = player(20, 20, 5, 5)
 spieler2 = player(20, 20, 10, 10)
-screen.blit(spieler2.image, spieler2.position)
 #Main Loop:
 while True:
     exit_game()
     spieler.update()
+    spieler2.update()
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
