@@ -5,6 +5,7 @@ import pygame as pg
 import sys
 import random
 import os
+from abc import ABC, abstractclassmethod
 
 pg.display.set_caption("Centipeter")
 FPS = pg.time.Clock()
