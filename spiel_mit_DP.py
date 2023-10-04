@@ -1,2 +1,1 @@
-#Test
-#'test2'
+#Diese Datei ist dafür da, Code in sinnvollen Design Patterns zu schreiben
