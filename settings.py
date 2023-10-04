@@ -9,7 +9,7 @@ weiss = (255, 255, 255)
 cyan = (100, 100, 255)
 
 game_folder = os.path.dirname(__file__)
-screen = pygame.display.set_mode(size=(500, 500))
+screen = pygame.display.set_mode(size=(1000, 1000))
 
 
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
@@ -20,7 +20,11 @@ def exit_game():
             sys.exit()
 
 
-#Hintergründe
+#Hintergründe WARNUNG! 
+#vorab PNG's laden, die transformiert werden müssen
+background1 =  pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert()
+space_stars1 = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha()
+#Dictionary mit den Hintergründen
 hg_dict = {}
-hg_dict["background"] = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert()
-hg_dict["space-stars"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha()
+hg_dict["background"] = pygame.transform.scale(background1, (1000,1000))
+hg_dict["space-stars"] = pygame.transform.scale(space_stars1, (1000, 1000))
