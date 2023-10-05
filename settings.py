@@ -28,3 +28,12 @@ space_stars1 = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund"
 hg_dict = {}
 hg_dict["background"] = pygame.transform.scale(background1, (1000,1000))
 hg_dict["space-stars"] = pygame.transform.scale(space_stars1, (1000, 1000))
+hg_dict["big-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-big-planet.png")).convert_alpha()
+hg_dict["far-planets"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-far-planets.png")).convert_alpha()
+hg_dict["ring-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()
+
+while True:
+    for i in hg_dict:
+        screen.blit(hg_dict[i], (0, 0))
+
+    pygame.display.update()
