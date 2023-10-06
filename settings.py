@@ -32,8 +32,8 @@ hg_dict["big-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hin
 hg_dict["far-planets"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-far-planets.png")).convert_alpha()
 hg_dict["ring-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()
 
-while True:
-    for i in hg_dict:
-        screen.blit(hg_dict[i], (0, 0))
+class Hintergrund:
+    def update():
+        for i in hg_dict:
+            screen.blit(hg_dict[i], (0, 0))
 
-    pygame.display.update()
