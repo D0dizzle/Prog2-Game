@@ -7,9 +7,11 @@ FPS = pygame.time.Clock()
 schwarz = (0, 0, 0)
 weiss = (255, 255, 255)
 cyan = (100, 100, 255)
+hoehe = 600
+breite = 800
 
 game_folder = os.path.dirname(__file__)
-screen = pygame.display.set_mode(size=(1000, 1000))
+screen = pygame.display.set_mode(size=(breite, hoehe))
 
 
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
@@ -26,8 +28,8 @@ background1 =  pygame.image.load(os.path.join(game_folder, "Assets", "hintergrun
 space_stars1 = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha()
 #Dictionary mit den Hintergründen
 hg_dict = {}
-hg_dict["background"] = pygame.transform.scale(background1, (1000,1000))
-hg_dict["space-stars"] = pygame.transform.scale(space_stars1, (1000, 1000))
+hg_dict["background"] = pygame.transform.scale(background1, (breite, hoehe))
+hg_dict["space-stars"] = pygame.transform.scale(space_stars1, (breite, hoehe))
 hg_dict["big-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-big-planet.png")).convert_alpha()
 hg_dict["far-planets"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-far-planets.png")).convert_alpha()
 hg_dict["ring-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()

@@ -6,8 +6,13 @@ import random
 import os
 from abc import ABC, abstractclassmethod
 from settings import *
+from sprites import *
+
+
+spieler = PlayerSprite(20, 20, 5, 5)
 
 while True:
     Hintergrund.update()
     exit_game()
+    spieler.update()
     pygame.display.update()
