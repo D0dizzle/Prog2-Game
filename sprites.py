@@ -27,4 +27,19 @@ class PlayerSprite(Sprite):
         self.position = self.rect 
 
     def update(self):
-        screen.blit(self.image, self.position)      
+        screen.blit(self.image, self.position)    
+
+
+class ProjectilSprite(Sprite):
+    def __init__(self, x, y, vy):
+        self.x = x
+        self.y = y
+        self.vy = vy
+        self.image1 = pygame.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
+        self.image = pygame.transform.scale(self.image1, (10, 10))
+        self.rect = self.image.get_rect()
+        self.rect.center = (x,y)
+
+
+    def update(self):
+        screen.blit(self.image, self.rect)

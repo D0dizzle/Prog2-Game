@@ -10,9 +10,12 @@ from sprites import *
 
 
 spieler = PlayerSprite(20, 20, 5, 5)
+projectil = ProjectilSprite(10, 10, 5)
 
 while True:
     Hintergrund.update()
     exit_game()
     spieler.update()
+    projectil.update()
+
     pygame.display.update()
