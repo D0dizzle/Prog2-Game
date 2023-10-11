@@ -10,7 +10,7 @@ from sprites import *
 
 
 spieler = PlayerSprite()
-projectil = ProjectilSprite(10, 10, 5)
+projectil = ProjectilSprite()
 
 while True:
     Hintergrund.update()
