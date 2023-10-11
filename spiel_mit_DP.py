@@ -19,3 +19,4 @@ while True:
     projectil.update()
 
     pygame.display.update()
+    FPS.tick(FPS_anzahl)

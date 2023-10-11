@@ -36,3 +36,6 @@ class ProjectilSprite(Sprite):
 
     def update(self):
         screen.blit(self.image, self.rect)
+
+#hier noch Gegner-Sprite-Klassen einfügen
+
