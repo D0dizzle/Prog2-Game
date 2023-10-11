@@ -9,7 +9,7 @@ from settings import *
 from sprites import *
 
 
-spieler = PlayerSprite(20, 20, 5, 5)
+spieler = PlayerSprite()
 projectil = ProjectilSprite(10, 10, 5)
 
 while True:
