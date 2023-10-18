@@ -38,11 +38,13 @@ def exit_game():
 
 
 #### Klassen für Settings: ####
-class Hintergrund:
-    def update():
+class Hintergrund():
+    def __init__(self, dict):
+        self.dict = dict
+    def update(self):
         x = 0
-        for i in hg_dict:
-            screen.blit(hg_dict[i], (x /breite, x / hoehe))
+        for i in self.dict:
+            screen.blit(self.dict[i], (x /breite, x / hoehe))
             x += 30000  
             ####TODO: x += __ festlegen, damit sich unsere Background-Assets cool auf dem Hintergrund verteilen!
 

@@ -11,11 +11,12 @@ from sprites import *
 
 spieler = PlayerSprite()
 projectil = ProjectilSprite()
-
+sprites = [spieler, projectil]
+background = Hintergrund(hg_dict)
 while True:
-    Hintergrund.update()
+    background.update()
     exit_game()
-    spieler.update()
-    projectil.update()
+    for sprite in sprites:
+        sprite.update()
 
     pygame.display.update()
