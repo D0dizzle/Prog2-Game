@@ -7,10 +7,13 @@ from settings import *
 
 
 
-# Klasse Sprite, damit Fehlermeldung kommt, wenn Sprite-Klasse keine Update-Methode hat
+# Klasse Sprite, damit Fehlermeldung kommt, wenn Sprite-Klasse keine Update- und Render-Methode hat
 class Sprite(ABC):
     @abstractclassmethod
-    def update():
+    def update():           #Platz um Sprite Logik zu implementieren
+        pass
+    @abstractclassmethod
+    def render():           #Funktion zum Rendern von Sprites 
         pass
 
 #Klasse für den Player Sprite
@@ -23,7 +26,14 @@ class PlayerSprite(Sprite):
         self.position = self.rect 
 
     def update(self):
-        screen.blit(self.image, self.position)    
+        pass   
+
+    def render(self):
+        screen.blit(self.image, self.position) 
+
+
+
+   
 
 
 class ProjectilSprite(Sprite):
@@ -33,9 +43,11 @@ class ProjectilSprite(Sprite):
         self.rect = self.image.get_rect()
 
 
-
-    def update(self):
+    def render(self):
         screen.blit(self.image, self.rect)
+    
+    def update(self):
+        pass
 
 #hier noch Gegner-Sprite-Klassen einfügen
 

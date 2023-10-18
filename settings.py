@@ -28,6 +28,8 @@ hg_dict["big-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hin
 hg_dict["far-planets"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-far-planets.png")).convert_alpha()
 hg_dict["ring-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()
 
+#ToDo überlegen, wie man einen Ordner direkt in ein Dict einliest
+
 
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
@@ -39,11 +41,13 @@ def exit_game():
 
 
 #### Klassen für Settings: ####
-class Hintergrund:
-    def update():
+class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstruktor mit self.hg_dict festlegen
+    def __init__(self, dict):
+        self.dict = dict
+    def render(self):
         x = 0
-        for i in hg_dict:
-            screen.blit(hg_dict[i], (x /breite, x / hoehe))
+        for i in self.dict:
+            screen.blit(self.dict[i], (x /breite, x / hoehe))
             x += 30000  
             ####TODO: x += __ festlegen, damit sich unsere Background-Assets cool auf dem Hintergrund verteilen!
 

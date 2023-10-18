@@ -11,12 +11,15 @@ from sprites import *
 
 spieler = PlayerSprite()
 projectil = ProjectilSprite()
-
+background = Hintergrund(hg_dict)
+#### die Liste + sprites.render um alle sprites in der Liste zu render und zu blitten
+sprites = [spieler, projectil]
 while True:
-    Hintergrund.update()
-    exit_game()
-    spieler.update()
-    projectil.update()
+
+    #exit_game()
+    background.render()
+    for sprite in sprites:
+        sprite.render()
 
     pygame.display.update()
     FPS.tick(FPS_anzahl)

@@ -10,12 +10,12 @@ from settings import *
 from sprites import *
 
 #Interface für Gegner Main-Klassen:
-class GegnerMain(ABC):
+class IGegnerMain(ABC):
     @abstractclassmethod
     def zustand():
         pass
 
-class Hindernis(GegnerMain):
+class Hindernis(IGegnerMain):
     def __init__(self):
         pass
 
