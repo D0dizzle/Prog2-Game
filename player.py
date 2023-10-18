@@ -32,3 +32,7 @@ class Spieler1(iPlayer):
     
     def shoot(self):
         pass
+
+class Bewegungsfunktion:        #TODO hier Bewegungsfunktion rein!!
+    def update():
+        pass
