@@ -33,8 +33,6 @@ class PlayerSprite(Sprite):
 
 
 
-   
-
 
 class ProjectilSprite(Sprite):
     def __init__(self):
@@ -49,5 +47,16 @@ class ProjectilSprite(Sprite):
     def update(self):
         pass
 
-#hier noch Gegner-Sprite-Klassen einfügen
+class HindernisSprite(Sprite):
+    def __init__(self):
+        self.image = pygame.Surface((10, 10))
+        self.image.fill(cyan)
+        self.rect = self.image.get_rect()
 
+    def render(self):
+        screen.blit(self.image, self.rect)
+
+    def update(self):
+        pass
+
+    

@@ -34,4 +34,13 @@ class ISegment(ABC):
         pass
 
 class KopfSegment(ISegment):
-    
+    def __init__(self):
+        pass
+    def zustand(self):
+        pass
+
+class KoerperSegment(ISegment):
+    def __init__(self):
+        pass
+    def zustand(self):
+        pass

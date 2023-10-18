@@ -7,17 +7,20 @@ import os
 from abc import ABC, abstractclassmethod
 from settings import *
 from sprites import *
+from player import *
 
 
 spieler = PlayerSprite()
 projectil = ProjectilSprite()
+hindernis = HindernisSprite()
+player1 = Spieler1(spieler)
 background = Hintergrund(hg_dict)
 #### die Liste + sprites.render um alle sprites in der Liste zu render und zu blitten
-sprites = [spieler, projectil]
+sprites = [spieler, projectil, hindernis]
 while True:
-
-    #exit_game()
+    exit_game()
     background.render()
+    player1.update()
     for sprite in sprites:
         sprite.render()
 
