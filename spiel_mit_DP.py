@@ -13,14 +13,15 @@ from player import *
 spieler = PlayerSprite()
 projectil = ProjectilSprite()
 hindernis = HindernisSprite()
-player1 = Spieler1(spieler)
+player1 = Player1(spieler)
 background = Hintergrund(hg_dict)
 #### die Liste + sprites.render um alle sprites in der Liste zu render und zu blitten
-sprites = [spieler, projectil, hindernis]
+sprites = [projectil, hindernis]
 while True:
     exit_game()
     background.render()
     player1.update()
+    player1.bewegung()
     for sprite in sprites:
         sprite.render()
 

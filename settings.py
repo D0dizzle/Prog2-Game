@@ -4,6 +4,7 @@ import pygame
 import os
 import sys
 
+
 #### Variablen: ####
 schwarz = (0, 0, 0)
 weiss = (255, 255, 255)
