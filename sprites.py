@@ -91,7 +91,7 @@ class Player1(iPlayer):
     #Bewegungsfunktion muss scheinbar in Klasse (sonst Bäh), vielleicht "PlayerMovement"-Class?? ###
     def bewegung(self):
         gedrueckte_Taste = pygame.key.get_pressed()         
-        if gedrueckte_Taste[pygame.K_UP] and self.rect.top > 400:
+        if gedrueckte_Taste[pygame.K_UP] and self.rect.top > 450:
             self.rect.y += self.vy * -1                           #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
         if gedrueckte_Taste[pygame.K_DOWN] and self.rect.bottom < hoehe:                     # hier 5 pixel nach unten
             self.rect.y += self.vy 
