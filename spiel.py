@@ -122,7 +122,6 @@ while True:
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
-    screen.blit(spieler.image, spieler.position)
     sprites = pg.sprite.Group(spieler, projectiles)
     sprites.draw(screen)
 
