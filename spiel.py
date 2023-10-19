@@ -104,7 +104,7 @@ while True:
 
     for projectile in projectiles:
         projectile.update()
-        if projectile.y < 0:
+        if projectile.rect.bottom  < -5:
             projectiles.remove(projectile)
 
     keypress = pg.key.get_pressed()
