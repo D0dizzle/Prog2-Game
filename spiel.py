@@ -35,17 +35,6 @@ background4 = pg.transform.scale(background3, (500, 500))
 #Funktion, um Tastendruck des Spielers auszuwerten und entsprechende Aktionen auszuführen
 #kommt später vermutlich als Methode in die "Player"-Klasse
 
-"""def update(a):                                     #a ist die derzeitige Position des Player-Sprites
-    gedrueckte_Taste = pg.key.get_pressed()            
-    if gedrueckte_Taste[pg.K_UP]:                   #wir schauen: wurde Pfeiltaste nach oben gedrückt?
-        a.move_ip(0, -5)                            #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
-    if gedrueckte_Taste[pg.K_DOWN]:                  # hier 5 pixel nach unten
-        a.move_ip(0, 5)
-    if gedrueckte_Taste[pg.K_LEFT]:                 #-5 pixel nach links
-        a.move_ip(-5, 0)
-    if gedrueckte_Taste[pg.K_RIGHT]:                #5 pixel nach rechts
-        a.move_ip(5, 0)"""
-
 def exit_game():
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -65,7 +54,7 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
         self.image1 = pg.image.load(os.path.join(game_folder,"Assets","ship","ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
         self.image = pg.transform.scale(self.image1, (50, 50))
         self.rect = self.image.get_rect()
-        self.rect.center = (250, 400)
+        self.rect.center = (x, y)
         self.position = self.rect
         
         
@@ -89,14 +78,8 @@ class player(pg.sprite.Sprite):             #Quelle für Erstellungshilfe = pyga
             self.rect.move_ip(-1 * self.vx, 0) 
         if gedrueckte_Taste[pg.K_d] and self.position.x < 450:                #5 pixel nach rechts
             self.rect.move_ip(self.vx, 0)
-        if gedrueckte_Taste[pg.K_SPACE]:
-            self.shoot()
-
-
-    def shoot(self):
-        bullet = Projectile(100, 100, 20)
+            
         
-       
             
 class Projectile(pg.sprite.Sprite):
     
@@ -108,21 +91,41 @@ class Projectile(pg.sprite.Sprite):
         self.image1 = pg.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
         self.image = pg.transform.scale(self.image1, (10, 10))
         self.rect = self.image.get_rect()
-        self.rect.center = (x,y)
+        self.rect.center = (x, y)
 
-spieler = player(20, 20, 5, 5)
-spieler2 = player(20, 20, 10, 10)
+    def update(self):
+        self.rect.y -= self.vy
 
+spieler = player(250, 400, 5, 5)
+projectiles = []
+cooldown = False
 #Main Loop:
 while True:
+
+    for projectile in projectiles:
+        projectile.update()
+        if projectile.y < 0:
+            projectiles.remove(projectile)
+
+    keypress = pg.key.get_pressed()
+    if keypress[pg.K_SPACE] and cooldown == False:
+        projectiles.append(Projectile(spieler.rect.centerx, spieler.rect.centery-20, 10))
+        cooldown = True
+
+    if not keypress[pg.K_SPACE]:
+        cooldown = False
+        
+
     exit_game()
-    spieler2.update()
-    spieler.update() 
+    #spieler2.update()
+    spieler.update()
     screen.blit(background, (0,0))
     screen.blit(background2, (20,50))
     screen.blit(background4, (20,50))
     screen.blit(spieler.image, spieler.position)
-    screen.blit(spieler.image, spieler.position)
+    sprites = pg.sprite.Group(spieler, projectiles)
+    sprites.draw(screen)
+
     
     pg.display.update()
     FPS.tick(60)
