@@ -4,7 +4,7 @@ from abc import ABC, abstractclassmethod
 from settings import *
 from sprites import *
 
-
+"""
 class iPlayer(ABC):
     @abstractclassmethod
     def update():
@@ -21,7 +21,7 @@ class iPlayer(ABC):
 class iHelpFunktion(ABC):
     @abstractclassmethod
     def function():
-        pass
+        pass"""
 
 ####Hmmmm ####
 """class PlayerMovement(iHelpFunktion):
@@ -39,7 +39,7 @@ class iHelpFunktion(ABC):
         if gedrueckte_Taste[pygame.K_RIGHT] and self.sprite.rect.right < 450:                #5 pixel nach rechts
             self.vx = 5"""
 
-
+"""
 class Player1(iPlayer):
     def __init__(self, sprite: PlayerSprite):
         self.sprite = sprite
@@ -78,3 +78,4 @@ class Player1(iPlayer):
     
     def shoot(self):
         pass
+"""

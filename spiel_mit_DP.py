@@ -21,7 +21,7 @@ while True:
     exit_game()
     background.render()
     player1.update()
-    player1.bewegung()
+
     for sprite in sprites:
         sprite.render()
 
