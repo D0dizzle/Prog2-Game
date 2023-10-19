@@ -12,12 +12,30 @@ from sprites import *
 #Interface für Gegner Main-Klassen:
 class IBaseGegnerMain(ABC):
     @abstractclassmethod
+    def update(self):
+        pass
+
+    @abstractclassmethod
     def zustand():
         pass
 
-class Hindernis(IBaseGegnerMain):
-    def __init__(self):
+class ISegment(ABC):
+    @abstractclassmethod
+    def update(self):
         pass
+
+    @abstractclassmethod  
+    def zustand(self):
+        pass
+
+class Hindernis(IBaseGegnerMain):
+    def __init__(self, sprite: HindernisSprite):
+        self.sprite = sprite
+        self.rect = sprite.rect
+        self.position = self.rect
+        
+    def update(self):
+        self.sprite.render()
 
     def zustand(self):
         pass
@@ -25,22 +43,35 @@ class Hindernis(IBaseGegnerMain):
 class MobilerGegner(IBaseGegnerMain):
     def __init__(self):
         pass
+
+    def update(self):
+        pass
+
     def zustand(self):
         pass
 
-class ISegment(ABC):
-    @abstractclassmethod  
-    def zustand(self):
-        pass
 
 class KopfSegment(ISegment):
-    def __init__(self):
-        pass
+    def __init__(self, sprite: SpriteSegmentKopf):
+        self.sprite = sprite
+        self.rect = sprite.rect
+        self.positon = self.rect
+
+    def update(self):
+        self.sprite.render()
+
     def zustand(self):
         pass
 
 class KoerperSegment(ISegment):
-    def __init__(self):
-        pass
+    def __init__(self, sprite: SpriteSegmentKoerper):
+        self.sprite = sprite
+        self.rect = sprite.rect
+        self.position = self.rect
+    
+    def update(self):
+        self.sprite.render()
+
     def zustand(self):
         pass
+

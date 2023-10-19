@@ -9,10 +9,14 @@ import sys
 schwarz = (0, 0, 0)
 weiss = (255, 255, 255)
 cyan = (100, 100, 255)
+gruen = (0, 255, 0)
+dunkelgruen = (100, 255, 100)
 hoehe = 600
 breite = 800
 FPS_anzahl = 60                     #Anzahl FPS
 FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
+seg_groesse = 20
+hin_groesse = 10
 
 game_folder = os.path.dirname(__file__)
 screen = pygame.display.set_mode(size=(breite, hoehe))

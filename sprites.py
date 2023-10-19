@@ -53,7 +53,7 @@ class ProjectilSprite(Sprite):
 
 class HindernisSprite(Sprite):
     def __init__(self):
-        self.image = pygame.Surface((10, 10))
+        self.image = pygame.Surface((hin_groesse, hin_groesse))
         self.image.fill(cyan)
         self.rect = self.image.get_rect()
 
@@ -63,4 +63,39 @@ class HindernisSprite(Sprite):
     def update(self):
         pass
 
+class SpriteSegmentKopf(Sprite):
+    def __init__(self):
+        self.image = pygame.Surface((seg_groesse, seg_groesse))
+        self.image.fill(gruen)
+        self.rect = self.image.get_rect()
+
+    def render(self):
+        screen.blit(self.image, self.rect)
+
+    def update(self):
+        pass
+
+class SpriteSegmentKoerper(Sprite):
+    def __init__(self):
+        self.image = pygame.Surface((seg_groesse, seg_groesse))
+        self.image.fill(dunkelgruen)
+        self.rect = self.image.get_rect()
+
+    def render(self):
+        screen.blit(self.image, self.rect)
+
+    def update(self):
+        pass
+
+#TileMap, um "ersten" Zustand der "Verteilung" der Hindernisse zu definieren
+class TileMap():
+    def __init__(self):
+        pass
     
+    def read_map(self):
+        #TileMap hier aus Texteditor einlesen lassen
+        pass
+    
+    def make_map(self, sprite: HindernisSprite):
+        #hier Map aus Hindernis-Sprites erstellen
+        pass
