@@ -12,12 +12,10 @@ class Sprite(ABC):
     @abstractclassmethod
     def update():           #Platz um Sprite Logik zu implementieren
         pass
-    @abstractclassmethod
-    def render():           #Funktion zum Rendern von Sprites 
-        pass
+
 
 #Klasse für den Player Sprite
-class PlayerSprite(Sprite):
+class PlayerSprite(pygame.sprite.Sprite, Sprite):
     def __init__(self):
         self.image1 = pygame.image.load(os.path.join(game_folder,"Assets","ship","ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
         self.image = pygame.transform.scale(self.image1, (50, 50))
@@ -38,27 +36,32 @@ class PlayerSprite(Sprite):
         screen.blit(self.image, self.position) #### hier überlegen: wie übergeben wir Position aus der Bewegungsfunktion
 
 
-class ProjectilSprite(Sprite):
-    def __init__(self):
+class Projectile(pygame.sprite.Sprite, Sprite):
+    def __init__(self, x, y, vy):
+        super().__init__()
         self.image1 = pygame.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
         self.image = pygame.transform.scale(self.image1, (10, 10))
         self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.vy = vy
+        self.rect.center = (x, y)
 
 
     def render(self):
-        screen.blit(self.image, self.rect)
+        pass
     
     def update(self):
-        pass
+        self.rect.y -= self.vy
 
-class HindernisSprite(Sprite):
+
+class HindernisSprite(pygame.sprite.Sprite, Sprite):
     def __init__(self):
+        super().__init__()
         self.image = pygame.Surface((hin_groesse, hin_groesse))
         self.image.fill(cyan)
         self.rect = self.image.get_rect()
 
-    def render(self):
-        screen.blit(self.image, self.rect)
 
     def update(self):
         pass
