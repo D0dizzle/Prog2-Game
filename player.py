@@ -29,8 +29,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
     def update(self):
         self.bewegung()
 
-        self.sprite.set_pos((self.rect.x, self.rect.y))
-        self.sprite.render()
+
 
 
     #Bewegungsfunktion muss scheinbar in Klasse (sonst Bäh), vielleicht "PlayerMovement"-Class?? ###
