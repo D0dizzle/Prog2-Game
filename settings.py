@@ -15,8 +15,7 @@ hoehe = 600
 breite = 800
 FPS_anzahl = 60                     #Anzahl FPS
 FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
-seg_groesse = 20
-hin_groesse = 10
+seg_groesse = 25
 projectiles = []
 
 

@@ -46,7 +46,7 @@ class Projectile(pygame.sprite.Sprite, Sprite):
 class HindernisSprite(pygame.sprite.Sprite, Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((hin_groesse, hin_groesse))
+        self.image = pygame.Surface((seg_groesse, seg_groesse))
         self.image.fill(cyan)
         self.rect = self.image.get_rect()
 
@@ -77,4 +77,5 @@ class SpriteSegmentKoerper(Sprite):
 
     def update(self):
         pass
+
 
