@@ -52,8 +52,8 @@ while True:
 
     keypress = pygame.key.get_pressed()
     if keypress[pygame.K_SPACE] and cooldown == False:
-        projectiles.append(Projectile(player1.rect.centerx-8, player1.rect.centery-20, 10))
-        projectiles.append(Projectile(player1.rect.centerx+8, player1.rect.centery-20, 10))
+        projectiles.append(Projectile(player1.rect.centerx, player1.rect.centery-20, 10))
+
         cooldown = True
 
     if not keypress[pygame.K_SPACE]:
