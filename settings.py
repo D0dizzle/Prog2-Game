@@ -34,8 +34,8 @@ hg_dict["big-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hin
 hg_dict["far-planets"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-far-planets.png")).convert_alpha()
 hg_dict["ring-planet"] = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()
 
-#ToDo überlegen, wie man einen Ordner direkt in ein Dict einliest
 
+img_dict = {}
 
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke

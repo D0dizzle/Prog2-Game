@@ -28,17 +28,11 @@ class ISegment(ABC):
     def zustand(self):
         pass
 
-class Hindernis(IBaseGegnerMain):
-    def __init__(self, sprite: HindernisSprite):
-        self.sprite = sprite
-        self.rect = sprite.rect
-        self.position = self.rect
-        
-    def update(self):
-        self.sprite.render()
-
-    def zustand(self):
-        pass
+class HindernisCreator:
+    def createHindernis(self):
+        hindernis = HindernisCyan()
+        hindernis.__init__()
+        return hindernis
 
 class MobilerGegner(IBaseGegnerMain):
     def __init__(self):

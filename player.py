@@ -13,8 +13,6 @@ class iPlayer(ABC):
     def zustand():
         pass
 
-
-
 class Player1(pygame.sprite.Sprite, iPlayer):
     def __init__(self, sprite: PlayerSprite):
         super().__init__()
@@ -29,9 +27,6 @@ class Player1(pygame.sprite.Sprite, iPlayer):
     def update(self):
         self.bewegung()
 
-
-
-
     #Bewegungsfunktion muss scheinbar in Klasse (sonst Bäh), vielleicht "PlayerMovement"-Class?? ###
     def bewegung(self):
         key_press = pygame.key.get_pressed()         
@@ -43,8 +38,21 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             self.rect.x += self.vx * -1
         if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < breite:                #5 pixel nach rechts
             self.rect.x += self.vx 
+    
+    def shoot(self, projectile: Projectile):
+        cooldown = False
+        keypress = pygame.key.get_pressed()
+        if not keypress[pygame.K_SPACE]:
+            cooldown = False
 
+        for projectile in projectiles:
+            projectile.update()
+            if projectile.rect.bottom  < -5:
+                projectiles.remove(projectile)
+
+        if keypress[pygame.K_SPACE] and cooldown == False:
+            projectiles.append(Projectile(self.rect.centerx, self.rect.centery-20, 10))
+            cooldown = True
 
     def zustand(self):
         pass
-    

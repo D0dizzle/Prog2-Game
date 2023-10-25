@@ -5,12 +5,10 @@ import os
 from abc import ABC, abstractclassmethod
 from settings import *
 
-
-
 # Klasse Sprite, damit Fehlermeldung kommt, wenn Sprite-Klasse keine Update- und Render-Methode hat
 class Sprite(ABC):
     @abstractclassmethod
-    def update():           #Platz um Sprite Logik zu implementieren
+    def update():
         pass
 
 
@@ -25,7 +23,6 @@ class PlayerSprite(pygame.sprite.Sprite, Sprite):
     
     def update(self):
         pass   
-
 
 class Projectile(pygame.sprite.Sprite, Sprite):
     def __init__(self, x, y, vy):
@@ -42,15 +39,13 @@ class Projectile(pygame.sprite.Sprite, Sprite):
     def update(self):
         self.rect.y -= self.vy
 
-
-class HindernisSprite(pygame.sprite.Sprite, Sprite):
+class HindernisCyan(pygame.sprite.Sprite, Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
         self.image.fill(cyan)
         self.rect = self.image.get_rect()
-
-
+    
     def update(self):
         pass
 
@@ -77,5 +72,3 @@ class SpriteSegmentKoerper(Sprite):
 
     def update(self):
         pass
-
-
