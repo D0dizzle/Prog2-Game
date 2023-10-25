@@ -11,12 +11,15 @@ for pilz in pilze:
         go_down()  # Hier sollte die entsprechende Reaktion auf die Kollision mit einem Pilz erfolgen, in dem Fall eine Zeile nach unten gehen
 #kann man bestimmt auch auf den Gegner anwenden. Dann mit game_over()
 
+# Wenn die Schlange größer als 1 ist, muss sie sich teilen; wenn genau 1 soll der Kopf verschwinden.
+    if len(snake) == 1:
+        snake.pop()
+    
+    if len(snake) < 1
+        snake.split()
+
 def go_down(snake, screen_widht, screen_ height):
-    # hier kann ach die kollision-funktion stehen dann:
+    # hier kann auch die kollision-funktion stehen dann:
 else:
     new_head = (new_head_x, new_head_y)
     snake.insert(0, new_head)
-
-# Wenn die Schlange größer als 1 ist, muss sie sich teilen,
-    if len(snake)> 1:
-        snake.pop()
