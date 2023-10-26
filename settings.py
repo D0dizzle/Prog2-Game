@@ -17,6 +17,7 @@ FPS_anzahl = 60                     #Anzahl FPS
 FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
 seg_groesse = 25
 projectiles = []
+key_press = pygame.key.get_pressed()
 
 
 game_folder = os.path.dirname(__file__)
