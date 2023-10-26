@@ -17,21 +17,6 @@ hindernis = hindernisCreator.createHindernis()
 player1 = Player1(spieler)
 background = Hintergrund(hg_dict)
 
-"""
-def shoot(player1, projectiles, cooldown = False):
-    for projectile in projectiles:
-        projectile.update()
-        if projectile.rect.bottom  < -5:
-            projectiles.remove(projectile)
-    keypress = pygame.key.get_pressed()
-    if keypress[pygame.K_SPACE] and cooldown is False:
-        projectiles.append(Projectile(player1.rect.centerx, player1.rect.centery-20, 10))
-        cooldown = True
-
-    if not keypress[pygame.K_SPACE]:
-        cooldown = False
-"""
-
 while True:
     exit_game()
     background.render()
