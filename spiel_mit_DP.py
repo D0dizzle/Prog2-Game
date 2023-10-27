@@ -25,15 +25,6 @@ new_game = Game()
 new_game.new()
 
 while True:
-<<<<<<< HEAD
-    exit_game()
-    player1.update()
-    player1.shoot(projectiles)
-    background.render()
-
-
-    sprites = pygame.sprite.Group(player1, projectiles, hindernis)
-=======
 
     background.render()
     player1.update()
@@ -41,7 +32,6 @@ while True:
 
     new_game.update()
     sprites = pygame.sprite.Group(player1, projectiles)
->>>>>>> 2fb5a2185490bde778e462aaf33d70a062b88f94
     sprites.draw(screen)
     exit_game()
     pygame.display.update()

@@ -18,7 +18,7 @@ class PlayerSprite(pygame.sprite.Sprite, Sprite):
         self.image1 = pygame.image.load(os.path.join(game_folder,"Assets","ship","ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
         self.image = pygame.transform.scale(self.image1, (50, 50))
         self.rect = self.image.get_rect()
-        self.rect.center = (breite / 2, hoehe - hoehe / 4)
+        self.rect.center = (breite / 2, hoehe - hoehe / 6)
         self.position = self.rect 
     
     def update(self):
