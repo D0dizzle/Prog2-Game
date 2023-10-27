@@ -22,10 +22,9 @@ background = Hintergrund(hg_dict)
 
 while True:
     exit_game()
-    background.render()
     player1.update()
     player1.shoot(projectiles)
-
+    background.render()
 
 
     sprites = pygame.sprite.Group(player1, projectiles, hindernis)

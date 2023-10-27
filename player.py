@@ -22,7 +22,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.vy = 5
         self.rect = self.sprite.rect
         self.position = sprite.position
-        self.shoot_cd = 100
+        self.shoot_cd = 200
         self.last_shot = 0
         self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
 
