@@ -3,7 +3,7 @@
 import pygame
 import os
 import sys
-from random import randint
+from random import randint, choice
 
 #### Variablen: ####
 schwarz = (0, 0, 0)
@@ -52,6 +52,12 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
         self.background = pygame.transform.scale(self.background, (breite, hoehe))
         self.space_stars = pygame.transform.scale(self.space_stars, (breite, hoehe))
         self.dict = dict
+        self.max_particles = 1000
+        self.current_particles = 0
+        self.last_particles = 0
+        self.particles = []
+        self.animated_background = [pygame.image.load(os.path.join(game_folder,"Assets","enemies" ,"particle.png")).convert_alpha(), pygame.image.load(os.path.join(game_folder,"Assets","enemies" ,"particle2.png")).convert_alpha()]
+        self.cooldown = 1
 
         for i in self.dict:
             x = randint(50,(breite-50))
@@ -68,9 +74,32 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
         screen.blit(self.background,(0,0))
         screen.blit(self.space_stars,(0,0))
 
-
         for i in self.dict:
             screen.blit(self.dict[i]["image"], (self.dict[i]["x"],self.dict[i]["y"]))
+
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_particles > self.cooldown and self.current_particles < self.max_particles:
+            self.last_particles = current_time                 
+            self.particles.append(Particles(randint(0,breite),-80, randint(2,10),choice(self.animated_background)))
+            self.current_particles =+ 1
+            self.cooldown = randint(20,60)
+
+        for particle in self.particles:
+            particle.update()
+
+class Particles(pygame.sprite.Sprite):
+    def __init__(self, x, y, vy, img):
+        super().__init__()
+        self.image = img
+        self.x = x
+        self.y = y
+        self.vy = vy
+    
+    def update(self):
+        screen.blit(self.image, (self.x, self.y))
+        self.y += self.vy
+        if self.y  < hoehe+50:
+                self.remove()
 
 
 class TileMap:

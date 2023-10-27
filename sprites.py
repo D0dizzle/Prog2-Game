@@ -34,6 +34,7 @@ class Projectile(pygame.sprite.Sprite, Sprite):
         self.y = y
         self.vy = vy
         self.rect.center = (x, y)
+        
 
     
     def update(self):
