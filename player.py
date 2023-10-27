@@ -13,6 +13,13 @@ class iPlayer(ABC):
     def zustand():
         pass
 
+class ProjectileCreator:
+    def createProjectile(self,x, y, vy, proj_kind):
+        if proj_kind == "basic":
+            basic_projectile = Projectile(x, y, vy)
+        basic_projectile.__init__(x, y, vy)
+        return basic_projectile
+
 class Player1(pygame.sprite.Sprite, iPlayer):
     def __init__(self, sprite: PlayerSprite):
         super().__init__()
@@ -42,12 +49,12 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             self.rect.x += self.vx 
     
     def shoot(self, projectiles: Projectile):
-        
+        projectileCreator = ProjectileCreator()
         key_press = pygame.key.get_pressed()
         current_time = pygame.time.get_ticks()
 
         if key_press[pygame.K_SPACE] and current_time - self.last_shot > self.shoot_cd:
-            projectiles.append(Projectile(self.rect.centerx, self.rect.centery-20, 10))
+            projectiles.append(projectileCreator.createProjectile(self.rect.centerx, self.rect.centery-20, 10, "basic"))
             self.last_shot = current_time
             self.shoot_sound.play()
             
