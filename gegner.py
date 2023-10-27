@@ -47,7 +47,7 @@ class MobilerGegner(IBaseGegnerMain):
     def zustand(self):
         pass
 
-
+"""
 class KopfSegment(ISegment):
     def __init__(self, sprite: SpriteSegmentKopf):
         self.sprite = sprite
@@ -69,4 +69,29 @@ class KoerperSegment(ISegment):
     def update(self):
         pass
     def zustand(self):
-        pass
+        pass"""
+
+class SegmentCreator:
+    def createSegment(self, x, y, seg_kind):
+        if seg_kind == "head":
+            segment = SegmentKopf(x, y)
+        elif seg_kind == "body":
+            segment = SegmentKoerper(x, y)
+        segment.__init__(x, y)
+        return segment
+
+
+class Centipede:
+    def __init__(self):
+        self.segments = []
+        self.length = 10
+
+    def createCentipede(self):
+        segmentCreator = SegmentCreator()
+        for i in range(self.length):
+            if i == 0:
+                self.segments.append(segmentCreator.createSegment(i* 0, i*0, "body"))
+            elif i < self.length - 1:
+                self.segments.append(segmentCreator.createSegment(i* 25, i*0, "body"))
+            elif i == self.length - 1:
+                self.segments.append(segmentCreator.createSegment(i * 25, i * 0, "head"))

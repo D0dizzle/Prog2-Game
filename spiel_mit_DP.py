@@ -23,6 +23,9 @@ background = Hintergrund(hg_dict)
 
 new_game = Game()
 new_game.new()
+centipede = Centipede()
+centipede.createCentipede()
+print(centipede.segments)
 
 while True:
 
@@ -31,7 +34,7 @@ while True:
     player1.shoot(projectiles)
 
 
-    sprites = pygame.sprite.Group(player1, projectiles, new_game.sprites)
+    sprites = pygame.sprite.Group(player1, projectiles, new_game.sprites, centipede.segments)
     sprites.draw(screen)
     exit_game()
     pygame.display.update()

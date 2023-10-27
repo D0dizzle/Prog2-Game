@@ -46,14 +46,20 @@ class HindernisPilz(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-class SpriteSegmentKopf(pygame.sprite.Sprite):
-    def __init__(self):
+class SegmentKopf(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
         self.image.fill(gruen)
         self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y 
 
-class SpriteSegmentKoerper(pygame.sprite.Sprite):
-    def __init__(self):
+class SegmentKoerper(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
-        self.image.fill(dunkelgruen)
+        self.image.fill(weiss)
         self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y 
