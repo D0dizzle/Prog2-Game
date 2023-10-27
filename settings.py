@@ -34,7 +34,12 @@ hg_dict["far-planets"] = {"image" : pygame.image.load(os.path.join(game_folder,"
 hg_dict["ring-planet"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()}
 # hg_dict keys wird wert image zugewiesen
 
-#img_dict = {}
+img_dict = {}
+img_dict["bullet"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
+img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Satellite.png"))
+img_dict["TME"] = os.path.join(game_folder, "Assets", "TileMapEinfach.txt")
+
+player_img_dict = {}
 
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke

@@ -17,7 +17,7 @@ class PlayerSprite(pygame.sprite.Sprite):
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, vy):
         super().__init__()
-        self.image1 = pygame.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
+        self.image1 = img_dict["bullet"]
         self.image = pygame.transform.scale(self.image1, (10, 10))
         self.rect = self.image.get_rect()
         self.x = x
@@ -29,7 +29,7 @@ class Projectile(pygame.sprite.Sprite):
     def update(self):
         self.rect.y -= self.vy
 
-class HindernisCyan(pygame.sprite.Sprite):
+class ObstacleCyan(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
@@ -38,10 +38,10 @@ class HindernisCyan(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-class HindernisPilz(pygame.sprite.Sprite):
+class ObstacleSatellite(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Satellite.png"))
+        self.image = img_dict["satellite"]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

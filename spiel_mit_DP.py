@@ -9,7 +9,7 @@ from settings import *
 from sprites import *
 from player import *
 from gegner import *
-from game import *
+
 
 spieler = PlayerSprite()
 pygame.mixer.init()
@@ -19,8 +19,8 @@ pygame.mixer.music.set_volume(0.4)
 
 player1 = Player1(spieler)
 background = Hintergrund(hg_dict)
-new_game = Game()
-new_game.new()
+new_map = ObstacleOnScreen()
+new_map.new()
 centipede = Centipede()
 centipede.createCentipede()
 
@@ -32,7 +32,7 @@ while True:
     player1.shoot(projectiles)
 
 
-    sprites = pygame.sprite.Group(player1, projectiles, new_game.sprites, centipede.segments)
+    sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)
     sprites.draw(screen)
     exit_game()
     pygame.display.update()

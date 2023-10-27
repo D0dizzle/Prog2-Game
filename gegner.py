@@ -28,14 +28,27 @@ class ISegment(ABC):
     def zustand(self):
         pass
 
-class HindernisCreator:
-    def createHindernis(self, x, y, style):
+class ObstacleCreator:
+    def createObstacle(self, x, y, style):
         if style == "Pilz":
-            hindernis = HindernisPilz(x, y)
+            hindernis = ObstacleSatellite(x, y)
         elif style == "Cyan":
-            hindernis = HindernisCyan(x, y)
+            hindernis = ObstacleCyan(x, y)
         hindernis.__init__(x, y)
         return hindernis
+
+class ObstacleOnScreen(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.sprites = []
+    
+    def new(self):
+        self.map = TileMap(img_dict["TME"])
+        for col, tiles in enumerate(self.map.data):
+            for row, tile in enumerate(tiles):
+                if tile == '1':
+                    obstacleCreator = ObstacleCreator()
+                    self.sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Pilz"))
 
 class MobilerGegner(IBaseGegnerMain):
     def __init__(self):
