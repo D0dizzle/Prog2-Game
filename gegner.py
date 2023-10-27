@@ -29,10 +29,10 @@ class ISegment(ABC):
         pass
 
 class HindernisCreator:
-    def createHindernis(self, x, y, art):
-        if art == "Pilz":
+    def createHindernis(self, x, y, style):
+        if style == "Pilz":
             hindernis = HindernisPilz(x, y)
-        elif art == "Cyan":
+        elif style == "Cyan":
             hindernis = HindernisCyan(x, y)
         hindernis.__init__(x, y)
         return hindernis
@@ -55,7 +55,7 @@ class KopfSegment(ISegment):
         self.positon = self.rect
 
     def update(self):
-        self.sprite.render()
+        pass
 
     def zustand(self):
         pass
@@ -67,8 +67,6 @@ class KoerperSegment(ISegment):
         self.position = self.rect
     
     def update(self):
-        self.sprite.render()
-
+        pass
     def zustand(self):
         pass
-
