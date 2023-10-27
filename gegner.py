@@ -29,9 +29,9 @@ class ISegment(ABC):
         pass
 
 class HindernisCreator:
-    def createHindernis(self):
-        hindernis = HindernisCyan()
-        hindernis.__init__()
+    def createHindernis(self, x, y):
+        hindernis = HindernisCyan(x, y)
+        hindernis.__init__(x, y)
         return hindernis
 
 class MobilerGegner(IBaseGegnerMain):
