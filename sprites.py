@@ -40,14 +40,16 @@ class Projectile(pygame.sprite.Sprite, Sprite):
         self.rect.y -= self.vy
 
 class HindernisCyan(pygame.sprite.Sprite, Sprite):
-    def __init__(self):
+    def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
         self.image.fill(cyan)
         self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
     
     def update(self):
-        pass
+        screen.blit(self.image, self.rect)
 
 class SpriteSegmentKopf(Sprite):
     def __init__(self):
@@ -72,3 +74,5 @@ class SpriteSegmentKoerper(Sprite):
 
     def update(self):
         pass
+
+

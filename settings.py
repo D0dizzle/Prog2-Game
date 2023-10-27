@@ -19,6 +19,7 @@ seg_groesse = 25
 projectiles = []
 game_folder = os.path.dirname(__file__)
 screen = pygame.display.set_mode(size=(breite, hoehe))
+pygame.display.set_caption("Space Centipede")
 
 ## Hintergründe: ##
 #vorab PNG's laden, die transformiert werden müssen
@@ -42,7 +43,6 @@ def exit_game():
         if event.type == pygame.QUIT:
             pygame.quit()                       #Quelle für pygame.quit(): coderslegacy.com/python/python-pygame-tutorial
             sys.exit()
-
 
 #### Klassen für Settings: ####
 class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstruktor mit self.hg_dict festlegen
@@ -72,3 +72,12 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
         for i in self.dict:
             screen.blit(self.dict[i]["image"], (self.dict[i]["x"],self.dict[i]["y"]))
 
+
+class TileMap:
+    def __init__(self, filename):
+        self.data = []
+        with open(filename, 'r') as f:
+            for line in f:
+                self.data.append(line.strip())
+        self.width = len(self.data[0])
+        self.height = len(self.data)
