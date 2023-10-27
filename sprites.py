@@ -49,7 +49,15 @@ class HindernisCyan(pygame.sprite.Sprite, Sprite):
         self.rect.y = y
     
     def update(self):
-        screen.blit(self.image, self.rect)
+        pass
+
+class HindernisPilz(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Pilz1.png"))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
 class SpriteSegmentKopf(Sprite):
     def __init__(self):

@@ -30,8 +30,8 @@ while True:
     player1.update()
     player1.shoot(projectiles)
 
-    new_game.update()
-    sprites = pygame.sprite.Group(player1, projectiles)
+
+    sprites = pygame.sprite.Group(player1, projectiles, new_game.sprites)
     sprites.draw(screen)
     exit_game()
     pygame.display.update()

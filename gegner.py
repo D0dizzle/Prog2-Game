@@ -29,8 +29,11 @@ class ISegment(ABC):
         pass
 
 class HindernisCreator:
-    def createHindernis(self, x, y):
-        hindernis = HindernisCyan(x, y)
+    def createHindernis(self, x, y, art):
+        if art == "Pilz":
+            hindernis = HindernisPilz(x, y)
+        elif art == "Cyan":
+            hindernis = HindernisCyan(x, y)
         hindernis.__init__(x, y)
         return hindernis
 
