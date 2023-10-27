@@ -13,16 +13,16 @@ font = pygame.font.SysFont('Corbel',35)
   
 # rendering a text written in 
 # this font 
-text = font.render('quit' , True , weiss) 
+text = font.render('quit' , True , white) 
 
 
-Screen = pygame.display.set_mode((breite, hoehe))
+Screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Centipede")
 
 Background = pygame.image.load("/Users/justusraabe/Documents/Fortgeschrittene Programmierung/Prog2-Game/Assets/hintergrund/parallax-background.png")
 
 
-Background_scaled= pygame.transform.scale(Background,(breite, hoehe))
+Background_scaled= pygame.transform.scale(Background,(width, height))
 # Using blit to copy content from one surface to other
 Screen.blit(Background_scaled, (0, 0))
  
@@ -40,7 +40,7 @@ while (status):
               
             #if the mouse is clicked on the 
             # button the game is terminated 
-            if breite/2 <= mouse[0] <= hoehe/2+140 and hoehe/2 <= mouse[1] <= hoehe/2+40: 
+            if width/2 <= mouse[0] <= height/2+140 and height/2 <= mouse[1] <= height/2+40: 
                 exit_game() 
       
     # stores the (x,y) coordinates into 
@@ -49,15 +49,15 @@ while (status):
       
     # if mouse is hovered on a button it 
     # changes to lighter shade  
-    if breite/2 <= mouse[0] <= breite/2+140 and hoehe/2 <= mouse[1] <= hoehe/2+40: 
-        pygame.draw.rect(screen,color_light,[breite/2,hoehe/2,140,40]) 
+    if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40: 
+        pygame.draw.rect(screen,color_light,[width/2,height/2,140,40]) 
           
     else: 
-        pygame.draw.rect(screen,color_dark,[breite/2,hoehe/2,140,40]) 
+        pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40]) 
       
     # superimposing the text onto our button 
-    screen.blit(text , (breite/2+50,hoehe/2))
-    screen.blit(Background_scaled, (hoehe, breite))
+    screen.blit(text , (width/2+50,height/2))
+    screen.blit(Background_scaled, (height, width))
 
     pygame.display.flip()
 

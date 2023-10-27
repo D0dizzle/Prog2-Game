@@ -11,7 +11,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.image1 = pygame.image.load(os.path.join(game_folder,"Assets","ship","ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
         self.image = pygame.transform.scale(self.image1, (50, 50))
         self.rect = self.image.get_rect()
-        self.rect.center = (breite / 2, hoehe - hoehe / 6)
+        self.rect.center = (width / 2, height - height / 6)
         self.position = self.rect 
 
 class Projectile(pygame.sprite.Sprite):
@@ -50,7 +50,7 @@ class SegmentKopf(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
-        self.image.fill(gruen)
+        self.image.fill(green)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y 
@@ -59,7 +59,7 @@ class SegmentKoerper(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
-        self.image.fill(weiss)
+        self.image.fill(white)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y 

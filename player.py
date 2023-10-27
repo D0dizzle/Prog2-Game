@@ -32,13 +32,13 @@ class Player1(pygame.sprite.Sprite, iPlayer):
 
     def bewegung(self):  
         key_press = pygame.key.get_pressed()         
-        if (key_press[pygame.K_UP] or key_press[pygame.K_w]) and self.rect.top > 450:
+        if (key_press[pygame.K_UP] or key_press[pygame.K_w]) and self.rect.top > height*0.75:
             self.rect.y += self.vy * -1                           #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
-        if (key_press[pygame.K_DOWN] or key_press[pygame.K_s]) and self.rect.bottom < hoehe:                     # hier 5 pixel nach unten
+        if (key_press[pygame.K_DOWN] or key_press[pygame.K_s]) and self.rect.bottom < height:                     # hier 5 pixel nach unten
             self.rect.y += self.vy 
         if (key_press[pygame.K_LEFT] or key_press[pygame.K_a]) and self.rect.left > 0:                 #-5 pixel nach links
             self.rect.x += self.vx * -1
-        if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < breite:                #5 pixel nach rechts
+        if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < width:                #5 pixel nach rechts
             self.rect.x += self.vx 
     
     def shoot(self, projectiles: Projectile):

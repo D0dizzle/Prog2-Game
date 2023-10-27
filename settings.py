@@ -6,19 +6,19 @@ import sys
 from random import randint, choice
 
 #### Variablen: ####
-schwarz = (0, 0, 0)
-weiss = (255, 255, 255)
+black = (0, 0, 0)
+white = (255, 255, 255)
 cyan = (100, 100, 255)
-gruen = (0, 255, 0)
-dunkelgruen = (100, 255, 100)
-hoehe = 600
-breite = 800
+green = (0, 255, 0)
+dark_green = (100, 255, 100)
+height = 1000
+width = 800
 FPS_anzahl = 60                     #Anzahl FPS
 FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
 seg_groesse = 25
 projectiles = []
 game_folder = os.path.dirname(__file__)
-screen = pygame.display.set_mode(size=(breite, hoehe))
+screen = pygame.display.set_mode(size=(width, height))
 pygame.display.set_caption("Space Centipede")
 
 ## Hintergründe: ##
@@ -27,8 +27,8 @@ pygame.display.set_caption("Space Centipede")
 #space_stars1 = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha()
 #Dictionary mit den Hintergründen
 hg_dict = {}
-#hg_dict["background"] = pygame.transform.scale(background1, (breite, hoehe))
-#hg_dict["space-stars"] = pygame.transform.scale(space_stars1, (breite, hoehe))
+#hg_dict["background"] = pygame.transform.scale(background1, (width, height))
+#hg_dict["space-stars"] = pygame.transform.scale(space_stars1, (width, height))
 hg_dict["big-planet"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-big-planet.png")).convert_alpha()}
 hg_dict["far-planets"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-far-planets.png")).convert_alpha()}
 hg_dict["ring-planet"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()}
@@ -49,10 +49,10 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
     def __init__(self, dict):
         self.background = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert()
         self.space_stars = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha()
-        self.background = pygame.transform.scale(self.background, (breite, hoehe))
-        self.space_stars = pygame.transform.scale(self.space_stars, (breite, hoehe))
+        self.background = pygame.transform.scale(self.background, (width, height))
+        self.space_stars = pygame.transform.scale(self.space_stars, (width, height))
         self.dict = dict
-        self.max_particles = 1000
+        self.max_particles = 500
         self.current_particles = 0
         self.last_particles = 0
         self.particles = []
@@ -60,8 +60,8 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
         self.cooldown = 1
 
         for i in self.dict:
-            x = randint(50,(breite-50))
-            y = randint(50,(hoehe-200))
+            x = randint(50,(width-50))
+            y = randint(50,(height-200))
             dict[i]["x"] = x
             dict[i]["y"] = y
             #verschachtes dict: jedem background asset key wird ein weiteres dict hinzugefügt für die werte image, x und y
@@ -80,9 +80,9 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
         current_time = pygame.time.get_ticks()
         if current_time - self.last_particles > self.cooldown and self.current_particles < self.max_particles:
             self.last_particles = current_time                 
-            self.particles.append(Particles(randint(0,breite),-80, randint(2,10),choice(self.animated_background)))
+            self.particles.append(Particles(randint(0,width),-80, randint(2,10),choice(self.animated_background)))
             self.current_particles =+ 1
-            self.cooldown = randint(20,60)
+            self.cooldown = randint(0,60)
 
         for particle in self.particles:
             particle.update()
@@ -98,7 +98,7 @@ class Particles(pygame.sprite.Sprite):
     def update(self):
         screen.blit(self.image, (self.x, self.y))
         self.y += self.vy
-        if self.y  < hoehe+50:
+        if self.y  < height+50:
                 self.remove()
 
 
