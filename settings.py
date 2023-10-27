@@ -18,7 +18,6 @@ FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
 seg_groesse = 25
 projectiles = []
 
-
 game_folder = os.path.dirname(__file__)
 screen = pygame.display.set_mode(size=(breite, hoehe))
 

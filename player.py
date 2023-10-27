@@ -24,6 +24,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.position = sprite.position
         self.shoot_cd = 100
         self.last_shot = 0
+        self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
 
 
     def update(self):
@@ -49,6 +50,9 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         if key_press[pygame.K_SPACE] and current_time - self.last_shot > self.shoot_cd:
             projectiles.append(Projectile(self.rect.centerx, self.rect.centery-20, 10))
             self.last_shot = current_time
+            self.shoot_sound.play()
+            
+
 
         for projectile in projectiles:
             projectile.update()
