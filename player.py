@@ -30,7 +30,6 @@ class Player1(pygame.sprite.Sprite, iPlayer):
     def update(self):
         self.bewegung()
 
-    #Bewegungsfunktion muss scheinbar in Klasse (sonst Bäh), vielleicht "PlayerMovement"-Class?? ###
     def bewegung(self):  
         key_press = pygame.key.get_pressed()         
         if (key_press[pygame.K_UP] or key_press[pygame.K_w]) and self.rect.top > 450:
