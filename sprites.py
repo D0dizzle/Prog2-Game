@@ -5,7 +5,6 @@ import os
 from abc import ABC, abstractclassmethod
 from settings import *
 
-
 #Klasse für den Player Sprite
 class PlayerSprite(pygame.sprite.Sprite):
     def __init__(self):

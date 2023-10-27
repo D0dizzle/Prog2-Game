@@ -47,30 +47,6 @@ class MobilerGegner(IBaseGegnerMain):
     def zustand(self):
         pass
 
-"""
-class KopfSegment(ISegment):
-    def __init__(self, sprite: SpriteSegmentKopf):
-        self.sprite = sprite
-        self.rect = sprite.rect
-        self.positon = self.rect
-
-    def update(self):
-        pass
-
-    def zustand(self):
-        pass
-
-class KoerperSegment(ISegment):
-    def __init__(self, sprite: SpriteSegmentKoerper):
-        self.sprite = sprite
-        self.rect = sprite.rect
-        self.position = self.rect
-    
-    def update(self):
-        pass
-    def zustand(self):
-        pass"""
-
 class SegmentCreator:
     def createSegment(self, x, y, seg_kind):
         if seg_kind == "head":

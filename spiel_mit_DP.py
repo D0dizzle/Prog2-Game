@@ -16,16 +16,14 @@ pygame.mixer.init()
 pygame.mixer.music.load(os.path.join(game_folder,"Assets","sounds","BGM.wav"))
 pygame.mixer.music.play(-1, 0)
 pygame.mixer.music.set_volume(0.4)
-#hindernisCreator = HindernisCreator()
-#hindernis = hindernisCreator.createHindernis()
+
 player1 = Player1(spieler)
 background = Hintergrund(hg_dict)
-
 new_game = Game()
 new_game.new()
 centipede = Centipede()
 centipede.createCentipede()
-print(centipede.segments)
+
 
 while True:
 
