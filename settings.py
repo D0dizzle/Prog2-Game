@@ -21,6 +21,8 @@ game_folder = os.path.dirname(__file__)
 screen = pygame.display.set_mode(size=(width, height))
 pygame.display.set_caption("Space Centipede")
 
+
+
 ## Hintergründe: ##
 #vorab PNG's laden, die transformiert werden müssen
 #background1 =  pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert()
