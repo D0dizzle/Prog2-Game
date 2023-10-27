@@ -20,7 +20,7 @@ class Game(pygame.sprite.Sprite):
             for row, tile in enumerate(tiles):
                 if tile == '1':
                     hindernisCreator = HindernisCreator()
-                    self.sprites.append(hindernisCreator.createHindernis((row -1) * 25, (col -1) * 25))
+                    self.sprites.append(hindernisCreator.createHindernis(row * 25, (col) * 25))
 
     def update(self):
         for sprite in self.sprites:
