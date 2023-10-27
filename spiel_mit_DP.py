@@ -11,7 +11,9 @@ from player import *
 from gegner import *
 
 spieler = PlayerSprite()
-
+pygame.mixer.init()
+pygame.mixer.music.load(os.path.join(game_folder,"Assets","sounds","BGM.wav"))
+pygame.mixer.music.play(-1, 0)
 hindernisCreator = HindernisCreator()
 hindernis = hindernisCreator.createHindernis()
 player1 = Player1(spieler)
@@ -22,6 +24,7 @@ while True:
     background.render()
     player1.update()
     player1.shoot(projectiles)
+
 
 
     sprites = pygame.sprite.Group(player1, projectiles, hindernis)
