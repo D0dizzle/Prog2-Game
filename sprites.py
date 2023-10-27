@@ -41,7 +41,7 @@ class HindernisCyan(pygame.sprite.Sprite):
 class HindernisPilz(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Pilz1.png"))
+        self.image = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Satellite.png"))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
