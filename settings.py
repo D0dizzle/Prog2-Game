@@ -39,6 +39,7 @@ hg_dict["ring-planet"] = {"image" : pygame.image.load(os.path.join(game_folder,"
 img_dict = {}
 img_dict["bullet"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
 img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Satellite.png"))
+img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(25,25))
 img_dict["TME"] = os.path.join(game_folder, "Assets", "TileMapEinfach.txt")
 
 player_img_dict = {}
