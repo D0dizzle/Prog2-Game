@@ -4,15 +4,14 @@ import pygame
 import os
 from abc import ABC, abstractclassmethod
 from settings import *
-
+"""
 #Klasse für den Player Sprite
 class PlayerSprite(pygame.sprite.Sprite):
-    def __init__(self):
-        self.image1 = pygame.image.load(os.path.join(game_folder,"Assets","ship","ship-1.png")) #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
-        self.image = pygame.transform.scale(self.image1, (50, 50))
+    def __init__(self, dict):
+        self.dict = dict
         self.rect = self.image.get_rect()
         self.rect.center = (width / 2, height - height / 6)
-        self.position = self.rect 
+        self.position = self.rect """
 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, vy):

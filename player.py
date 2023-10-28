@@ -21,32 +21,67 @@ class ProjectileCreator:
         return basic_projectile
 
 class Player1(pygame.sprite.Sprite, iPlayer):
-    def __init__(self, sprite: PlayerSprite):
+    def __init__(self, dict):
         super().__init__()
-        self.sprite = sprite
-        self.image = self.sprite.image
+        self.dict = dict
+        self.image = self.dict["player0"]
         self.vx = 5
         self.vy = 5
-        self.rect = self.sprite.rect
-        self.position = sprite.position
+        self.ax = 0
+        self.ay = 0
+        self.rect = self.image.get_rect()
+        self.rect.center = (width / 2, height - height / 6)
         self.shoot_cd = 200
         self.last_shot = 0
         self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav")) # Quelle: https://opengameart.org/content/4-projectile-launches
-
+        self.timer = 0
+        self.dir = 0
+        self.anim_rate = 4
+        self.act_frame = 0
 
     def update(self):
-        self.bewegung()
+        self.bewegung() 
+        #Bewegungsgleichung
+        self.ax += self.vx * player_friction
+        self.ay += self.vy * player_friction
+        self.vx += self.ax
+        self.vy += self.ay
+        self.rect.x += self.vx + 0.5 * self.ax
+        self.rect.y += self.vy + 0.5 * self.ay
+
+
+        if self.timer < 5 and self.timer > -5:
+            if self.dir < -1.25:
+                self.image = self.dict["player"+str(self.timer)]
+                self.timer -= 1
+            elif self.dir > 1.25:
+                self.image = self.dict["player"+str(self.timer)]
+                self.timer += 1
+        elif self.dir < 1.25 and self.dir > -1.25:
+            self.timer = 0
+            self.image = self.dict["player"+str(self.timer)]
 
     def bewegung(self):  
+        self.ax = 0
+        self.ay = 0
+        self.dir = 0
         key_press = pygame.key.get_pressed()         
         if (key_press[pygame.K_UP] or key_press[pygame.K_w]) and self.rect.top > height*0.75:
-            self.rect.y += self.vy * -1                           #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
+            self.ay = -player_acc                          #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
         if (key_press[pygame.K_DOWN] or key_press[pygame.K_s]) and self.rect.bottom < height:                     # hier 5 pixel nach unten
-            self.rect.y += self.vy 
+            self.ay = player_acc
         if (key_press[pygame.K_LEFT] or key_press[pygame.K_a]) and self.rect.left > 0:                 #-5 pixel nach links
-            self.rect.x += self.vx * -1
+            self.ax = -player_acc
+            self.dir = -player_acc
         if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < width:                #5 pixel nach rechts
-            self.rect.x += self.vx 
+            self.ax = player_acc
+            self.dir = player_acc
+        if (key_press[pygame.K_RIGHT] and key_press[pygame.K_LEFT]) or (key_press[pygame.K_a] and key_press[pygame.K_s]):
+            self.ax = 0
+            self.dir = 0
+        if self.ax != 0 and self.ay != 0:
+            self.ax *= 0.7071
+            self.ay *= 0.7071
 
 
 
@@ -58,7 +93,6 @@ class Player1(pygame.sprite.Sprite, iPlayer):
 
 
 
-            
     
     def shoot(self, projectiles: Projectile):
         projectileCreator = ProjectileCreator()

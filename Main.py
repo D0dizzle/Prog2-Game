@@ -7,13 +7,13 @@ from sprites import *
 from player import *
 from enemy import *
 
-spieler = PlayerSprite()
+
 pygame.mixer.init()
 pygame.mixer.music.load(os.path.join(game_folder,"Assets","sounds","BGM.wav"))
 pygame.mixer.music.play(-1, 0)
 pygame.mixer.music.set_volume(0.4)
 
-player1 = Player1(spieler)
+player1 = Player1(player_img_dict)
 background = Hintergrund(hg_dict)
 new_map = ObstacleOnScreen()
 new_map.new()

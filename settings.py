@@ -11,11 +11,14 @@ white = (255, 255, 255)
 cyan = (100, 100, 255)
 green = (0, 255, 0)
 dark_green = (100, 255, 100)
-height = 1000
+height = 700
 width = 800
 FPS_anzahl = 60                     #Anzahl FPS
 FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
 seg_groesse = 25
+player_size = 50
+player_acc = 1.5 * 60 / FPS_anzahl
+player_friction = -0.15
 projectiles = []
 game_folder = os.path.dirname(__file__)
 screen = pygame.display.set_mode(size=(width, height))
@@ -46,18 +49,18 @@ img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "e
 img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
 img_dict["TME"] = os.path.join(game_folder, "Assets", "TileMapEinfach.txt")
 
-player_img_dict = {}
-
-
-
-
-
-
-
-
-
-
-
+player_img_dict = {}    #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
+player_img_dict["player-5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-5.png")),(player_size, player_size))
+player_img_dict["player-4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-4.png")),(player_size, player_size))
+player_img_dict["player-3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-3.png")),(player_size, player_size))
+player_img_dict["player-2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-2.png")),(player_size, player_size))
+player_img_dict["player-1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-1.png")),(player_size, player_size))
+player_img_dict["player0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship0.png")),(player_size, player_size))
+player_img_dict["player1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship1.png")),(player_size, player_size))
+player_img_dict["player2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship2.png")),(player_size, player_size))
+player_img_dict["player3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship3.png")),(player_size, player_size))
+player_img_dict["player4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship4.png")),(player_size, player_size))
+player_img_dict["player5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship5.png")),(player_size, player_size))
 
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
