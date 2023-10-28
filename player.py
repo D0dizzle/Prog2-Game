@@ -47,6 +47,18 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             self.rect.x += self.vx * -1
         if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < width:                #5 pixel nach rechts
             self.rect.x += self.vx 
+
+
+
+
+
+
+
+
+
+
+
+            
     
     def shoot(self, projectiles: Projectile):
         projectileCreator = ProjectileCreator()

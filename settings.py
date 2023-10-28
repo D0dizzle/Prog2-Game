@@ -23,6 +23,10 @@ pygame.display.set_caption("Space Centipede")
 
 
 
+
+
+
+
 ## Hintergründe: ##
 #vorab PNG's laden, die transformiert werden müssen
 #background1 =  pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert()
@@ -43,6 +47,17 @@ img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(gam
 img_dict["TME"] = os.path.join(game_folder, "Assets", "TileMapEinfach.txt")
 
 player_img_dict = {}
+
+
+
+
+
+
+
+
+
+
+
 
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
