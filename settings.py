@@ -137,11 +137,11 @@ class TileMap:
 
 
 class Collider():
-    def collideObstacle(self, spritegroup1, spritegroup2):
-        for sprite2 in spritegroup2:
-            for sprite1 in spritegroup1:
-                if sprite2.rect.collidelist(spritegroup1) > -1:
-                    sprite2.status("hit")
-                    spritegroup1.remove(sprite1)
+    def collideObstacle(self, projectiles, enemysprites):
+        for enemy in enemysprites:
+            for projectile in projectiles:
+                if enemy.rect.collidelist(projectiles) > -1:
+                    enemy.status("hit")
+                    projectiles.remove(projectile)
 
 collider = Collider()
