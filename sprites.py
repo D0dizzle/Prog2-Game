@@ -51,9 +51,10 @@ class ObstacleUfo(pygame.sprite.Sprite):
     def status(self, status_change: str):
         if status_change == "hit":
             self.hp -= 1
+            if self.hp <= 0:
+                self.state = "dead"
             self.image = ufo_animation_dict["ufo"+ str(self.hp)]
-        if self.hp == 0:
-            self.state = "dead"
+        
 
 class SegmentKopf(pygame.sprite.Sprite):
     def __init__(self, x, y):

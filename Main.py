@@ -9,7 +9,7 @@ from enemy import *
 from game import *
 
 
-pygame.mixer.init()
+pygame.mixer.init() 
 pygame.mixer.music.load(os.path.join(game_folder,"Assets","sounds","BGM.wav"))
 pygame.mixer.music.play(-1, 0)
 pygame.mixer.music.set_volume(0.4)
