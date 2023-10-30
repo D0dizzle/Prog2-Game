@@ -121,7 +121,6 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
 
         for particle in self.particles:
             particle.update()
-            print(self.current_particles)
 
 class Particles(pygame.sprite.Sprite):
     def __init__(self, x, y, vy, img):
@@ -155,5 +154,18 @@ class Collider():
                 if enemy.rect.collidelist(projectiles) > -1:
                     enemy.status("hit")
                     projectiles.remove(projectile)
+
+    def collideEnemy(self, projectiles, enemy):
+        for projectile in projectiles:
+            if enemy.rect.collide(projectile):
+                enemy.status("hit")
+                projectiles.remove(projectile)
+
+    def collideWithWall(self, centipede, obstacles):
+        for segment in centipede:
+            for obstacle in obstacles:
+                if segment.rect.colliderect(obstacle.rect):
+                    print(segment)
+                    segment.status("collideWithWall")
 
 collider = Collider()

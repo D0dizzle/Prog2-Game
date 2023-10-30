@@ -51,10 +51,12 @@ class ObstacleUfo(pygame.sprite.Sprite):
     def status(self, status_change: str):
         if status_change == "hit":
             self.hp -= 1
+            if self.hp == -1:
+                self.hp = 0
             self.image = ufo_animation_dict["ufo"+ str(self.hp)]
         if self.hp == 0:
             self.state = "dead"
-
+"""
 class SegmentKopf(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -64,6 +66,10 @@ class SegmentKopf(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y 
 
+    def status(self, status_change: str):
+        if status_change == "hit":
+            obstacleCreator = ObstacleCreator()
+
 class SegmentKoerper(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -71,4 +77,4 @@ class SegmentKoerper(pygame.sprite.Sprite):
         self.image.fill(white)
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y 
+        self.rect.y = y """
