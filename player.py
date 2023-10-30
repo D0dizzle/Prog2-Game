@@ -66,12 +66,12 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         key_press = pygame.key.get_pressed()         
         if (key_press[pygame.K_UP] or key_press[pygame.K_w]) and self.rect.top > height*0.75:
             self.ay = -player_acc                          #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
-        if (key_press[pygame.K_DOWN] or key_press[pygame.K_s]) and self.rect.bottom < height:                     # hier 5 pixel nach unten
+        if (key_press[pygame.K_DOWN] or key_press[pygame.K_s]) and self.rect.bottom < height -10:                     # hier 5 pixel nach unten
             self.ay = player_acc
-        if (key_press[pygame.K_LEFT] or key_press[pygame.K_a]) and self.rect.left > 0:                 #-5 pixel nach links
+        if (key_press[pygame.K_LEFT] or key_press[pygame.K_a]) and self.rect.left > 10:                 #-5 pixel nach links
             self.ax = -player_acc
             self.dir = -player_acc
-        if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < width:                #5 pixel nach rechts
+        if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < width -10:                #5 pixel nach rechts
             self.ax = player_acc
             self.dir = player_acc
         if (key_press[pygame.K_RIGHT] and key_press[pygame.K_LEFT]) or (key_press[pygame.K_a] and key_press[pygame.K_s]):

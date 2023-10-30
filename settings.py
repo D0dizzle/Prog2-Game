@@ -59,6 +59,9 @@ player_img_dict["player3"] = pygame.transform.scale(pygame.image.load(os.path.jo
 player_img_dict["player4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship4.png")),(player_size, player_size))
 player_img_dict["player5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship5.png")),(player_size, player_size))
 
+
+ufo_img_dict = {}
+ufo_img_dict["ufo4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
 def exit_game():

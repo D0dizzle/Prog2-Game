@@ -37,7 +37,7 @@ class ObstacleCyan(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-class ObstacleSatellite(pygame.sprite.Sprite):
+class ObstacleUfo(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = img_dict["ufo_gelb"]
