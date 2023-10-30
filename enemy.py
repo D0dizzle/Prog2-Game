@@ -31,7 +31,7 @@ class ISegment(ABC):
 class ObstacleCreator:
     def createObstacle(self, x, y, style):
         if style == "Pilz":
-            hindernis = ObstacleSatellite(x, y)
+            hindernis = ObstacleUfo(x, y)
         elif style == "Cyan":
             hindernis = ObstacleCyan(x, y)
         hindernis.__init__(x, y)
