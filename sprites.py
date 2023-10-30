@@ -77,4 +77,4 @@ class SegmentKoerper(pygame.sprite.Sprite):
         self.image.fill(white)
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y """
+        self.rect.y = y 
