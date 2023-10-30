@@ -70,6 +70,7 @@ ufo_animation_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.jo
 ufo_animation_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau2.png")),(seg_groesse,seg_groesse))
 ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau3.png")),(seg_groesse,seg_groesse))
 ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+#ufo_animation_dict["ufo-1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
 
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
@@ -149,8 +150,8 @@ class TileMap:
 
 class Collider():
     def collideObstacle(self, projectiles, enemysprites):
-        for enemy in enemysprites:
-            for projectile in projectiles:
+        for projectile in projectiles:
+            for enemy in enemysprites:
                 if enemy.rect.collidelist(projectiles) > -1:
                     enemy.status("hit")
                     projectiles.remove(projectile)
