@@ -61,7 +61,11 @@ player_img_dict["player5"] = pygame.transform.scale(pygame.image.load(os.path.jo
 
 
 ufo_img_dict = {}
-ufo_img_dict["ufo4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_gelb.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_lila.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_rot.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
 def exit_game():

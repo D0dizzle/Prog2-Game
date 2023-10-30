@@ -40,16 +40,18 @@ class ObstacleCyan(pygame.sprite.Sprite):
 class ObstacleUfo(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = img_dict["ufo_gelb"]
+        self.hp = 4        
+        self.image = ufo_img_dict["ufo"+ str(self.hp)]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.hp = 4
+
         self.state = "alive"
 
     def status(self, status_change: str):
         if status_change == "hit":
             self.hp -= 1
+            self.image = ufo_img_dict["ufo"+ str(self.hp)]
         if self.hp == 0:
             self.state = "dead"
 
