@@ -30,7 +30,6 @@ while True:
     collider.collideObstacle(projectiles, new_map.sprites)
     collider.collideObstacle(projectiles, centipede.segments)
     collider.collideWithWall(centipede.segments, new_map.sprites)
-    collider.collideObstacle(projectiles, new_map.sprites) 
     new_map.delete()
     centipede.update()
     sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)
