@@ -53,6 +53,7 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
     def delete(self):
         for sprite in self.sprites:
             if sprite.state == "dead":
+                print("sprite del")
                 self.sprites.remove(sprite)
 
 

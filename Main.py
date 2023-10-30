@@ -20,13 +20,14 @@ new_map = ObstacleOnScreen()
 new_map.new()
 centipede = Centipede()
 centipede.createCentipede()
+collider = Collider()
 
 while True:
 
     background.render()
     player1.update()
     player1.shoot(projectiles)
-    collider.collideObstacle(projectiles, new_map.sprites)
+    collider.collideObstacle(projectiles, new_map.sprites) 
     new_map.delete()
     sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)
     sprites.draw(screen)
