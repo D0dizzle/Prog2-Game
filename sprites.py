@@ -49,7 +49,6 @@ class ObstacleUfo(pygame.sprite.Sprite):
         self.state = "alive"
 
     def status(self, status_change: str):
-        print(self.hp)
         if status_change == "hit":
             self.hp -= 1
             if self.hp <= 0:

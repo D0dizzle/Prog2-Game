@@ -148,10 +148,22 @@ class TileMap:
         self.height = len(self.data)
 
 
-class Collider():
+"""class Collider():
     def collideObstacle(self, projectiles, enemysprites):
         for projectile in projectiles:
             for enemy in enemysprites:
                 if enemy.rect.collidelist(projectiles) > -1:
                     enemy.status("hit")
-                    projectiles.remove(projectile)
+                    projectiles.remove(projectile)"""
+
+class Collider():
+
+    def collideObstacle(self, projectiles, enemysprites):
+        for enemy in enemysprites:
+            index = enemy.rect.collidelist(projectiles)
+            if index > -1:
+                enemy.status("hit")
+                projectiles.pop(index)
+
+    def collideAsteroid():
+        pass
