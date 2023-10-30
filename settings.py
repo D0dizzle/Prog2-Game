@@ -32,12 +32,9 @@ pygame.display.set_caption("Space Centipede")
 
 ## Hintergründe: ##
 #vorab PNG's laden, die transformiert werden müssen
-#background1 =  pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert()
-#space_stars1 = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha()
+
 #Dictionary mit den Hintergründen
 hg_dict = {}
-#hg_dict["background"] = pygame.transform.scale(background1, (width, height))
-#hg_dict["space-stars"] = pygame.transform.scale(space_stars1, (width, height))
 hg_dict["big-planet"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-big-planet.png")).convert_alpha()}
 hg_dict["far-planets"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-far-planets.png")).convert_alpha()}
 hg_dict["ring-planet"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-ring-planet.png")).convert_alpha()}
@@ -78,7 +75,7 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
         self.background = pygame.transform.scale(self.background, (width, height))
         self.space_stars = pygame.transform.scale(self.space_stars, (width, height))
         self.dict = dict
-        self.max_particles = 500
+        self.max_particles = 50
         self.current_particles = 0
         self.last_particles = 0
         self.particles = []
@@ -107,11 +104,12 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
         if current_time - self.last_particles > self.cooldown and self.current_particles < self.max_particles:
             self.last_particles = current_time                 
             self.particles.append(Particles(randint(0,width),-80, randint(2,10),choice(self.animated_background)))
-            self.current_particles =+ 1
+            self.current_particles += 1
             self.cooldown = randint(0,60)
 
         for particle in self.particles:
             particle.update()
+            print(self.current_particles)
 
 class Particles(pygame.sprite.Sprite):
     def __init__(self, x, y, vy, img):
@@ -124,8 +122,8 @@ class Particles(pygame.sprite.Sprite):
     def update(self):
         screen.blit(self.image, (self.x, self.y))
         self.y += self.vy
-        if self.y  < height+50:
-                self.remove()
+        if self.y  > height+50:
+                self.y = -10
 
 
 class TileMap:
