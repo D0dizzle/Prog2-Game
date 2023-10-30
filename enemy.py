@@ -50,6 +50,12 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
                     obstacleCreator = ObstacleCreator()
                     self.sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Pilz"))
 
+    def delete(self):
+        for sprite in self.sprites:
+            if sprite.state == "dead":
+                self.sprites.remove(sprite)
+
+
 class MobilerGegner(IBaseGegnerMain):
     def __init__(self):
         pass
@@ -59,6 +65,12 @@ class MobilerGegner(IBaseGegnerMain):
 
     def zustand(self):
         pass
+
+class CentipedeList:
+    def __init__(self, centi_length):
+        self,segments = []
+        self.length = centi_length
+
 
 class SegmentCreator:
     def createSegment(self, x, y, seg_kind):

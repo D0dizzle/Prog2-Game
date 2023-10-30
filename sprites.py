@@ -44,6 +44,14 @@ class ObstacleSatellite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.hp = 4
+        self.state = "alive"
+
+    def status(self, status_change: str):
+        if status_change == "hit":
+            self.hp -= 1
+        if self.hp == 0:
+            self.state = "dead"
 
 class SegmentKopf(pygame.sprite.Sprite):
     def __init__(self, x, y):

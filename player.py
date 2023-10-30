@@ -25,8 +25,8 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         super().__init__()
         self.dict = dict
         self.image = self.dict["player0"]
-        self.vx = 5
-        self.vy = 5
+        self.vx = 3
+        self.vy = 3
         self.ax = 0
         self.ay = 0
         self.rect = self.image.get_rect()
@@ -41,6 +41,16 @@ class Player1(pygame.sprite.Sprite, iPlayer):
 
     def update(self):
         self.bewegung() 
+        if self.timer < 5 and self.timer > -5:
+            if self.dir < -1.3:
+                self.image = self.dict["player"+str(self.timer)]
+                self.timer -= 1
+            elif self.dir > 1.3:
+                self.image = self.dict["player"+str(self.timer)]
+                self.timer += 1
+        elif self.dir < 1.3 and self.dir > -1.3:
+            self.timer = 0
+            self.image = self.dict["player"+str(self.timer)]
         #Bewegungsgleichung
         self.ax += self.vx * player_friction
         self.ay += self.vy * player_friction
@@ -48,19 +58,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.vy += self.ay
         self.rect.x += self.vx + 0.5 * self.ax
         self.rect.y += self.vy + 0.5 * self.ay
-
-
-        if self.timer < 5 and self.timer > -5:
-            if self.dir < -1.25:
-                self.image = self.dict["player"+str(self.timer)]
-                self.timer -= 1
-            elif self.dir > 1.25:
-                self.image = self.dict["player"+str(self.timer)]
-                self.timer += 1
-        elif self.dir < 1.25 and self.dir > -1.25:
-            self.timer = 0
-            self.image = self.dict["player"+str(self.timer)]
-
+        
     def bewegung(self):  
         self.ax = 0
         self.ay = 0
@@ -82,17 +80,6 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         if self.ax != 0 and self.ay != 0:
             self.ax *= 0.7071
             self.ay *= 0.7071
-
-
-
-
-
-
-
-
-
-
-
     
     def shoot(self, projectiles: Projectile):
         projectileCreator = ProjectileCreator()

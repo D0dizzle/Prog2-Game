@@ -18,7 +18,7 @@ FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
 seg_groesse = 25
 player_size = 50
 player_acc = 1.5 * 60 / FPS_anzahl
-player_friction = -0.15
+player_friction = -0.13
 projectiles = []
 game_folder = os.path.dirname(__file__)
 screen = pygame.display.set_mode(size=(width, height))
@@ -136,3 +136,14 @@ class TileMap:
                 self.data.append(line.strip())
         self.width = len(self.data[0])
         self.height = len(self.data)
+
+
+class Collider():
+    def collideObstacle(self, spritegroup1, spritegroup2):
+        for sprite2 in spritegroup2:
+            for sprite1 in spritegroup1:
+                if sprite2.rect.collidelist(spritegroup1) > -1:
+                    sprite2.status("hit")
+                    spritegroup1.remove(sprite1)
+
+collider = Collider()
