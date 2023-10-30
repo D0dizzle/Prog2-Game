@@ -122,24 +122,23 @@ class SegmentKopf(pygame.sprite.Sprite, Observable):
         if self.dir == "down":
             self.rect.y += 1
             self.counter += 1
-            if self.counter > 25 or self.rect.left == 0:
-                self.dir = "right"
-                self.notify()
-                self.counter = 0
-            elif self.counter > 25 and self.rect.right == width:
-                self.dir = "left"
-                self.notify()
-                self.counter = 0
         elif self.dir == "left":
             self.rect.x -= 2
         elif self.dir == "right":
             self.rect.x += 2
     
-    def border(self):
+    def direction(self):
         if self.dir == "left" and self.rect.left == 0:
             self.dir = "down"
         elif self.dir == "right" and self.rect.right == width:
             self.dir = "down"
+        elif self.dir == "down" and self.counter > 25 and self.rect.left > 0:
+            self.dir = "left"
+            self.counter = 0
+        elif self.dir == "down" and self.counter > 25 and self.rect.right < width:
+            self.dir = "right"
+            self.counter = 0
+
     
 class SegmentKoerper(pygame.sprite.Sprite, Observer):
     def __init__(self, x, y):
@@ -169,7 +168,7 @@ class SegmentKoerper(pygame.sprite.Sprite, Observer):
         elif self.dir == "right":
             self.rect += 2
     
-    def border(self):
+    def direction(self):
         pass
 
 
@@ -209,7 +208,7 @@ class Centipede:
 
     def update(self):
         for segment in self.segments:
-            segment.border()
+            segment.direction()
             segment.move()
 
 

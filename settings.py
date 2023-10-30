@@ -168,17 +168,16 @@ class Collider():
     def collideAsteroid():
         pass
 
-    def collideEnemy(self, projectiles, enemy):
+    """def collideEnemy(self, projectiles, enemy):
         for projectile in projectiles:
             if enemy.rect.collide(projectile):
                 enemy.status("hit")
-                projectiles.remove(projectile)
+                projectiles.remove(projectile)"""
 
     def collideWithWall(self, centipede, obstacles):
         for segment in centipede:
-            for obstacle in obstacles:
-                if segment.rect.colliderect(obstacle.rect):
-                    print(segment)
-                    segment.status("collideWithWall")
+            if segment.rect.collidelist(obstacles) > -1:
+                print(segment)
+                segment.status("collideWithWall")
 
 collider = Collider()
