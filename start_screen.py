@@ -1,139 +1,64 @@
 import pygame
 import sys
 from settings import *
+import subprocess
+
+# Initialisieren von Pygame
 pygame.init()
 
-# light shade of the button 
-color_light = (170,170,170) 
-  
-# dark shade of the button 
-color_dark = (100,100,100)
+# Definieren von Farbe der Buttons
 
-font = pygame.font.SysFont('Corbel',35) 
-  
-# rendering a text written in 
-# this font 
-text = font.render('quit' , True , white) 
+color_light = (170, 170, 170)
 
+# Schriftart und Text für die Buttons
+font = pygame.font.SysFont('Corbel', 35)
 
+# Bildschirmgröße und Bildschirmerstellung
 Screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Centipede")
+pygame.display.set_caption("Centipede") # kann angepasst werden, vielleicht "Centipede Hauptmenü"?
 
-Background = pygame.image.load("/Users/justusraabe/Documents/Fortgeschrittene Programmierung/Prog2-Game/Assets/hintergrund/parallax-background.png")
+# Hintergrundbild laden und Daten aus settings anwenden
+Background = pygame.image.load("Assets/hintergrund/parallax-background.png")
+Background_scaled = pygame.transform.scale(Background, (width, height))
 
 
-Background_scaled= pygame.transform.scale(Background,(width, height))
-# Using blit to copy content from one surface to other
-Screen.blit(Background_scaled, (0, 0))
- 
-# paint screen one time
-pygame.display.flip()
+# Rechtecke und Texte für die Buttons, wenn wir noch weitere hinzufügen möchten, muss die ausrichtung beachtet werden.
+buttons = [
+    {'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Start'}, # beide hinteren Werte für die Größe
+    {'rect': pygame.Rect(300, 500, 200, 50), 'text': 'Button 2'}, # Butto 2 durch Wunschnamen ersetzen
+    {'rect': pygame.Rect(550, 500, 200, 50), 'text': 'Button 3'}
+]
+
 status = True
-while (status):
- 
-  # iterate over the list of Event objects
-  # that was returned by pygame.event.get() method.
-    for ev in pygame.event.get():  
+while status:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            status = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for button in buttons:
+                if button['rect'].collidepoint(event.pos):
+                    if button['text'] == 'Button 1':
+                        subprocess.Popen(["python", "Main.py"]) # startet Main.py bzw. das Spiel
+                    elif button['text'] == 'Button 2':
+                        subprocess.Popen(["python", "py"]) # gewünscheten Dateiname eintragen
+                    elif button['text'] == 'Button 3':
+                        subprocess.Popen(["python", "py"]) # gewünschten Dateiname eintragen
 
-        #checks if a mouse is clicked 
-        if ev.type == pygame.MOUSEBUTTONDOWN: 
-              
-            #if the mouse is clicked on the 
-            # button the game is terminated 
-            if width/2 <= mouse[0] <= height/2+140 and height/2 <= mouse[1] <= height/2+40: 
-                exit_game() 
-      
-    # stores the (x,y) coordinates into 
-    # the variable as a tuple 
-    mouse = pygame.mouse.get_pos() 
-      
-    # if mouse is hovered on a button it 
-    # changes to lighter shade  
-    if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40: 
-        pygame.draw.rect(screen,color_light,[width/2,height/2,140,40]) 
-          
-    else: 
-        pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40]) 
-      
-    # superimposing the text onto our button 
-    screen.blit(text , (width/2+50,height/2))
-    screen.blit(Background_scaled, (height, width))
+    # Hintergrundbild anzeigen
+    Screen.blit(Background_scaled, (0, 0))
 
+    # Buttons erstellen und Text in den Buttons zeichnen
+    for button in buttons:
+        rect = pygame.Rect(button['rect'])
+        pygame.draw.rect(Screen, color_light, rect, border_radius=10)
+        pygame.draw.rect(Screen, white, rect, width=2, border_radius=10)
+        button_text = font.render(button['text'], True, white)
+        text_rect = button_text.get_rect(center=rect.center)
+        Screen.blit(button_text, text_rect)
+
+    # Aktualisieren des Bildschirms
     pygame.display.flip()
 
-
-
-
-
-import pygame 
-import sys
-
-
-# initializing the constructor 
-pygame.init() 
-
-# screen resolution 
-res = (720,720) 
-
-# opens up a window 
-screen = pygame.display.set_mode(res) 
-
-# white color 
-color = (255,255,255) 
-
-# light shade of the button 
-color_light = (170,170,170) 
-
-# dark shade of the button 
-color_dark = (100,100,100) 
-
-# stores the width of the 
-# screen into a variable 
-width = screen.get_width() 
-
-# stores the height of the 
-# screen into a variable 
-height = screen.get_height() 
-
-# defining a font 
-smallfont = pygame.font.SysFont('Corbel',35) 
-
-# rendering a text written in 
-# this font 
-text = smallfont.render('quit' , True , color) 
-
-while True: 
-	
-	for ev in pygame.event.get(): 
-
-		if ev.type == pygame.QUIT: 
-			pygame.quit() 
-			
-		#checks if a mouse is clicked 
-		if ev.type == pygame.MOUSEBUTTONDOWN: 
-			
-			#if the mouse is clicked on the 
-			# button the game is terminated 
-			if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40: 
-				pygame.quit() 
-				
-	# fills the screen with a color 
-	screen.fill((60,25,60)) 
-	
-	# stores the (x,y) coordinates into 
-	# the variable as a tuple 
-	mouse = pygame.mouse.get_pos() 
-	
-	# if mouse is hovered on a button it 
-	# changes to lighter shade 
-	if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40: 
-		pygame.draw.rect(screen,color_light,[width/2,height/2,140,40]) 
-		
-	else: 
-		pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40]) 
-	
-	# superimposing the text onto our button 
-	screen.blit(text , (width/2+50,height/2)) 
-	
-	# updates the frames of the game 
-	pygame.display.update() 
+# Beenden
+pygame.quit()
+sys.exit()
