@@ -9,7 +9,7 @@ from enemy import *
 from game import *
 
 
-pygame.mixer.init()
+pygame.mixer.init() 
 pygame.mixer.music.load(os.path.join(game_folder,"Assets","sounds","BGM.wav"))
 pygame.mixer.music.play(-1, 0)
 pygame.mixer.music.set_volume(0.4)
@@ -18,8 +18,9 @@ player1 = Player1(player_img_dict)
 background = Hintergrund(hg_dict)
 new_map = ObstacleOnScreen()
 new_map.new()
-centipede = Centipede()
+centipede = Centipede(10)
 centipede.createCentipede()
+collider = Collider()
 
 while True:
 
@@ -27,7 +28,10 @@ while True:
     player1.update()
     player1.shoot(projectiles)
     collider.collideObstacle(projectiles, new_map.sprites)
+    collider.collideObstacle(projectiles, centipede.segments)
+    collider.collideWithWall(centipede.segments, new_map.sprites)
     new_map.delete()
+    centipede.update()
     sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)
     sprites.draw(screen)
     exit_game()

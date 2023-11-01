@@ -4,6 +4,7 @@ import pygame
 import os
 from abc import ABC, abstractclassmethod
 from settings import *
+from random import choice
 """
 #Klasse für den Player Sprite
 class PlayerSprite(pygame.sprite.Sprite):
@@ -37,23 +38,26 @@ class ObstacleCyan(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-class ObstacleSatellite(pygame.sprite.Sprite):
+class ObstacleUfo(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = img_dict["ufo_gelb"]
+        self.hp = 4        
+        self.image = choice(list(ufo_img_dict.values()))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.hp = 4
         self.state = "alive"
 
     def status(self, status_change: str):
         if status_change == "hit":
             self.hp -= 1
+            if self.hp == -1:
+                self.hp = 0
+            self.image = ufo_animation_dict["ufo"+ str(self.hp)]
         if self.hp == 0:
             self.state = "dead"
 
-class SegmentKopf(pygame.sprite.Sprite):
+"""class SegmentKopf(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
@@ -62,6 +66,10 @@ class SegmentKopf(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y 
 
+    def status(self, status_change: str):
+        if status_change == "hit":
+            obstacleCreator = ObstacleCreator()
+
 class SegmentKoerper(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -69,4 +77,4 @@ class SegmentKoerper(pygame.sprite.Sprite):
         self.image.fill(white)
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y 
+        self.rect.y = y """

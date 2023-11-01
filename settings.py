@@ -59,6 +59,19 @@ player_img_dict["player3"] = pygame.transform.scale(pygame.image.load(os.path.jo
 player_img_dict["player4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship4.png")),(player_size, player_size))
 player_img_dict["player5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship5.png")),(player_size, player_size))
 
+
+ufo_img_dict = {}
+ufo_img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_gelb.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_lila"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_lila.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_rot"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_rot.png")),(seg_groesse,seg_groesse))
+
+ufo_animation_dict = {}
+ufo_animation_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau2.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau3.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+#ufo_animation_dict["ufo-1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
 def exit_game():
@@ -109,7 +122,7 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
 
         for particle in self.particles:
             particle.update()
-            print(self.current_particles)
+        print(self.current_particles)
 
 class Particles(pygame.sprite.Sprite):
     def __init__(self, x, y, vy, img):
@@ -136,12 +149,36 @@ class TileMap:
         self.height = len(self.data)
 
 
-class Collider():
+"""class Collider():
     def collideObstacle(self, projectiles, enemysprites):
-        for enemy in enemysprites:
-            for projectile in projectiles:
+        for projectile in projectiles:
+            for enemy in enemysprites:
                 if enemy.rect.collidelist(projectiles) > -1:
                     enemy.status("hit")
-                    projectiles.remove(projectile)
+                    projectiles.remove(projectile)"""
+
+class Collider():
+
+    def collideObstacle(self, projectiles, enemysprites):
+        for enemy in enemysprites:
+            index = enemy.rect.collidelist(projectiles)
+            if index > -1:
+                enemy.status("hit")
+                projectiles.pop(index)
+
+    def collideAsteroid():
+        pass
+
+    """def collideEnemy(self, projectiles, enemy):
+        for projectile in projectiles:
+            if enemy.rect.collide(projectile):
+                enemy.status("hit")
+                projectiles.remove(projectile)"""
+
+    def collideWithWall(self, centipede, obstacles):
+        for segment in centipede:
+            if segment.rect.collidelist(obstacles) > -1:
+                print(segment)
+                segment.status("collideWithWall")
 
 collider = Collider()

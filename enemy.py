@@ -9,7 +9,7 @@ from abc import ABC, abstractclassmethod
 from settings import *
 from sprites import *
 
-#Interface für Gegner Main-Klassen:
+##### Interfaces für verschiedene Sachen #####
 class IBaseGegnerMain(ABC):
     @abstractclassmethod
     def update(self):
@@ -28,10 +28,32 @@ class ISegment(ABC):
     def zustand(self):
         pass
 
+class Observer(ABC):
+    @abstractclassmethod
+    def notification():
+        pass
+
+class Observable:
+    def __init__(self):
+        self.observers = []
+
+    def register(self, follower):
+        if follower not in self.observers:
+            self.observers.append(follower)
+
+    def unregister(self, follower):
+        if follower in self.observers:
+            self.observers.remove(follower)
+
+    def notify(self):
+        for follower in self.observers:
+            follower.notification(self)       
+###########################################################
+
 class ObstacleCreator:
     def createObstacle(self, x, y, style):
         if style == "Pilz":
-            hindernis = ObstacleSatellite(x, y)
+            hindernis = ObstacleUfo(x, y)
         elif style == "Cyan":
             hindernis = ObstacleCyan(x, y)
         hindernis.__init__(x, y)
@@ -66,11 +88,95 @@ class MobilerGegner(IBaseGegnerMain):
     def zustand(self):
         pass
 
-class CentipedeList:
-    def __init__(self, centi_length):
-        self,segments = []
-        self.length = centi_length
 
+class SegmentKopf(pygame.sprite.Sprite, Observable):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((seg_groesse, seg_groesse))
+        self.image.fill(green)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y 
+        self.counter = 0
+        self.dir = "left"
+        self.hp = 1
+        self.state = "alive"
+        self.observers = []
+
+    def status(self, status_change: str):
+        if status_change == "hit":
+            self.hp -= 1
+            if self.hp == 0:
+                obstacleCreator = ObstacleCreator()
+                obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz")
+                self.state = "dead"
+        elif status_change == "collideWithWall":
+            if self.dir == "left" or self.dir == "right":
+                self.dir = "down"
+                self.counter = 0
+                self.notify()
+            if self.dir == "down":
+                self.dir == "left"
+
+    def move(self):
+        if self.dir == "down":
+            self.rect.y += 1
+            self.counter += 1
+        elif self.dir == "left":
+            self.rect.x -= 2
+        elif self.dir == "right":
+            self.rect.x += 2
+    
+    def direction(self):
+        if self.dir == "left" and self.rect.left == 0:
+            self.dir = "down"
+        elif self.dir == "right" and self.rect.right == width:
+            self.dir = "down"
+        elif self.dir == "down" and self.counter > 25 and self.rect.left > 0:
+            self.dir = "left"
+            self.counter = 0
+        elif self.dir == "down" and self.counter > 25 and self.rect.right < width:
+            self.dir = "right"
+            self.counter = 0
+
+    
+class SegmentKoerper(pygame.sprite.Sprite, Observer):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((seg_groesse, seg_groesse))
+        self.image.fill(white)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y 
+        self.hp = 1
+        self.state = "alive"
+        self.dir = "left"
+    
+    def notification(self, observable: Observable):
+        self.dir = observable.dir
+    
+    def status(self, status_change: str):
+        if status_change == "hit":
+            self.hp -= 1
+            self.state = "divide"
+    
+    def move(self):
+        if self.dir == "down":
+            self.rect.y += 2
+        elif self.dir == "left":
+            self.rect.x -= 2
+        elif self.dir == "right":
+            self.rect += 2
+    
+    def direction(self):
+        pass
+
+
+class CentipedeListCreator:
+    def createCentipedeList(self, centi_length):
+        if centi_length == 10:
+            self.segments = []
+            self.length = centi_length
 
 class SegmentCreator:
     def createSegment(self, x, y, seg_kind):
@@ -81,18 +187,58 @@ class SegmentCreator:
         segment.__init__(x, y)
         return segment
 
-
 class Centipede:
-    def __init__(self):
+    def __init__(self, centi_length):
         self.segments = []
         self.length = 10
+        self.x = width
+        self.y = 0
 
     def createCentipede(self):
         segmentCreator = SegmentCreator()
         for i in range(self.length):
             if i == 0:
-                self.segments.append(segmentCreator.createSegment(i* 0, i*0, "body"))
-            elif i < self.length - 1:
-                self.segments.append(segmentCreator.createSegment(i* 25, i*0, "body"))
-            elif i == self.length - 1:
-                self.segments.append(segmentCreator.createSegment(i * 25, i * 0, "head"))
+                self.segments.append(segmentCreator.createSegment(i* self.x, i * self.y, "body"))
+            elif i <= self.length - 1:
+                self.segments.append(segmentCreator.createSegment(i* self.x, i * self.y, "head"))
+
+    def observer(self):
+        for segment in self.segments[:len(self.segments)]:
+            self.segments[0].register(segment)
+
+    def update(self):
+        for segment in self.segments:
+            segment.direction()
+            segment.move()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+class Centipede:
+    def __init__(self):
+        self.centipedeListCreator = CentipedeListCreator()
+        self.segments = self.centipedeListCreator.createCentipedeList(10)
+        self.segmentCreator = SegmentCreator()
+
+
+    def deleteSegment(self):
+        for segment in self.segments:
+            if segment.state == "dead":
+                self.segments.remove(segment)"""
+
+                    
