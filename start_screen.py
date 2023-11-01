@@ -24,8 +24,8 @@ Background_scaled = pygame.transform.scale(Background, (width, height))
 
 # Rechtecke und Texte für die Buttons, wenn wir noch weitere hinzufügen möchten, muss die ausrichtung beachtet werden.
 buttons = [
-    {'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Start'}, # beide hinteren Werte für die Größe
-    {'rect': pygame.Rect(300, 500, 200, 50), 'text': 'Button 2'}, # Butto 2 durch Wunschnamen ersetzen
+    {'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Button 1'}, # beide hinteren Werte für die Größe
+    {'rect': pygame.Rect(300, 500, 200, 50), 'text': 'Button 2'},
     {'rect': pygame.Rect(550, 500, 200, 50), 'text': 'Button 3'}
 ]
 
@@ -37,9 +37,9 @@ while status:
         if event.type == pygame.MOUSEBUTTONDOWN:
             for button in buttons:
                 if button['rect'].collidepoint(event.pos):
-                    if button['text'] == 'Button 1':
+                    if button['text'] == 'Start':
                         subprocess.Popen(["python", "Main.py"]) # startet Main.py bzw. das Spiel
-                    elif button['text'] == 'Button 2':
+                    elif button['text'] == 'Button 2': # gewünschen Namen des Buttons eintragen
                         subprocess.Popen(["python", "py"]) # gewünscheten Dateiname eintragen
                     elif button['text'] == 'Button 3':
                         subprocess.Popen(["python", "py"]) # gewünschten Dateiname eintragen
