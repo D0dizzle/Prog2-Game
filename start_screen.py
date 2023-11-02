@@ -3,7 +3,7 @@ import sys
 from settings import *
 import subprocess
 
-# def open_screen(): funktion lässt sich noch nicht in Main.py implementieren 
+# def open_screen(): funktion lässt sich noch nicht in Main.py implementieren mit while loop
 # Initialisieren von Pygame
 pygame.init()
 
