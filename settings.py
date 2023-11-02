@@ -122,7 +122,6 @@ class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstrukto
 
         for particle in self.particles:
             particle.update()
-        print(self.current_particles)
 
 class Particles(pygame.sprite.Sprite):
     def __init__(self, x, y, vy, img):
