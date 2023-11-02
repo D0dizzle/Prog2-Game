@@ -81,12 +81,10 @@ def exit_game():
             sys.exit()
 
 #### Klassen für Settings: ####
-class Hintergrund():      #ToDo: Dict als Parameter übergeben und im Konstruktor mit self.hg_dict festlegen
+class Hintergrund():     
     def __init__(self, dict):
-        self.background = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert()
-        self.space_stars = pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha()
-        self.background = pygame.transform.scale(self.background, (width, height))
-        self.space_stars = pygame.transform.scale(self.space_stars, (width, height))
+        self.background = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert(),(width, height))
+        self.space_stars = pygame.transform.scale(pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha(),(width, height))
         self.dict = dict
         self.max_particles = 50
         self.current_particles = 0
@@ -147,15 +145,6 @@ class TileMap:
         self.width = len(self.data[0])
         self.height = len(self.data)
 
-
-"""class Collider():
-    def collideObstacle(self, projectiles, enemysprites):
-        for projectile in projectiles:
-            for enemy in enemysprites:
-                if enemy.rect.collidelist(projectiles) > -1:
-                    enemy.status("hit")
-                    projectiles.remove(projectile)"""
-
 class Collider():
 
     def collideObstacle(self, projectiles, enemysprites):
@@ -168,16 +157,7 @@ class Collider():
     def collideAsteroid():
         pass
 
-    """def collideEnemy(self, projectiles, enemy):
-        for projectile in projectiles:
-            if enemy.rect.collide(projectile):
-                enemy.status("hit")
-                projectiles.remove(projectile)"""
-
     def collideWithWall(self, centipede, obstacles):
         for segment in centipede:
             if segment.rect.collidelist(obstacles) > -1:
-                print(segment)
                 segment.status("collideWithWall")
-
-collider = Collider()
