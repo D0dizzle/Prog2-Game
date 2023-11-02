@@ -5,14 +5,6 @@ import os
 from abc import ABC, abstractclassmethod
 from settings import *
 from random import choice
-"""
-#Klasse für den Player Sprite
-class PlayerSprite(pygame.sprite.Sprite):
-    def __init__(self, dict):
-        self.dict = dict
-        self.rect = self.image.get_rect()
-        self.rect.center = (width / 2, height - height / 6)
-        self.position = self.rect """
 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, vy):
@@ -57,24 +49,3 @@ class ObstacleUfo(pygame.sprite.Sprite):
         if self.hp == 0:
             self.state = "dead"
 
-"""class SegmentKopf(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__()
-        self.image = pygame.Surface((seg_groesse, seg_groesse))
-        self.image.fill(green)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y 
-
-    def status(self, status_change: str):
-        if status_change == "hit":
-            obstacleCreator = ObstacleCreator()
-
-class SegmentKoerper(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__()
-        self.image = pygame.Surface((seg_groesse, seg_groesse))
-        self.image.fill(white)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y """
