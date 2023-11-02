@@ -36,8 +36,6 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav")) # Quelle: https://opengameart.org/content/4-projectile-launches
         self.timer = 0
         self.dir = 0
-        self.anim_rate = 4
-        self.act_frame = 0
 
     def update(self):
         self.bewegung() 

@@ -25,11 +25,6 @@ screen = pygame.display.set_mode(size=(width, height))
 pygame.display.set_caption("Space Centipede")
 
 
-
-
-
-
-
 ## Hintergründe: ##
 #vorab PNG's laden, die transformiert werden müssen
 
@@ -150,7 +145,7 @@ class Collider():
     def collideObstacle(self, projectiles, enemysprites):
         for enemy in enemysprites:
             index = enemy.rect.collidelist(projectiles)
-            if index > -1:
+            if index != -1:    #-1 bedeutet keine Kollision deswegen muss es exkludiert werden
                 enemy.status("hit")
                 projectiles.pop(index)
 
@@ -159,5 +154,5 @@ class Collider():
 
     def collideWithWall(self, centipede, obstacles):
         for segment in centipede:
-            if segment.rect.collidelist(obstacles) > -1:
+            if segment.rect.collidelist(obstacles) != -1:
                 segment.status("collideWithWall")

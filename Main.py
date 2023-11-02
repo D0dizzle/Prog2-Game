@@ -1,13 +1,12 @@
 #Diese Datei ist dafür da, Code in sinnvollen Design Patterns zu schreiben
 
-import pygame
-import os
 from settings import *
 from sprites import *
 from player import *
 from enemy import *
 from game import *
-
+import pygame
+import os
 
 pygame.mixer.init() 
 pygame.mixer.music.load(os.path.join(game_folder,"Assets","sounds","BGM.wav"))
