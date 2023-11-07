@@ -141,7 +141,6 @@ class SegmentKopf(pygame.sprite.Sprite, Observable):
             self.dir = "right"
             self.counter = 0
         elif self.dir == "down":
-            self.rect.y += 1
             self.counter = 0
             if self.rect.x < width / 2:
                 self.dir = "right"
