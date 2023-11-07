@@ -130,14 +130,24 @@ class SegmentKopf(pygame.sprite.Sprite, Observable):
     def direction(self):
         if self.dir == "left" and self.rect.left == 0:
             self.dir = "down"
+            self.counter = 0
         elif self.dir == "right" and self.rect.right == width:
             self.dir = "down"
+            self.counter = 0
         elif self.dir == "down" and self.counter >= 25 and self.rect.left > 0:
             self.dir = "left"
             self.counter = 0
         elif self.dir == "down" and self.counter >= 25 and self.rect.right < width:
             self.dir = "right"
             self.counter = 0
+        elif self.dir == "down":
+            self.rect.y += 1
+            self.counter = 0
+            if self.rect.x < width / 2:
+                self.dir = "right"
+            else:
+                self.dir = "left"
+            self.rect.y += 25
 
     
 class SegmentKoerper(pygame.sprite.Sprite, Observer):
