@@ -2,6 +2,7 @@
 ##   Mögliche Klassenarten: Main, Bewegung, Kollision    ##
 
 #imports:
+from __future__ import annotations
 import pygame
 import os
 import random
@@ -77,19 +78,81 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
             if sprite.state == "dead":
                 self.sprites.remove(sprite)
 
+######################################################################################
 
-class MobilerGegner(IBaseGegnerMain):
-    def __init__(self):
+class segState(ABC):
+
+    def exit(self):
         pass
 
-    def update(self):
+    def enter(self):
         pass
 
-    def zustand(self):
+    def move(self):
+        pass
+
+    def collide_with_obstacle(self):
+        pass
+
+    def collide_with_border(self):
+        pass
+
+    def counter_reached(self):
         pass
 
 
-class SegmentKopf(pygame.sprite.Sprite, Observable):
+class looksLeft(segState):
+    def collide_with_border(self, seg: SegmentKopf):
+        seg.change_state(looksDown())
+
+    def collide_with_obstacle(self, seg: SegmentKopf):
+        seg.change_state(looksDown())
+
+    def exit(self, seg: SegmentKopf):
+        seg.state_before = looksLeft()
+
+    def move(self, seg: SegmentKopf):
+        seg.rect.x -= 3   
+
+
+class looksRight(segState):
+    def collide_with_border(self, seg: SegmentKopf):
+        seg.change_state(looksDown())
+    
+    def collide_with_obstacle(self, seg: SegmentKopf):
+        seg.change_state(looksDown())
+
+    def exit(self, seg: SegmentKopf):
+        seg.state_before = looksRight()
+
+    def move(self, seg: SegmentKopf):
+        seg.rect.x += 3
+    
+    
+
+
+class looksDown(segState):
+    def counter_reached(self, seg: SegmentKopf):
+        self.counter = 0
+        if isinstance(seg.state_before, looksLeft):
+            seg.change_state(looksRight())
+            seg.counter = 0
+        elif isinstance(seg.state_before, looksRight):
+            seg.change_state(looksLeft())
+
+
+    def move(self, seg: SegmentKopf):
+        seg.rect.y += 1
+        seg.counter += 1
+    
+    def exit(self, seg: SegmentKopf):
+        seg.counter = 0
+
+
+
+
+
+class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des State Patterns
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface((seg_groesse, seg_groesse))
@@ -98,10 +161,20 @@ class SegmentKopf(pygame.sprite.Sprite, Observable):
         self.rect.x = x
         self.rect.y = y 
         self.counter = 0
-        self.dir = "left"
+        self.state = looksLeft()
+        self.state_before = self.state
         self.hp = 1
-        self.state = "alive"
+        #self.state = "alive"
         self.observers = []
+
+    def change_state(self, newState: segState):
+        if (self.state != None):
+            self.state.exit(self)
+        self.state = newState
+        self.state.enter()
+
+    #def collide_with_obstacle(self):
+    #    self.state.collide_with_obstacle(self)
 
     def status(self, status_change: str):
         if status_change == "hit":
@@ -110,24 +183,38 @@ class SegmentKopf(pygame.sprite.Sprite, Observable):
                 obstacleCreator = ObstacleCreator()
                 obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz")
                 self.state = "dead"
-        elif status_change == "collideWithWall":
-            if self.dir == "left" or self.dir == "right":
+        elif status_change == "collideWithWall" and self.counter == 0 :
+            self.state.collide_with_obstacle(self)
+            """if self.dir == "left" or self.dir == "right":
                 self.dir = "down"
                 self.counter = 0
                 self.notify()
             if self.dir == "down":
-                self.dir == "left"
+                self.dir == "left"""
+
+
 
     def move(self):
-        if self.dir == "down":
+        self.state.move(self)
+        if self.counter == 25:
+            self.state.counter_reached(self)
+        elif self.rect.x <= 0 and isinstance(self.state, looksLeft):
+            self.state.collide_with_border(self)
+        elif self.rect.right >= width and isinstance(self.state, looksRight):
+            
+            self.state.collide_with_border(self)
+        
+        """if self.dir == "down":
             self.rect.y += 1
             self.counter += 1
         elif self.dir == "left":
             self.rect.x -= 2
         elif self.dir == "right":
-            self.rect.x += 2
+            self.rect.x += 2"""
     
     def direction(self):
+        pass
+        """
         if self.dir == "left" and self.rect.left == 0:
             self.dir = "down"
             self.counter = 0
@@ -146,7 +233,7 @@ class SegmentKopf(pygame.sprite.Sprite, Observable):
                 self.dir = "right"
             else:
                 self.dir = "left"
-            self.rect.y += 25
+            self.rect.y += 25"""
 
     
 class SegmentKoerper(pygame.sprite.Sprite, Observer):
@@ -230,24 +317,14 @@ class Centipede:
 
 
 
+###############################################################################
 
-
-
-
-
-
-
-"""
-class Centipede:
+class MobilerGegner(IBaseGegnerMain):
     def __init__(self):
-        self.centipedeListCreator = CentipedeListCreator()
-        self.segments = self.centipedeListCreator.createCentipedeList(10)
-        self.segmentCreator = SegmentCreator()
+        pass
 
+    def update(self):
+        pass
 
-    def deleteSegment(self):
-        for segment in self.segments:
-            if segment.state == "dead":
-                self.segments.remove(segment)"""
-
-                    
+    def zustand(self):
+        pass

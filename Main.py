@@ -31,8 +31,8 @@ class Startscreen:
         # Rechtecke und Texte für die Buttons, wenn wir noch weitere hinzufügen möchten, muss die ausrichtung beachtet werden.
         self.buttons = [
             {'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Start'}, # beide hinteren Werte für die Größe
-            {'rect': pygame.Rect(300, 500, 200, 50), 'text': 'Button 2'},
-            {'rect': pygame.Rect(550, 500, 200, 50), 'text': 'Button 3'}]
+            {'rect': pygame.Rect(300, 500, 200, 50), 'text': 'Einstellungen'},
+            {'rect': pygame.Rect(550, 500, 200, 50), 'text': 'Beenden'}]
         self.font = pygame.font.SysFont('Corbel', 35)
     
     def update(self):
@@ -43,6 +43,9 @@ class Startscreen:
                         if button['text'] == 'Start':
                             status = False
                             return status
+                        if button['text'] == 'Beenden':
+                            pygame.quit()
+                            sys.exit()
             if event.type == pygame.QUIT:
                 sys.exit()
     
@@ -50,7 +53,7 @@ class Startscreen:
         screen.blit(self.background, (0,0))
         for button in self.buttons:
             rect = pygame.Rect(button['rect'])
-            pygame.draw.rect(screen, dark_green, rect, border_radius=10)
+            pygame.draw.rect(screen, cyan, rect, border_radius=10)
             pygame.draw.rect(screen, white, rect, width=2, border_radius=10)
             button_text = self.font.render(button['text'], True, white)
             text_rect = button_text.get_rect(center=rect.center)
