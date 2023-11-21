@@ -78,15 +78,46 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
                 self.sprites.remove(sprite)
 
 
-class MobilerGegner(IBaseGegnerMain):
-    def __init__(self):
-        pass
+class Asteroid(pygame.sprite.Sprite):
+    def __init__(self, x , y , vy , vx):
+        super().__init__()
+        self.image = img_dict["asteroid"]
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.vy = vy
+        self.vx = vx
+        self.rect.center = (x, y)
 
     def update(self):
-        pass
+        screen.blit(self.image, (self.x, self.y))
+        self.y += self.vy
+        self.x += self.vx
+        if self.y  > height+50:
+                self.remove()
 
     def zustand(self):
         pass
+
+class AsteroidCreator():
+
+    def __init__(self):
+        self.max_asteroids = 1000
+        self.current_asteroids = 0
+        self.last_asteroid = 0
+        self.asteroids = []
+        self.cooldown = 1
+
+    def render(self):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_asteroid > self.cooldown and self.current_asteroids < self.max_asteroids:
+            self.last_asteroid = current_time                 
+            self.asteroids.append(Asteroid(randint(0,width),-80, randint(2,5),randint(-1,1)))
+            self.current_asteroids += 1
+            self.cooldown = randint(50,100)
+
+            for asteroid in self.asteroids:
+                asteroid.update()
 
 
 class SegmentKopf(pygame.sprite.Sprite, Observable):

@@ -22,6 +22,7 @@ new_map.new()
 centipede = Centipede(10)
 centipede.createCentipede()
 collider = Collider()
+asteroid = AsteroidCreator()
 
 font = pygame.font.SysFont('Corbel', 35)
 
@@ -70,6 +71,7 @@ while True:
     background.render()
     player1.update()
     player1.shoot(projectiles)
+    asteroid.render()
     collider.collideObstacle(projectiles, new_map.sprites)
     collider.collideObstacle(projectiles, centipede.segments)
     collider.collideWithWall(centipede.segments, new_map.sprites)

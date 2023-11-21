@@ -27,7 +27,6 @@ pygame.display.set_caption("Space Centipede")
 
 ## Hintergründe: ##
 #vorab PNG's laden, die transformiert werden müssen
-
 #Dictionary mit den Hintergründen
 hg_dict = {}
 hg_dict["big-planet"] = {"image" : pygame.image.load(os.path.join(game_folder,"Assets","hintergrund", "parallax-space-big-planet.png")).convert_alpha()}
@@ -40,6 +39,7 @@ img_dict["bullet"] = pygame.image.load(os.path.join(game_folder,"Assets","ship",
 img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Satellite.png"))
 img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
 img_dict["TME"] = os.path.join(game_folder, "Assets", "TileMapEinfach.txt")
+img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "particle.png")),(seg_groesse,seg_groesse))
 
 player_img_dict = {}    #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
 player_img_dict["player-5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-5.png")),(player_size, player_size))
