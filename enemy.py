@@ -93,8 +93,6 @@ class Asteroid(pygame.sprite.Sprite):
         screen.blit(self.image, (self.x, self.y))
         self.y += self.vy
         self.x += self.vx
-        if self.y  > height+50:
-                self.remove()
 
     def zustand(self):
         pass
@@ -102,22 +100,27 @@ class Asteroid(pygame.sprite.Sprite):
 class AsteroidCreator():
 
     def __init__(self):
-        self.max_asteroids = 1000
+        self.max_asteroids = 2
         self.current_asteroids = 0
         self.last_asteroid = 0
         self.asteroids = []
-        self.cooldown = 1
+        self.cooldown = randint(100,500)
 
     def render(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_asteroid > self.cooldown and self.current_asteroids < self.max_asteroids:
-            self.last_asteroid = current_time                 
-            self.asteroids.append(Asteroid(randint(0,width),-80, randint(2,5),randint(-1,1)))
+            self.last_asteroid = current_time               
+            self.asteroids.append(Asteroid(randint(0,width),-50, randint(2,5),randint(-1,1)))
             self.current_asteroids += 1
-            self.cooldown = randint(50,100)
+            self.cooldown = randint(300,1000)
+            
 
-            for asteroid in self.asteroids:
-                asteroid.update()
+        for asteroid in self.asteroids:
+            asteroid.update()
+            if asteroid.y  > height+50:
+                self.asteroids.remove(asteroid)
+                self.current_asteroids -= 1
+            
 
 
 class SegmentKopf(pygame.sprite.Sprite, Observable):
