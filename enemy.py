@@ -104,13 +104,13 @@ class segState(ABC):
 class looksLeft(segState):
     def collide_with_border(self, seg: SegmentKopf):
         seg.change_state(looksDown())
-
+        seg.notify()
     def collide_with_obstacle(self, seg: SegmentKopf):
         seg.change_state(looksDown())
-
+        seg.notify()
     def exit(self, seg: SegmentKopf):
         seg.state_before = looksLeft()
-        seg.notify()
+        #seg.notify()
 
     def move(self, seg: SegmentKopf):
         seg.rect.x -= 3   
@@ -119,13 +119,15 @@ class looksLeft(segState):
 class looksRight(segState):
     def collide_with_border(self, seg: SegmentKopf):
         seg.change_state(looksDown())
+        seg.notify()
     
     def collide_with_obstacle(self, seg: SegmentKopf):
         seg.change_state(looksDown())
+        seg.notify()
 
     def exit(self, seg: SegmentKopf):
         seg.state_before = looksRight()
-        seg.notify()
+        #seg.notify()
 
     def move(self, seg: SegmentKopf):
         seg.rect.x += 3
@@ -135,9 +137,11 @@ class looksDown(segState):      #####Hier aufpassen! anderes Verhalten bei SegHe
         self.counter = 0
         if isinstance(seg.state_before, looksLeft):
             seg.change_state(looksRight())
+            seg.notify()
             seg.counter = 0
         elif isinstance(seg.state_before, looksRight):
             seg.change_state(looksLeft())
+            seg.notify()
             seg.counter = 0
 
     def move(self, seg: SegmentKopf):
@@ -146,7 +150,7 @@ class looksDown(segState):      #####Hier aufpassen! anderes Verhalten bei SegHe
     
     def exit(self, seg: SegmentKopf):
         seg.counter = 0
-        seg.notify()
+        #seg.notify()
 
 class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des State Patterns
     def __init__(self, x, y):
@@ -222,7 +226,7 @@ class SegmentKoerper(pygame.sprite.Sprite, Observer):
         self.state.move(self)
     
     def direction(self):
-        self.change_state()
+        pass
 
 class CentipedeListCreator:
     def createCentipedeList(self, centi_length):
