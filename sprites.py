@@ -38,7 +38,7 @@ class ObstacleUfo(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.state = "alive"
+        self.isAlive = "alive"
 
     def status(self, status_change: str):
         if status_change == "hit":
@@ -47,5 +47,5 @@ class ObstacleUfo(pygame.sprite.Sprite):
                 self.hp = 0
             self.image = ufo_animation_dict["ufo"+ str(self.hp)]
         if self.hp == 0:
-            self.state = "dead"
+            self.isAlive = "dead"
 

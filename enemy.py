@@ -75,7 +75,7 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
 
     def delete(self):
         for sprite in self.sprites:
-            if sprite.state == "dead":
+            if sprite.isAlive == "dead":
                 self.sprites.remove(sprite)
 
 ######################################################################################
@@ -110,6 +110,7 @@ class looksLeft(segState):
 
     def exit(self, seg: SegmentKopf):
         seg.state_before = looksLeft()
+        seg.notify()
 
     def move(self, seg: SegmentKopf):
         seg.rect.x -= 3   
@@ -124,14 +125,12 @@ class looksRight(segState):
 
     def exit(self, seg: SegmentKopf):
         seg.state_before = looksRight()
+        seg.notify()
 
     def move(self, seg: SegmentKopf):
         seg.rect.x += 3
-    
-    
 
-
-class looksDown(segState):
+class looksDown(segState):      #####Hier aufpassen! anderes Verhalten bei SegHead/SegBody! 
     def counter_reached(self, seg: SegmentKopf):
         self.counter = 0
         if isinstance(seg.state_before, looksLeft):
@@ -139,7 +138,7 @@ class looksDown(segState):
             seg.counter = 0
         elif isinstance(seg.state_before, looksRight):
             seg.change_state(looksLeft())
-
+            seg.counter = 0
 
     def move(self, seg: SegmentKopf):
         seg.rect.y += 1
@@ -147,10 +146,7 @@ class looksDown(segState):
     
     def exit(self, seg: SegmentKopf):
         seg.counter = 0
-
-
-
-
+        seg.notify()
 
 class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des State Patterns
     def __init__(self, x, y):
@@ -164,7 +160,7 @@ class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des Sta
         self.state = looksLeft()
         self.state_before = self.state
         self.hp = 1
-        #self.state = "alive"
+        self.isAlive = "alive"
         self.observers = []
 
     def change_state(self, newState: segState):
@@ -173,8 +169,6 @@ class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des Sta
         self.state = newState
         self.state.enter()
 
-    #def collide_with_obstacle(self):
-    #    self.state.collide_with_obstacle(self)
 
     def status(self, status_change: str):
         if status_change == "hit":
@@ -182,17 +176,9 @@ class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des Sta
             if self.hp == 0:
                 obstacleCreator = ObstacleCreator()
                 obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz")
-                self.state = "dead"
+                self.isAlive = "dead"
         elif status_change == "collideWithWall" and self.counter == 0 :
             self.state.collide_with_obstacle(self)
-            """if self.dir == "left" or self.dir == "right":
-                self.dir = "down"
-                self.counter = 0
-                self.notify()
-            if self.dir == "down":
-                self.dir == "left"""
-
-
 
     def move(self):
         self.state.move(self)
@@ -203,38 +189,9 @@ class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des Sta
         elif self.rect.right >= width and isinstance(self.state, looksRight):
             
             self.state.collide_with_border(self)
-        
-        """if self.dir == "down":
-            self.rect.y += 1
-            self.counter += 1
-        elif self.dir == "left":
-            self.rect.x -= 2
-        elif self.dir == "right":
-            self.rect.x += 2"""
-    
+ 
     def direction(self):
         pass
-        """
-        if self.dir == "left" and self.rect.left == 0:
-            self.dir = "down"
-            self.counter = 0
-        elif self.dir == "right" and self.rect.right == width:
-            self.dir = "down"
-            self.counter = 0
-        elif self.dir == "down" and self.counter >= 25 and self.rect.left > 0:
-            self.dir = "left"
-            self.counter = 0
-        elif self.dir == "down" and self.counter >= 25 and self.rect.right < width:
-            self.dir = "right"
-            self.counter = 0
-        elif self.dir == "down":
-            self.counter = 0
-            if self.rect.x < width / 2:
-                self.dir = "right"
-            else:
-                self.dir = "left"
-            self.rect.y += 25"""
-
     
 class SegmentKoerper(pygame.sprite.Sprite, Observer):
     def __init__(self, x, y):
@@ -245,28 +202,27 @@ class SegmentKoerper(pygame.sprite.Sprite, Observer):
         self.rect.x = x
         self.rect.y = y 
         self.hp = 1
-        self.state = "alive"
-        self.dir = "left"
-    
+        self.isAlive = "alive"
+        self.state = looksLeft()
+        self.next_state = looksDown()
+        self.counter = 0
+
     def notification(self, observable: Observable):
-        self.dir = observable.dir
+        self.state = observable.state
+
+    def change_state(self):
+        pass
     
     def status(self, status_change: str):
         if status_change == "hit":
             self.hp -= 1
-            self.state = "divide"
+            self.isAlive = "divide"
     
     def move(self):
-        if self.dir == "down":
-            self.rect.y += 2
-        elif self.dir == "left":
-            self.rect.x -= 2
-        elif self.dir == "right":
-            self.rect += 2
+        self.state.move(self)
     
     def direction(self):
-        pass
-
+        self.change_state()
 
 class CentipedeListCreator:
     def createCentipedeList(self, centi_length):
@@ -292,15 +248,17 @@ class Centipede:
 
     def createCentipede(self):
         segmentCreator = SegmentCreator()
-        for i in range(self.length):
+        for i in range(10):
             if i == 0:
-                self.segments.append(segmentCreator.createSegment(i* self.x, i * self.y, "body"))
-            elif i <= self.length - 1:
-                self.segments.append(segmentCreator.createSegment(i* self.x, i * self.y, "head"))
+                self.segments.append(segmentCreator.createSegment(self.x - (25*i), i * self.y, "body"))
+            elif i < 10 - 1:
+                self.segments.append(segmentCreator.createSegment(self.x - (25*i), i * self.y, "body"))
+            elif i == 10 - 1:
+                self.segments.append(segmentCreator.createSegment(self.x - (25*i), i * self.y, "head"))
 
-    def observer(self):
-        for segment in self.segments[:len(self.segments)]:
-            self.segments[0].register(segment)
+    def observer(self): #hier fraglich, ob die Funktion das richtig registert
+        for segment in self.segments[:len(self.segments)-1]:
+            self.segments[len(self.segments)-1].register(segment)
 
     def update(self):
         for segment in self.segments:

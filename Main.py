@@ -21,6 +21,7 @@ new_map = ObstacleOnScreen()
 new_map.new()
 centipede = Centipede(10)
 centipede.createCentipede()
+centipede.observer()
 collider = Collider()
 
 font = pygame.font.SysFont('Corbel', 35)
@@ -69,7 +70,6 @@ while status == True or status == None:
     FPS.tick(FPS_anzahl)
 
 while True:
-
     background.render()
     player1.update()
     player1.shoot(projectiles)
