@@ -20,15 +20,21 @@ new_map.new()
 centipede = Centipede(10)
 centipede.createCentipede()
 collider = Collider()
+score = 0
+highscore = load_highscore()
 
 while True:
-
     background.render()
     player1.update()
     player1.shoot(projectiles)
     collider.collideObstacle(projectiles, new_map.sprites)
     collider.collideObstacle(projectiles, centipede.segments)
     collider.collideWithWall(centipede.segments, new_map.sprites)
+    score += 1
+    load_highscore()
+    update_highscore()
+    save_highscore()
+    display_scores()
     new_map.delete()
     centipede.update()
     sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)

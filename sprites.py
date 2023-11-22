@@ -48,4 +48,3 @@ class ObstacleUfo(pygame.sprite.Sprite):
             self.image = ufo_animation_dict["ufo"+ str(self.hp)]
         if self.hp == 0:
             self.state = "dead"
-

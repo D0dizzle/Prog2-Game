@@ -23,6 +23,8 @@ projectiles = []
 game_folder = os.path.dirname(__file__)
 screen = pygame.display.set_mode(size=(width, height))
 pygame.display.set_caption("Space Centipede")
+score = 0
+highscore = 0
 
 
 ## Hintergründe: ##
@@ -156,3 +158,35 @@ class Collider():
         for segment in centipede:
             if segment.rect.collidelist(obstacles) != -1:
                 segment.status("collideWithWall")
+
+def load_highscore():
+    try:
+        with open("highscore.txt", "r") as file:
+            return int(file.read())
+    except FileNotFoundError:
+        return 0
+
+def save_highscore():
+    with open("highscore.txt", "w") as file:
+        file.write(str(highscore))
+
+def update_highscore():
+    global score, highscore
+    if score > highscore:
+        highscore = score
+
+# Außerhalb der Schleife
+font_path = pygame.font.match_font('arial')
+custom_font = pygame.font.Font(font_path, 36)
+
+# Innerhalb der display_scores-Funktion
+def display_scores():
+    global score, highscore
+    highscore_text = custom_font.render(f"Highscore: {highscore}", True, white)
+    score_text = custom_font.render(f"Score: {score}", True, white)
+    screen.blit(highscore_text, (10, 10))
+    screen.blit(score_text, (10, 50))
+
+    #if enemy = "dead"
+    #score += 10
+    #return
