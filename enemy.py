@@ -113,7 +113,7 @@ class looksLeft(segState):
         #seg.notify()
 
     def move(self, seg: SegmentKopf):
-        seg.rect.x -= 3   
+        seg.rect.x -= 2   
 
 
 class looksRight(segState):
@@ -130,7 +130,7 @@ class looksRight(segState):
         #seg.notify()
 
     def move(self, seg: SegmentKopf):
-        seg.rect.x += 3
+        seg.rect.x += 2
 
 class looksDown(segState):      #####Hier aufpassen! anderes Verhalten bei SegHead/SegBody! 
     def counter_reached(self, seg: SegmentKopf):
@@ -149,6 +149,7 @@ class looksDown(segState):      #####Hier aufpassen! anderes Verhalten bei SegHe
         seg.counter += 1
     
     def exit(self, seg: SegmentKopf):
+        seg.state_before = looksDown()
         seg.counter = 0
         #seg.notify()
 
@@ -194,7 +195,7 @@ class SegmentKopf(pygame.sprite.Sprite, Observable): ###Kontext im Sinne des Sta
             
             self.state.collide_with_border(self)
  
-    def direction(self):
+    def direction(self, i):
         pass
     
 class SegmentKoerper(pygame.sprite.Sprite, Observer):
@@ -208,11 +209,13 @@ class SegmentKoerper(pygame.sprite.Sprite, Observer):
         self.hp = 1
         self.isAlive = "alive"
         self.state = looksLeft()
-        self.next_state = looksDown()
-        self.counter = 0
+        self.notif = False
+        #self.counter = 0
+        self.counter2 = 0
 
     def notification(self, observable: Observable):
-        self.state = observable.state
+        self.next_state = observable.state
+        self.notif = True
 
     def change_state(self):
         pass
@@ -223,10 +226,21 @@ class SegmentKoerper(pygame.sprite.Sprite, Observer):
             self.isAlive = "divide"
     
     def move(self):
-        self.state.move(self)
-    
-    def direction(self):
-        pass
+        if isinstance(self.state, looksLeft):
+            self.rect.x -= 2
+        elif isinstance(self.state, looksRight):
+            self.rect.x += 2
+        elif isinstance(self.state, looksDown):
+            self.rect.y += 1
+
+    def direction(self, i):
+        if self.notif == True:
+            if self.counter2 >= 25 * i:
+                self.state = self.next_state
+                self.notif = False
+                self.counter2 = 0
+            else:
+                self.counter2 += 1
 
 class CentipedeListCreator:
     def createCentipedeList(self, centi_length):
@@ -260,14 +274,16 @@ class Centipede:
             elif i == 10 - 1:
                 self.segments.append(segmentCreator.createSegment(self.x - (25*i), i * self.y, "head"))
 
-    def observer(self): #hier fraglich, ob die Funktion das richtig registert
+    def observer(self): 
         for segment in self.segments[:len(self.segments)-1]:
             self.segments[len(self.segments)-1].register(segment)
 
     def update(self):
+        i = 1
         for segment in self.segments:
-            segment.direction()
             segment.move()
+            segment.direction(len(self.segments)-i)
+            i += 1
 
 
 

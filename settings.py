@@ -21,7 +21,7 @@ player_acc = 1.5 * 60 / FPS_anzahl
 player_friction = -0.13
 projectiles = []
 game_folder = os.path.dirname(__file__)
-screen = pygame.display.set_mode(size=(width, height))
+SCREEN = pygame.display.set_mode(size=(width, height))
 pygame.display.set_caption("Space Centipede")
 
 
@@ -100,11 +100,11 @@ class Hintergrund():
             #  'ring-planet': {'image': <Surface(51x115x32 SW)>, 'x': 337, 'y': 68}}
 
     def render(self):
-        screen.blit(self.background,(0,0))
-        screen.blit(self.space_stars,(0,0))
+        SCREEN.blit(self.background,(0,0))
+        SCREEN.blit(self.space_stars,(0,0))
 
         for i in self.dict:
-            screen.blit(self.dict[i]["image"], (self.dict[i]["x"],self.dict[i]["y"]))
+            SCREEN.blit(self.dict[i]["image"], (self.dict[i]["x"],self.dict[i]["y"]))
 
         current_time = pygame.time.get_ticks()
         if current_time - self.last_particles > self.cooldown and self.current_particles < self.max_particles:
@@ -125,7 +125,7 @@ class Particles(pygame.sprite.Sprite):
         self.vy = vy
     
     def update(self):
-        screen.blit(self.image, (self.x, self.y))
+        SCREEN.blit(self.image, (self.x, self.y))
         self.y += self.vy
         if self.y  > height+50:
                 self.y = -10

@@ -51,14 +51,14 @@ class Startscreen:
                 sys.exit()
     
     def render(self):
-        screen.blit(self.background, (0,0))
+        SCREEN.blit(self.background, (0,0))
         for button in self.buttons:
             rect = pygame.Rect(button['rect'])
-            pygame.draw.rect(screen, cyan, rect, border_radius=10)
-            pygame.draw.rect(screen, white, rect, width=2, border_radius=10)
+            pygame.draw.rect(SCREEN, cyan, rect, border_radius=10)
+            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
             button_text = self.font.render(button['text'], True, white)
             text_rect = button_text.get_rect(center=rect.center)
-            screen.blit(button_text, text_rect)
+            SCREEN.blit(button_text, text_rect)
                 
 startscreen = Startscreen()
 status = True
@@ -79,7 +79,7 @@ while True:
     new_map.delete()
     centipede.update()
     sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)
-    sprites.draw(screen)
+    sprites.draw(SCREEN)
     exit_game()
     pygame.display.update()
     FPS.tick(FPS_anzahl)
