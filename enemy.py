@@ -75,9 +75,10 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
                     self.sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Pilz"))
 
     def delete(self):
+        self.score = 0
         for sprite in self.sprites: 
             if sprite.state == "dead":
-                self.score += 10
+                self.score = 10
                 print(self.score)
                 self.sprites.remove(sprite)
 

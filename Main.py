@@ -31,13 +31,13 @@ class Score():
 
     def load_highscore(self):
         try:
-            with open("highscore.txt", "r") as file:
+            with open(os.path.join(game_folder,"highscore.txt"), "r") as file:
                 self.highscore= int(file.read())
         except FileNotFoundError:
             return 0
 
     def save_highscore(self):
-        with open("highscore.txt", "w") as file:
+        with open(os.path.join(game_folder,"highscore.txt"), "w") as file:
             file.write(str(self.highscore))
 
     def update_highscore(self):
@@ -51,14 +51,10 @@ class Score():
         screen.blit(score_text, (10, 50))
 
     def update_score(self, enemy):
-        self.score += enemy.score
+        self.score = enemy.score
 
 highscore = Score() 
-
 highscore.load_highscore()
-highscore.update_highscore()
-highscore.save_highscore()
-
 
 while True:
     background.render()
@@ -67,8 +63,10 @@ while True:
     collider.collideObstacle(projectiles, new_map.sprites)
     collider.collideObstacle(projectiles, centipede.segments)
     collider.collideWithWall(centipede.segments, new_map.sprites)
-    #highscore.update_score(new_map)
+    highscore.update_score(new_map)
     highscore.display_scores()
+    highscore.update_highscore()
+    highscore.save_highscore()
     new_map.delete()
     centipede.update()
     sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)
