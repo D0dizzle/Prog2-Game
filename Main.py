@@ -83,3 +83,4 @@ while True:
     exit_game()
     pygame.display.update()
     FPS.tick(FPS_anzahl)
+    print(asteroids.asteroids)

@@ -150,11 +150,12 @@ class Collider():
                 projectiles.pop(index)
 
     def collideAsteroid(self, asteroids, player1):
-        for asteroid in asteroids:
-            index = asteroid.rect.collidelist(player1)
-            if index != -1:
-                player1.status("dead")
-                asteroids.pop(index)
+            
+        index = player1.rect.collidelist(asteroids)
+        if index != -1:
+            asteroids.pop(index)
+            player1.status("dead")
+            
         
     def collideWithWall(self, centipede, obstacles):
         for segment in centipede:
