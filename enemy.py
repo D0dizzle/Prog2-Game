@@ -2,6 +2,7 @@
 ##   Mögliche Klassenarten: Main, Bewegung, Kollision    ##
 
 #imports:
+from __future__ import annotations
 import pygame
 import os
 import random
@@ -63,7 +64,8 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.sprites = []
-    
+        self.score = 0
+
     def new(self):
         self.map = TileMap(img_dict["TME"])
         for col, tiles in enumerate(self.map.data):
@@ -73,8 +75,10 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
                     self.sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Pilz"))
 
     def delete(self):
-        for sprite in self.sprites:
+        for sprite in self.sprites: 
             if sprite.state == "dead":
+                self.score += 10
+                print(self.score)
                 self.sprites.remove(sprite)
 
 
