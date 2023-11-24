@@ -38,8 +38,16 @@ img_dict = {}
 img_dict["bullet"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Bullet2.png"))
 img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Satellite.png"))
 img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
-img_dict["TME"] = os.path.join(game_folder, "Assets", "TileMapEinfach.txt")
 img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "asteroid.png")),(seg_groesse,seg_groesse))
+
+tilemap_dict = {}
+tilemap_dict["TME"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapEasy.txt")
+tilemap_dict["TMM"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapMedium.txt")
+tilemap_dict["TMH"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapHard.txt")
+tilemap_dict["TMVH"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapVeryHard.txt")
+
+
+
 
 player_img_dict = {}    #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
 player_img_dict["player-5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-5.png")),(player_size, player_size))

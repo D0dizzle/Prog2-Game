@@ -66,7 +66,7 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
         self.sprites = []
     
     def new(self):
-        self.map = TileMap(img_dict["TME"])
+        self.map = TileMap(choice(list(tilemap_dict.values())))
         for col, tiles in enumerate(self.map.data):
             for row, tile in enumerate(tiles):
                 if tile == '1':
@@ -109,7 +109,7 @@ class Asteroid():
         self.current_asteroids = 0
         self.last_asteroid = 0
         self.asteroidslist = []
-        self.cooldown = randint(500,1000)
+        self.cooldown = randint(3000,5000)
 
     def render(self):
 
@@ -118,7 +118,7 @@ class Asteroid():
         if current_time - self.last_asteroid > self.cooldown and self.current_asteroids < self.max_asteroids:
             self.last_asteroid = current_time               
             self.asteroidslist.append(creator.createAsteroid(randint(0,width),-50, randint(2,5),randint(-1,1)))
-            self.cooldown = randint(500,1000)
+            self.cooldown = randint(5000,10000)
             
     def update(self):
         for asteroid in self.asteroidslist:
