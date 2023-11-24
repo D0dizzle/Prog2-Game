@@ -2,6 +2,7 @@
 ##   Mögliche Klassenarten: Main, Bewegung, Kollision    ##
 
 #imports:
+from __future__ import annotations
 import pygame
 import os
 import random
@@ -87,7 +88,7 @@ class Asteroid(pygame.sprite.Sprite):
         self.y = y
         self.vy = vy
         self.vx = vx
-        self.rect.center = (x, y)
+        self.rect.center = (self.x, self.y)
 
     def update(self):
         screen.blit(self.image, (self.x, self.y))
