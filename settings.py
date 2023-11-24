@@ -157,7 +157,6 @@ class Collider():
             player1.status("dead")"""
         index = player1.rect.collidelist(asteroids)
         if index != -1:
-            print(index)
             asteroids.pop(index)
             
         
