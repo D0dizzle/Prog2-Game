@@ -21,7 +21,7 @@ class ProjectileCreator:
         return basic_projectile
 
 class Player1(pygame.sprite.Sprite, iPlayer):
-    def __init__(self, dict):
+    def __init__(self, dict, x , y):
         super().__init__()
         self.dict = dict
         self.image = self.dict["player0"]
@@ -30,7 +30,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.ax = 0
         self.ay = 0
         self.rect = self.image.get_rect()
-        self.rect.center = (width / 2, height - height / 6)
+        self.rect.center = (x, y)
         self.shoot_cd = 200
         self.last_shot = 0
         self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav")) # Quelle: https://opengameart.org/content/4-projectile-launches

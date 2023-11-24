@@ -39,7 +39,7 @@ img_dict["bullet"] = pygame.image.load(os.path.join(game_folder,"Assets","ship",
 img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Satellite.png"))
 img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
 img_dict["TME"] = os.path.join(game_folder, "Assets", "TileMapEinfach.txt")
-img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "particle.png")),(seg_groesse,seg_groesse))
+img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "asteroid.png")),(seg_groesse,seg_groesse))
 
 player_img_dict = {}    #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
 player_img_dict["player-5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-5.png")),(player_size, player_size))
@@ -150,11 +150,15 @@ class Collider():
                 projectiles.pop(index)
 
     def collideAsteroid(self, asteroids, player1):
+   
             
+        """if pygame.Rect.colliderect(asteroid.rect, player1.rect):
+            asteroids.remove(asteroid)
+            player1.status("dead")"""
         index = player1.rect.collidelist(asteroids)
         if index != -1:
+            print(index)
             asteroids.pop(index)
-            player1.status("dead")
             
         
     def collideWithWall(self, centipede, obstacles):

@@ -79,48 +79,62 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
                 self.sprites.remove(sprite)
 
 
-class Asteroid(pygame.sprite.Sprite):
+class AsteroidSprite(pygame.sprite.Sprite):
     def __init__(self, x , y , vy , vx):
         super().__init__()
         self.image = img_dict["asteroid"]
         self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
+        self.rect.x = x
+        self.rect.y = y
         self.vy = vy
         self.vx = vx
-        self.rect.center = (self.x, self.y)
+        if self.vx == -1:
+            self.image = pygame.transform.rotate(self.image, 315)
+        elif self.vx == 1:
+            self.image = pygame.transform.rotate(self.image, 45)  
 
     def update(self):
-        screen.blit(self.image, (self.x, self.y))
-        self.y += self.vy
-        self.x += self.vx
+
+        screen.blit(self.image,self.rect)
+        self.rect.y += self.vy
+        self.rect.x += self.vx
 
     def zustand(self):
         pass
 
-class AsteroidCreator():
+class Asteroid():
 
     def __init__(self):
         self.max_asteroids = 2
         self.current_asteroids = 0
         self.last_asteroid = 0
-        self.asteroids = []
-        self.cooldown = randint(100,500)
+        self.asteroidslist = []
+        self.cooldown = randint(500,1000)
 
     def render(self):
+
+        creator = AsteroidCreator()
         current_time = pygame.time.get_ticks()
         if current_time - self.last_asteroid > self.cooldown and self.current_asteroids < self.max_asteroids:
             self.last_asteroid = current_time               
-            self.asteroids.append(Asteroid(randint(0,width),-50, randint(2,5),randint(-1,1)))
-            self.current_asteroids += 1
-            self.cooldown = randint(300,1000)
+            self.asteroidslist.append(creator.createAsteroid(randint(0,width),-50, randint(2,5),randint(-1,1)))
+            self.cooldown = randint(500,1000)
             
-
-        for asteroid in self.asteroids:
+    def update(self):
+        for asteroid in self.asteroidslist:
             asteroid.update()
-            if asteroid.y  > height+50:
-                self.asteroids.remove(asteroid)
-                self.current_asteroids -= 1
+            if asteroid.rect.y  > height+50 or asteroid.rect.x < -50 or asteroid.rect.x > width+50:
+                self.asteroidslist.remove(asteroid)
+                
+
+
+class AsteroidCreator():
+
+    def createAsteroid(self, x, y, vy ,vx):
+
+        asteroid = AsteroidSprite(x, y ,vy ,vx)
+        asteroid.__init__(x, y, vy ,vx)
+        return asteroid
             
 
 
