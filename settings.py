@@ -20,6 +20,7 @@ player_size = 50
 player_acc = 1.5 * 60 / FPS_anzahl
 player_friction = -0.13
 projectiles = []
+ufo_sprites = []
 game_folder = os.path.dirname(__file__)
 SCREEN = pygame.display.set_mode(size=(width, height))
 pygame.display.set_caption("Space Centipede")
@@ -67,6 +68,9 @@ ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.jo
 ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
 #ufo_animation_dict["ufo-1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
 
+centipede_img_dict = {}
+centipede_img_dict["Head"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-head.png")),(seg_groesse,seg_groesse))
+centipede_img_dict["Body"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-body part.png")),(seg_groesse,seg_groesse))
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
 def exit_game():
@@ -149,10 +153,17 @@ class Collider():
                 enemy.status("hit")
                 projectiles.pop(index)
 
+    def collideCentipede(self, projectiles, enemysprites):
+        for enemy in enemysprites:
+            index = enemy.rect.collidelist(projectiles)
+            if index != -1:    #-1 bedeutet keine Kollision deswegen muss es exkludiert werden
+                enemy.status("hit", ufo_sprites)
+                projectiles.pop(index)
+
     def collideAsteroid():
         pass
 
     def collideWithWall(self, centipede, obstacles):
         for segment in centipede:
             if segment.rect.collidelist(obstacles) != -1:
-                segment.status("collideWithWall")
+                segment.status("collideWithWall", ufo_sprites)

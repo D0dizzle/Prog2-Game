@@ -10,7 +10,7 @@ from player import *
 background = Hintergrund(hg_dict)
 player1 = Player1(player_img_dict)
 new_map = ObstacleOnScreen()
-new_map.new()
+new_map.new(ufo_sprites)
 centipede = Centipede(10)
 centipede.createCentipede()
 centipede.observer()
@@ -66,8 +66,7 @@ class startScreen(screenState):
             SCREEN.blit(button_text, text_rect)
     
     def exit(self, screen: GameScreen):
-        pass
-    
+        pass    
 
 class playScreen(screenState):
     def enter(self, screen: GameScreen):
@@ -79,16 +78,16 @@ class playScreen(screenState):
         #update der Logik
         player1.update()
         player1.shoot(projectiles)
-        collider.collideObstacle(projectiles, new_map.sprites)
-        collider.collideObstacle(projectiles, centipede.segments)
-        collider.collideWithWall(centipede.segments, new_map.sprites)
-        new_map.delete()
+        collider.collideObstacle(projectiles, ufo_sprites)
+        collider.collideCentipede(projectiles, centipede.segments)
+        collider.collideWithWall(centipede.segments, ufo_sprites)
+        new_map.delete(ufo_sprites)
         centipede.update()
 
     def render(self, screen: GameScreen):    
         screen.image.render()
         #hier Objekte die ge"draw"ed werden sollen
-        sprites = pygame.sprite.Group(player1, projectiles, new_map.sprites, centipede.segments)
+        sprites = pygame.sprite.Group(player1, projectiles, ufo_sprites, centipede.segments)
         sprites.draw(SCREEN)
 
 class settingsScreen(screenState):
@@ -120,7 +119,6 @@ class gameOverScreen(screenState):
 
     def render(self, screen: GameScreen):
         pass
-
 
 class GameScreen:
     def __init__(self):
