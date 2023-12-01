@@ -34,7 +34,8 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.state = "alive"
         self.shoot_cd = 200
         self.last_shot = 0
-        self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav")) # Quelle: https://opengameart.org/content/4-projectile-launches
+        self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
+        self.death_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
         self.timer = 0
         self.dir = 0
 
@@ -102,3 +103,4 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         if state == "dead":
             print(state)
             self.remove()
+            self.death_sound.play()
