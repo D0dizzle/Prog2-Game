@@ -31,6 +31,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.ay = 0
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+        self.state = "alive"
         self.shoot_cd = 200
         self.last_shot = 0
         self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav")) # Quelle: https://opengameart.org/content/4-projectile-launches
@@ -96,5 +97,8 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             if projectile.rect.bottom  < -5:
                 projectiles.remove(projectile)
 
-    def zustand(self):
-        pass
+    def zustand(self, state:str):
+
+        if state == "dead":
+            print(state)
+            self.remove()

@@ -159,13 +159,10 @@ class Collider():
 
     def collideAsteroid(self, asteroids, player1):
    
-            
-        """if pygame.Rect.colliderect(asteroid.rect, player1.rect):
-            asteroids.remove(asteroid)
-            player1.status("dead")"""
         index = player1.rect.collidelist(asteroids)
         if index != -1:
             asteroids.pop(index)
+            player1.zustand("dead")
             
         
     def collideWithWall(self, centipede, obstacles):
