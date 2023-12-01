@@ -157,11 +157,11 @@ class Collider():
                 enemy.status("hit")
                 projectiles.pop(index)
 
-    def collideAsteroid(self, asteroids, player1):
+    def collidePlayer(self, sprite, player1):
    
-        index = player1.rect.collidelist(asteroids)
+        index = player1.rect.collidelist(sprite)
         if index != -1:
-            asteroids.pop(index)
+            sprite.pop(index)
             player1.zustand("dead")
             
         
