@@ -13,7 +13,7 @@ new_map = ObstacleOnScreen()
 new_map.new(ufo_sprites)
 centipede = Centipede(10)
 centipede.createCentipede()
-centipede.observer()
+#centipede.observer()
 collider = Collider()
 
 

@@ -21,7 +21,6 @@ class IBaseGegnerMain(ABC):
         pass
 
 class ISegment(ABC):
-    @abstractclassmethod
     def update(self):
         pass
 
@@ -96,7 +95,6 @@ class segState(ABC):
     def counter_reached(self):
         pass
 
-
 class looksLeft(segState):
     def collide_with_border(self, seg: ISegment):
         if seg.rect.left < 0:
@@ -144,20 +142,19 @@ class looksDown(segState):      #####Hier aufpassen! anderes Verhalten bei SegHe
         seg.state_before = looksDown()
         seg.counter = 0
 
-class SegmentKopf(pygame.sprite.Sprite, Observable, ISegment): ###Kontext im Sinne des State Patterns
+class SegmentKopf(ISegment, pygame.sprite.Sprite): ###Kontext im Sinne des State Patterns
     def __init__(self, x, y):
         super().__init__()
-        self.obstacleCreator = ObstacleCreator()
         self.image = centipede_img_dict["Head"]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y 
+        self.obstacleCreator = ObstacleCreator()
         self.counter = 0
         self.state = looksLeft()
         self.state_before = self.state
         self.hp = 1
         self.isAlive = "alive"
-        self.observers = []
 
     def change_state(self, newState: segState):
         if (self.state != None):
@@ -165,16 +162,16 @@ class SegmentKopf(pygame.sprite.Sprite, Observable, ISegment): ###Kontext im Sin
         self.state = newState
         self.state.enter()
 
-
     def status(self, status_change: str, ufo_sprites: list):
         if status_change == "hit":
             self.hp -= 1
             if self.hp == 0:
                 ufo_sprites.append(self.obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz"))
                 self.isAlive = "dead"
-        elif status_change == "collideWithWall" and self.counter == 0 :
+        elif status_change == "collideWithWall" and self.counter == 0 and isinstance(self.state, looksDown) == False:
             self.state.collide_with_obstacle(self)
 
+        
     def move(self):
         self.state.move(self)
         if self.counter == 25:
@@ -182,25 +179,23 @@ class SegmentKopf(pygame.sprite.Sprite, Observable, ISegment): ###Kontext im Sin
         elif self.rect.x <= 0 and isinstance(self.state, looksLeft):
             self.state.collide_with_border(self)
         elif self.rect.right >= width and isinstance(self.state, looksRight):
-            
             self.state.collide_with_border(self)
     
-class SegmentKoerper(pygame.sprite.Sprite, Observer, ISegment):
+class SegmentKoerper(ISegment, Observer, pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.obstacleCreator = ObstacleCreator()
         self.image = centipede_img_dict["Body"]
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y 
-        self.hp = 1
-        self.isAlive = "alive"
-        self.state = looksLeft()
-        self.notif = False
+        self.rect.y = y
+        self.obstacleCreator = ObstacleCreator()
         self.counter = 0
-        self.counter2 = 0
+        self.state = looksLeft()
+        self.state_before = self.state
+        self.hp = 1
+        self.isAlive = "alive" 
 
-    def notification(self, observable: Observable):
+    def notification(self):
         pass
 
     def change_state(self, newState: segState):
@@ -208,18 +203,17 @@ class SegmentKoerper(pygame.sprite.Sprite, Observer, ISegment):
             self.state.exit(self)
         self.state = newState
         self.state.enter()
-    
+
     def status(self, status_change: str, ufo_sprites: list):
         if status_change == "hit":
             self.hp -= 1
             if self.hp == 0:
                 ufo_sprites.append(self.obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz"))
                 self.isAlive = "dead"
-
-        elif status_change == "collideWithWall" and self.counter == 0 :
+        elif status_change == "collideWithWall" and self.counter == 0 and isinstance(self.state, looksDown) == False:
             self.state.collide_with_obstacle(self)
-
-    
+        
+        
     def move(self):
         self.state.move(self)
         if self.counter == 25:
@@ -227,10 +221,8 @@ class SegmentKoerper(pygame.sprite.Sprite, Observer, ISegment):
         elif self.rect.x <= 0 and isinstance(self.state, looksLeft):
             self.state.collide_with_border(self)
         elif self.rect.right >= width and isinstance(self.state, looksRight):
-            
             self.state.collide_with_border(self)
-
-
+    
 class CentipedeListCreator:
     def createCentipedeList(self, centi_length):
         if centi_length == 10:
@@ -263,9 +255,9 @@ class Centipede:
             elif i == 10 - 1:
                 self.segments.append(segmentCreator.createSegment(self.x - (25*i), i * self.y, "head"))
 
-    def observer(self): 
+    """def observer(self): 
         for segment in self.segments[:len(self.segments)-1]:
-            self.segments[len(self.segments)-1].register(segment)
+            self.segments[len(self.segments)-1].register(segment)"""
 
     def update(self):
         for segment in self.segments:
