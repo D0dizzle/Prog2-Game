@@ -18,3 +18,5 @@ Ufo Base Sprite     -  https://opengameart.org/content/space-pixel-art
 Player Death Sound  - https://opengameart.org/content/space-battle-game-sounds-astromenace
 
 https://stackoverflow.com/questions/395735/how-to-check-whether-a-variable-is-a-class-or-not
+
+https://stackoverflow.com/questions/522563/accessing-the-index-in-for-loops für Centipede.update() -> enumerate um an Indices zu kommen
