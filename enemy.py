@@ -215,87 +215,6 @@ class Segment(ISegment, pygame.sprite.Sprite):
         elif self.rect.right >= width and isinstance(self.state, looksRight):
             self.state.collide_with_border(self)
 
-"""class SegmentKopf(ISegment, pygame.sprite.Sprite): ###Kontext im Sinne des State Patterns
-    def __init__(self, x, y):
-        super().__init__()
-        self.image = centipede_img_dict["Head"]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y 
-        self.obstacleCreator = ObstacleCreator()
-        self.counter = 0
-        self.state = looksLeft()
-        self.state_before = self.state
-        self.hp = 1
-        self.isAlive = "alive"
-
-    def change_state(self, newState):
-        if (self.state != None):
-            self.state.exit(self)
-        self.state = newState
-        self.state.enter()
-
-    def status(self, status_change: str, ufo_sprites: list):
-        if status_change == "hit":
-            self.hp -= 1
-            if self.hp == 0:
-                ufo_sprites.append(self.obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz"))
-                self.isAlive = "dead"
-        elif status_change == "collideWithWall" and self.counter == 0 and isinstance(self.state, looksDown) == False:
-            self.state.collide_with_obstacle(self)
-
-        
-    def move(self):
-        self.state.move(self)
-        if self.counter == 25:
-            self.state.counter_reached(self)
-        elif self.rect.x <= 0 and isinstance(self.state, looksLeft):
-            self.state.collide_with_border(self)
-        elif self.rect.right >= width and isinstance(self.state, looksRight):
-            self.state.collide_with_border(self)
-    
-class SegmentKoerper(ISegment, Observer, pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__()
-        self.image = centipede_img_dict["Body"]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.obstacleCreator = ObstacleCreator()
-        self.counter = 0
-        self.state = looksLeft()
-        self.state_before = self.state
-        self.hp = 1
-        self.isAlive = "alive" 
-
-    def notification(self):
-        pass
-
-    def change_state(self, newState: segState):
-        if (self.state != None):
-            self.state.exit(self)
-        self.state = newState
-        self.state.enter()
-
-    def status(self, status_change: str, ufo_sprites: list):
-        if status_change == "hit":
-            self.hp -= 1
-            if self.hp == 0:
-                ufo_sprites.append(self.obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz"))
-                self.isAlive = "dead"
-        elif status_change == "collideWithWall" and self.counter == 0 and isinstance(self.state, looksDown) == False:
-            self.state.collide_with_obstacle(self)
-        
-        
-    def move(self):
-        self.state.move(self)
-        if self.counter == 25:
-            self.state.counter_reached(self)
-        elif self.rect.x <= 0 and isinstance(self.state, looksLeft):
-            self.state.collide_with_border(self)
-        elif self.rect.right >= width and isinstance(self.state, looksRight):
-            self.state.collide_with_border(self)"""
-    
 class CentipedeListCreator:
     def createCentipedeList(self, centi_length):
         if centi_length == 10:
@@ -310,7 +229,6 @@ class Centipede:
         self.y = 0
 
     def createCentipede(self):
-        #segmentCreator = SegmentCreator()
         for i in range(10):
             if i == 0:
                 self.segments.append(Segment(self.x - (25*i), i * self.y, isBody()))
@@ -318,10 +236,6 @@ class Centipede:
                 self.segments.append(Segment(self.x - (25*i), i * self.y, isBody()))
             elif i == 10 - 1:
                 self.segments.append(Segment(self.x - (25*i), i * self.y, isHead()))
-
-    """def observer(self): 
-        for segment in self.segments[:len(self.segments)-1]:
-            self.segments[len(self.segments)-1].register(segment)"""
 
     def update(self):
         i = 0
@@ -339,17 +253,6 @@ class Centipede:
                 print(self.segments[index].sprite_state)
                 self.segments.remove(segment)
             i += 1
-
-
-
-
-
-
-
-
-
-
-
 
 ###############################################################################
 
