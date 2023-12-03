@@ -23,6 +23,7 @@ class ProjectileCreator:
 class Player1(pygame.sprite.Sprite, iPlayer):
     def __init__(self, dict, x , y):
         super().__init__()
+        pygame.mixer.init() 
         self.dict = dict
         self.image = self.dict["player0"]
         self.vx = 3
