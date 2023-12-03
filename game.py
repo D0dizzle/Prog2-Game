@@ -8,7 +8,7 @@ from enemy import *
 from player import *
 
 background = Hintergrund(hg_dict)
-player1 = Player1(player_img_dict)
+player1 = Player1(player_img_dict, width /2, height - height /6)
 new_map = ObstacleOnScreen()
 new_map.new(ufo_sprites)
 centipede = Centipede(10)

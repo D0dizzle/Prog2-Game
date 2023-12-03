@@ -60,10 +60,8 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
     
-    def new(self):
-        self.map = TileMap(choice(list(tilemap_dict.values())))
     def new(self, ufo_sprites: list):
-        self.map = TileMap(img_dict["TME"])
+        self.map = TileMap(choice(list(tilemap_dict.values())))
         for col, tiles in enumerate(self.map.data):
             for row, tile in enumerate(tiles):
                 if tile == '1':
