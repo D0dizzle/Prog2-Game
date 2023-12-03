@@ -15,6 +15,7 @@ centipede = Centipede(10)
 centipede.createCentipede()
 #centipede.observer()
 collider = Collider()
+asteroids = Asteroid()
 
 
 #### Interface und Zustand-Klassen für die verschiedenen Spiel-Abschnitte
@@ -78,9 +79,11 @@ class playScreen(screenState):
         #update der Logik
         player1.update()
         player1.shoot(projectiles)
+        asteroids.render()
         collider.collideObstacle(projectiles, ufo_sprites)
         collider.collideCentipede(projectiles, centipede.segments)
         collider.collideWithWall(centipede.segments, ufo_sprites)
+        collider.collidePlayer(asteroids.asteroidslist, player1)
         new_map.delete(ufo_sprites)
         centipede.update()
 
@@ -89,6 +92,7 @@ class playScreen(screenState):
         #hier Objekte die ge"draw"ed werden sollen
         sprites = pygame.sprite.Group(player1, projectiles, ufo_sprites, centipede.segments)
         sprites.draw(SCREEN)
+        asteroids.update()
 
 class settingsScreen(screenState):
     def enter(self, screen: GameScreen):
