@@ -113,7 +113,7 @@ class Asteroid():
         if current_time - self.last_asteroid > self.cooldown and self.current_asteroids < self.max_asteroids:
             self.last_asteroid = current_time               
             self.asteroidslist.append(creator.createAsteroid(randint(0,width),-50, randint(2,5),randint(-1,1)))
-            self.cooldown = randint(500,1000)
+            self.cooldown = randint(5000,10000)
             
     def update(self):
         for asteroid in self.asteroidslist:
