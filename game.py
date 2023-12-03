@@ -48,7 +48,6 @@ class startScreen(screenState):
                 for button in screen.buttons:
                     if button['rect'].collidepoint(event.pos):
                         if button['text'] == 'Start':
-                            print("State changed")
                             screen.change_state(playScreen())
                         if button['text'] == 'Beenden':
                             pygame.quit()

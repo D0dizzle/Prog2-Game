@@ -121,8 +121,6 @@ class Asteroid():
             if asteroid.rect.y  > height+50 or asteroid.rect.x < -50 or asteroid.rect.x > width+50:
                 self.asteroidslist.remove(asteroid)
                 
-
-
 class AsteroidCreator():
 
     def createAsteroid(self, x, y, vy ,vx):
@@ -130,9 +128,15 @@ class AsteroidCreator():
         asteroid = AsteroidSprite(x, y ,vy ,vx)
         asteroid.__init__(x, y, vy ,vx)
         return asteroid
-            
+     
 class segSpriteState(ABC):
     def enter(self):
+        pass
+
+    def exit(self):
+        pass
+
+    def swap_head_and_body(self):
         pass
 
 class isHead(segSpriteState):
@@ -143,17 +147,17 @@ class isHead(segSpriteState):
         seg.change_sprite_state(isBody())
 
     def exit(self, seg: ISegment):
-        seg.image = None
+        pass
 
 class isBody(segSpriteState):
     def enter(self, seg: ISegment):
         seg.image = centipede_img_dict["Body"]
 
     def swap_head_and_body(self, seg: ISegment):
-        seg.change_spritestate(isHead())
+        seg.change_sprite_state(isHead())
 
     def exit(self, seg: ISegment):
-        seg.image = None
+        pass
 
 class segState(ABC):
 
@@ -244,10 +248,10 @@ class Segment(ISegment, pygame.sprite.Sprite):
         self.state = newState
         self.state.enter(self)
 
-    def change_sprite_state(self, newState):
+    def change_sprite_state(self, newSpriteState):
         if (self.sprite_state != None):
             self.sprite_state.exit(self)
-        self.sprite_state = newState
+        self.sprite_state = newSpriteState
         self.sprite_state.enter(self)
 
     def status(self, status_change: str, ufo_sprites: list):
@@ -291,22 +295,18 @@ class Centipede:
                 self.segments.append(Segment(self.x - (25*i), i * self.y, isHead()))
 
     def update(self):
-        i = 0
-        for segment in self.segments:
+        for index, segment in enumerate(self.segments):
             segment.move()
             if segment.isAlive == "dead":
-                index = i
-                if isinstance(segment.state, looksLeft):
-                    index += 1
-                    self.segments[index].change_sprite_state(isHead())
-                    print(self.segments[index].sprite_state)
-                elif isinstance(segment.state, looksRight):
-                    index -= 1 
-                    self.segments[index].change_sprite_state(isHead())   
-                print(self.segments[index].sprite_state)
+                if index + 1 < len(self.segments) or index - 1 >= 0:
+                    if isinstance(segment.state, looksLeft):
+                        segment_after = self.segments[index - 1]
+                        segment_after.change_sprite_state(isHead())
+                        print(segment_after.sprite_state)
+                    elif isinstance(segment.state, looksRight):
+                        segment_before = self.segments[index +1]
+                        segment_before.change_sprite_state(isHead())
+                    elif isinstance(segment.state, looksDown):
+                        segment_after = self.segments[index -1]
+                        segment_after.change_sprite_state(isHead())
                 self.segments.remove(segment)
-            i += 1
-
-###############################################################################
-
-                    
