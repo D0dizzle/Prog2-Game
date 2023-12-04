@@ -54,6 +54,7 @@ class startScreen(screenState):
             button_text = screen.font.render(button['text'], True, white)
             text_rect = button_text.get_rect(center=rect.center)
             SCREEN.blit(button_text, text_rect)
+        
     
     def exit(self):
         pass    
@@ -64,14 +65,14 @@ class playScreen(screenState):
         background = Hintergrund(hg_dict)
         screen.image = background
         screen.buttons = []
-        self.player1 = Player1(player_img_dict, width /2, height - height /6, screen.shoot_sound, screen.death_sound)
+        self.player1 = Player1(player_img_dict, width /2, height - height /6, screen.shoot_sound, screen.death_sound, screen.missile_sound)
         self.new_map = ObstacleOnScreen()
         self.new_map.new(ufo_sprites)
         self.centipede = Centipede(10)
         self.centipede.createCentipede()
         self.collider = Collider()
         self.asteroids = Asteroid()
-        print(ufo_sprites)
+
     
     def update(self, screen: GameScreen):
         exit_game()
@@ -158,6 +159,7 @@ class settingsScreen(screenState):
             button_text = screen.font.render(button['text'], True, white)
             text_rect = button_text.get_rect(center=rect.center)
             SCREEN.blit(button_text, text_rect)
+        
 
 class pauseScreen(screenState):
     def enter(self, screen: GameScreen):
@@ -192,6 +194,7 @@ class GameScreen:
         pygame.mixer.music.set_volume(self.volume)
         self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
         self.death_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
+        self.missile_sound = print("Hier kommt ein Sound")
         self.image = None
         self.screen_state = startScreen()
         self.buttons = []

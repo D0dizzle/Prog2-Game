@@ -16,12 +16,14 @@ class iPlayer(ABC):
 class ProjectileCreator:
     def createProjectile(self,x, y, vy, proj_kind):
         if proj_kind == "basic":
-            basic_projectile = Projectile(x, y, vy)
-        basic_projectile.__init__(x, y, vy)
-        return basic_projectile
+            projectile = Projectile(x, y, vy)
+        elif proj_kind == "missile":
+            projectile = Missile(x, y, vy)
+        projectile.__init__(x, y, vy)
+        return projectile
 
 class Player1(pygame.sprite.Sprite, iPlayer):
-    def __init__(self, dict, x , y, shoot_sound, death_sound):
+    def __init__(self, dict, x , y, shoot_sound, death_sound, missile_sound):
         super().__init__()
         pygame.mixer.init()
         self.dict = dict
@@ -34,9 +36,12 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.rect.center = (x, y)
         self.state = "alive"
         self.shoot_cd = 200
+        self.missile_cd = False
+        self.missile_shoot_rate = 0
         self.last_shot = 0
         self.shoot_sound = shoot_sound #pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
         self.death_sound = death_sound #pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
+        self.missile_sound = missile_sound
         self.timer = 0
         self.dir = 0
 
@@ -92,7 +97,12 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             self.last_shot = current_time
             self.shoot_sound.play()
             
-
+        if key_press[pygame.K_m] and self.missile_cd == 300:
+            projectiles.append(projectileCreator.createProjectile(self.rect.centerx, self.rect.centery-20, 10, "missile"))
+            self.missile_sound
+            self.missile_cd = 0
+        elif self.missile_cd < 300:
+            self.missile_cd += 1      
 
         for projectile in projectiles:
             projectile.update()

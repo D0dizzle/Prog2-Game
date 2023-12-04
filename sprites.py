@@ -3,6 +3,8 @@
 import pygame
 import os
 from abc import ABC, abstractclassmethod
+
+#from pygame.sprite import _Group
 from settings import *
 from random import choice
 
@@ -17,6 +19,19 @@ class Projectile(pygame.sprite.Sprite):
         self.vy = vy
         self.rect.center = (x, y)
         
+
+    def update(self):
+        self.rect.y -= self.vy
+
+class Missile(pygame.sprite.Sprite):
+    def __init__(self, x, y, vy):
+        super().__init__()
+        self.image = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "rock.green-crystals.png")), (15, 25))
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.vy = vy
+        self.rect.center = (x,y)
 
     def update(self):
         self.rect.y -= self.vy
