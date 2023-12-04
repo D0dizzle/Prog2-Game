@@ -224,7 +224,7 @@ class Score:
         highscore_text = self.font.render(f"Highscore: {self.highscore}", True, white)
         score_text = self.font.render(f"Score: {self.score}", True, white)
         SCREEN.blit(highscore_text, (10, 10))
-        SCREEN.blit(score_text, (10, 50))
+        SCREEN.blit(score_text, (10, 35))
 
     def update_score(self, enemy1, enemy2):
         self.score += enemy1.score

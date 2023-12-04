@@ -25,7 +25,7 @@ class startScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
             {'rect': pygame.Rect(width/2 -100, 400, 200, 50), 'text': 'Start'}, # beide hinteren Werte für die Größe
-            {'rect': pygame.Rect(width/2 -200, 500, 400, 50), 'text': 'Settings'},
+            {'rect': pygame.Rect(width/2 -150, 500, 300, 50), 'text': 'Settings'},
             {'rect': pygame.Rect(width/2 -100, 600, 200, 50), 'text': 'Exit'}]
         screen.image = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert(),(width, height))
         
@@ -55,7 +55,9 @@ class startScreen(screenState):
             text_rect = button_text.get_rect(center=rect.center)
             SCREEN.blit(button_text, text_rect)
         
-    
+        self.headline = screen.headline.render(f"Centipede", True, white)
+        SCREEN.blit(self.headline, (width/2 -225, 170, 0, 0))
+
     def exit(self):
         pass    
 
@@ -200,6 +202,7 @@ class GameScreen:
         self.buttons = []
         self.screen_state.enter(self)
         self.font = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 35)
+        self.headline = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 65)
 
     def change_state(self, newState: screenState):
         if (self.screen_state != None):
