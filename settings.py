@@ -180,3 +180,21 @@ class Collider():
         for segment in centipede:
             if segment.rect.collidelist(obstacles) != -1:
                 segment.status("collideWithWall", ufo_sprites)
+
+class Time:
+    def __init__(self):
+        pygame.init()
+        self.time = 0
+        self.time_counter = 0
+        self.font = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 14)
+
+    def count_time(self):
+        if self.time_counter == 60:
+            self.time += 1
+            self.time_counter = 0
+        elif self.time_counter < 60:
+            self.time_counter += 1
+    
+    def render(self):
+        self.time_on_screen = self.font.render(f"Time:  {self.time}", True, white)
+        SCREEN.blit(self.time_on_screen, (680, 10))
