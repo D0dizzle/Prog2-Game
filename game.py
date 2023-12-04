@@ -24,6 +24,7 @@ class screenState(ABC):
 class startScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
+            {'rect': pygame.Rect(width/2 -0, 100, 0, 0), 'text': 'Centipede'},
             {'rect': pygame.Rect(width/2 -100, 400, 200, 50), 'text': 'Start'}, # beide hinteren Werte für die Größe
             {'rect': pygame.Rect(width/2 -200, 500, 400, 50), 'text': 'Settings'},
             {'rect': pygame.Rect(width/2 -100, 600, 200, 50), 'text': 'Exit'}]
