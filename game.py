@@ -7,16 +7,6 @@ from sprites import *
 from enemy import *
 from player import *
 
-"""background = Hintergrund(hg_dict)
-player1 = Player1(player_img_dict, width /2, height - height /6)
-new_map = ObstacleOnScreen()
-new_map.new(ufo_sprites)
-centipede = Centipede(10)
-centipede.createCentipede()
-collider = Collider()
-asteroids = Asteroid()"""
-
-
 #### Interface und Zustand-Klassen für die verschiedenen Spiel-Abschnitte
 class screenState(ABC):
     def exit(self):
@@ -106,7 +96,7 @@ class playScreen(screenState):
         self.asteroids.update()
 
     def exit(self):
-        pass
+        del ufo_sprites[0:]
 
 class settingsScreen(screenState):
     def enter(self, screen: GameScreen):
