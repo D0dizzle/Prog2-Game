@@ -198,3 +198,34 @@ class Time:
     def render(self):
         self.time_on_screen = self.font.render(f"Time:  {self.time}", True, white)
         SCREEN.blit(self.time_on_screen, (680, 10))
+
+class Score:
+    def __init__(self):
+        pygame.init()
+        self.score = 0
+        self.font = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 14)
+
+    def load_highscore(self):
+        try:
+            with open(os.path.join(game_folder, "Assets", "highscore.txt"), "r") as file:
+                self.highscore= int(file.read())
+        except FileNotFoundError:
+            return 0
+
+    def save_highscore(self):
+        with open(os.path.join(game_folder,"Assets", "highscore.txt"), "w") as file:
+            file.write(str(self.highscore))
+
+    def update_highscore(self):
+        if self.score > self.highscore:
+            self.highscore = self.score
+
+    def display_scores(self):
+        highscore_text = self.font.render(f"Highscore: {self.highscore}", True, white)
+        score_text = self.font.render(f"Score: {self.score}", True, white)
+        SCREEN.blit(highscore_text, (10, 10))
+        SCREEN.blit(score_text, (10, 50))
+
+    def update_score(self, enemy1, enemy2):
+        self.score += enemy1.score
+        self.score += enemy2.score

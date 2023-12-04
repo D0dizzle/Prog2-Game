@@ -29,6 +29,7 @@ class ObstacleCreator:
 class ObstacleOnScreen(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.score = 0
     
     def new(self, ufo_sprites: list):
         self.map = TileMap(choice(list(tilemap_dict.values())))
@@ -39,9 +40,12 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
                     ufo_sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Pilz"))
 
     def delete(self, ufo_sprites: list):
+        self.score = 0
         for sprite in ufo_sprites:
             if sprite.isAlive == "dead":
+                self.score = 10
                 ufo_sprites.remove(sprite)
+
 
 
 class AsteroidSprite(pygame.sprite.Sprite):
@@ -211,7 +215,7 @@ class Segment(ISegment, pygame.sprite.Sprite):
         self.state_before = self.state
         self.hp = 1
         self.isAlive = "alive"
-    
+
     def change_state(self, newState):
         if (self.state != None):
             self.state.exit(self)
@@ -254,6 +258,7 @@ class Centipede:
         self.length = 10
         self.x = width
         self.y = 0
+        self.score = 0
 
     def createCentipede(self):
         for i in range(10):
@@ -265,6 +270,7 @@ class Centipede:
                 self.segments.append(Segment(self.x - (25*i), i * self.y, isHead()))
 
     def update(self):
+        self.score = 0
         for index, segment in enumerate(self.segments):
             segment.move()
             if segment.isAlive == "dead":
@@ -280,3 +286,4 @@ class Centipede:
                         segment_after = self.segments[index -1]
                         segment_after.change_sprite_state(isHead())
                 self.segments.remove(segment)
+                self.score = 10

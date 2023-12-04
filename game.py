@@ -60,6 +60,7 @@ class startScreen(screenState):
 
 class playScreen(screenState):
     def enter(self, screen: GameScreen):
+        screen.score.load_highscore()
         background = Hintergrund(hg_dict)
         screen.image = background
         screen.buttons = []
@@ -86,6 +87,9 @@ class playScreen(screenState):
         self.new_map.delete(ufo_sprites)
         self.centipede.update()
         screen.timer.count_time()
+        screen.score.update_score(self.new_map, self.centipede)
+        screen.score.update_highscore()
+        screen.score.save_highscore()
         if len(self.centipede.segments) == 0:
             screen.change_state(playScreen())
 
@@ -96,6 +100,7 @@ class playScreen(screenState):
         sprites.draw(SCREEN)
         self.asteroids.update()
         screen.timer.render()
+        screen.score.display_scores()
 
     def exit(self):
         del ufo_sprites[0:]
@@ -181,6 +186,7 @@ class GameScreen:
         self.volume = 0.5
         self.sound_volume = 0.5
         self.timer = Time()
+        self.score = Score()
         pygame.mixer.music.load(os.path.join(game_folder,"Assets","sounds","BGM.wav"))
         pygame.mixer.music.play(-1, 0)
         pygame.mixer.music.set_volume(self.volume)
