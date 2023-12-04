@@ -20,3 +20,5 @@ Player Death Sound  - https://opengameart.org/content/space-battle-game-sounds-a
 https://stackoverflow.com/questions/395735/how-to-check-whether-a-variable-is-a-class-or-not
 
 https://stackoverflow.com/questions/522563/accessing-the-index-in-for-loops für Centipede.update() -> enumerate um an Indices zu kommen
+
+https://stackoverflow.com/questions/38001898/what-fonts-can-i-use-with-pygame-font-font für das Laden von TrueType Fonts (pygame.font.Font())

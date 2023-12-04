@@ -11,40 +11,10 @@ from settings import *
 from sprites import *
 
 ##### Interfaces für verschiedene Sachen #####
-class IBaseGegnerMain(ABC):
-    @abstractclassmethod
-    def update(self):
-        pass
-
-    @abstractclassmethod
-    def zustand():
-        pass
-
 class ISegment(ABC):
     def update(self):
         pass
-
-
-class Observer(ABC):
-    @abstractclassmethod
-    def notification():
-        pass
-
-class Observable:
-    def __init__(self):
-        self.observers = []
-
-    def register(self, follower):
-        if follower not in self.observers:
-            self.observers.append(follower)
-
-    def unregister(self, follower):
-        if follower in self.observers:
-            self.observers.remove(follower)
-
-    def notify(self):
-        for follower in self.observers:
-            follower.notification(self)       
+   
 ###########################################################
 
 class ObstacleCreator:
@@ -208,7 +178,7 @@ class looksRight(segState):
     def move(self, seg: ISegment):
         seg.rect.x += 2
 
-class looksDown(segState):      #####Hier aufpassen! anderes Verhalten bei SegHead/SegBody! 
+class looksDown(segState): 
     def counter_reached(self, seg: ISegment):
         self.counter = 0
         if isinstance(seg.state_before, looksLeft):

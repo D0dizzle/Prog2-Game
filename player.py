@@ -21,9 +21,9 @@ class ProjectileCreator:
         return basic_projectile
 
 class Player1(pygame.sprite.Sprite, iPlayer):
-    def __init__(self, dict, x , y):
+    def __init__(self, dict, x , y, shoot_sound, death_sound):
         super().__init__()
-        pygame.mixer.init() 
+        pygame.mixer.init()
         self.dict = dict
         self.image = self.dict["player0"]
         self.vx = 3
@@ -35,8 +35,8 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.state = "alive"
         self.shoot_cd = 200
         self.last_shot = 0
-        self.shoot_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
-        self.death_sound = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
+        self.shoot_sound = shoot_sound #pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
+        self.death_sound = death_sound #pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
         self.timer = 0
         self.dir = 0
 
