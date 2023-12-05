@@ -163,7 +163,7 @@ class Collider():
         index = player1.rect.collidelist(sprite)
         if index != -1:
             sprite.pop(index)
-            player1.zustand("dead")
+            player1.status("hit")
             
         
     def collideCentipede(self, projectiles, enemysprites):

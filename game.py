@@ -96,6 +96,9 @@ class playScreen(screenState):
         screen.score.save_highscore()
         if len(self.centipede.segments) == 0:
             screen.change_state(playScreen())
+        if self.player1.state == "dead":
+            screen.change_state(gameOverScreen())
+
         if key_pressed[pygame.K_ESCAPE]:
             screen.change_state(pauseScreen())
 
@@ -213,14 +216,38 @@ class pauseScreen(screenState):
 
 
 class gameOverScreen(screenState):
+
     def enter(self, screen: GameScreen):
-        pass
+
+        screen.buttons = [{'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Restart'},
+        {'rect': pygame.Rect(550, 500, 200, 50), 'text': 'Exit'}]
+        screen.image = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert(),(width, height))
     
     def update(self, screen: GameScreen):
-        pass
+
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in screen.buttons:
+                    if button['rect'].collidepoint(event.pos):
+                        if button['text'] == 'Restart':
+                            screen.change_state(playScreen())
+                        if button['text'] == 'Exit':
+                            pygame.quit()
+                            sys.exit()
 
     def render(self, screen: GameScreen):
-        pass
+
+        self.gameovertext = screen.font.render("U dead Son", True, white)
+        SCREEN.blit(screen.image, (0,0))
+        SCREEN.blit(self.gameovertext, (275, 100))
+        
+        for button in screen.buttons:
+            rect = pygame.Rect(button['rect'])
+            pygame.draw.rect(SCREEN, cyan, rect, border_radius=10)
+            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
+            button_text = screen.font.render(button['text'], True, white)
+            text_rect = button_text.get_rect(center=rect.center)
+            SCREEN.blit(button_text, text_rect)
 
 class GameScreen:
     def __init__(self):

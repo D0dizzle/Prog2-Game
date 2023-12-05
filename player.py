@@ -10,7 +10,7 @@ class iPlayer(ABC):
         pass 
 
     @abstractclassmethod
-    def zustand():
+    def status():
         pass
 
 class ProjectileCreator:
@@ -35,6 +35,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.state = "alive"
+        self.hp = 1
         self.shoot_cd = 200
         self.missile_cd = False
         self.missile_shoot_rate = 0
@@ -109,9 +110,11 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             if projectile.rect.bottom  < -5:
                 projectiles.remove(projectile)
 
-    def zustand(self, state:str):
+    def status(self, state:str):
 
-        if state == "dead":
-            print(state)
-            self.remove()
+        if state == "hit":
             self.death_sound.play()
+            self.hp -= 1
+        if self.hp == 0:
+            self.state = "dead"
+
