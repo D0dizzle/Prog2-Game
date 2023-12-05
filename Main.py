@@ -13,4 +13,4 @@ while True:
     game_screen.update()
     game_screen.render()
     pygame.display.update()
-    FPS.tick(FPS_anzahl)
+    clock.tick(FPS)

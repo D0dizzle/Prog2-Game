@@ -9,15 +9,16 @@ from random import randint, choice
 black = (0, 0, 0)
 white = (255, 255, 255)
 cyan = (100, 100, 255)
+red = (205, 51, 51)
 green = (0, 255, 0)
 dark_green = (100, 255, 100)
 height = 700
 width = 800
-FPS_anzahl = 60                     #Anzahl FPS
-FPS = pygame.time.Clock()           #Pygame.time.Clock Objekt
+FPS = 60                     #Anzahl FPS
+clock = pygame.time.Clock()           #Pygame.time.Clock Objekt
 seg_groesse = 25
 player_size = 50
-player_acc = 1.5 * 60 / FPS_anzahl
+player_acc = 1.5 * 60 / FPS
 player_friction = -0.13
 projectiles = []
 ufo_sprites = []
@@ -75,6 +76,9 @@ ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.jo
 centipede_img_dict = {}
 centipede_img_dict["Head"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-head.png")),(seg_groesse,seg_groesse))
 centipede_img_dict["Body"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-body part.png")),(seg_groesse,seg_groesse))
+
+sound_dict = {}
+
 
 #### Funktionen: ####
 #Funktion zum Beenden des Spiels durch "x" in der Ecke
@@ -173,9 +177,6 @@ class Collider():
                 enemy.status("hit", ufo_sprites)
                 projectiles.pop(index)
 
-    def collideAsteroid():
-        pass
-
     def collideWithWall(self, centipede, obstacles):
         for segment in centipede:
             if segment.rect.collidelist(obstacles) != -1:
@@ -189,10 +190,10 @@ class Time:
         self.font = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 14)
 
     def count_time(self):
-        if self.time_counter == 60:
+        if self.time_counter == FPS:
             self.time += 1
             self.time_counter = 0
-        elif self.time_counter < 60:
+        elif self.time_counter < FPS:
             self.time_counter += 1
     
     def render(self):
@@ -202,13 +203,13 @@ class Time:
 class Score:
     def __init__(self):
         pygame.init()
-        self.score = 0
+        self.points = 0
         self.font = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 14)
 
     def load_highscore(self):
         try:
             with open(os.path.join(game_folder, "Assets", "highscore.txt"), "r") as file:
-                self.highscore= int(file.read())
+                self.highscore = int(file.read())
         except FileNotFoundError:
             return 0
 
@@ -217,15 +218,15 @@ class Score:
             file.write(str(self.highscore))
 
     def update_highscore(self):
-        if self.score > self.highscore:
-            self.highscore = self.score
+        if self.points > self.highscore:
+            self.highscore = self.points
 
     def display_scores(self):
         highscore_text = self.font.render(f"Highscore: {self.highscore}", True, white)
-        score_text = self.font.render(f"Score: {self.score}", True, white)
+        score_text = self.font.render(f"Score: {self.points}", True, white)
         SCREEN.blit(highscore_text, (10, 10))
         SCREEN.blit(score_text, (10, 35))
 
     def update_score(self, enemy1, enemy2):
-        self.score += enemy1.score
-        self.score += enemy2.score
+        self.points += enemy1.score
+        self.points += enemy2.score
