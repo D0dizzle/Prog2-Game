@@ -77,6 +77,7 @@ class playScreen(screenState):
 
     
     def update(self, screen: GameScreen):
+        key_pressed = pygame.key.get_pressed()
         exit_game()
         #update der Logik
         self.player1.update()
@@ -95,6 +96,8 @@ class playScreen(screenState):
         screen.score.save_highscore()
         if len(self.centipede.segments) == 0:
             screen.change_state(playScreen())
+        if key_pressed[pygame.K_ESCAPE]:
+            screen.change_state(pauseScreen())
 
     def render(self, screen: GameScreen):    
         screen.image.render()
@@ -118,8 +121,9 @@ class settingsScreen(screenState):
             {'rect': pygame.Rect(475, 350, 50, 50), 'text': '.+'},
             {'rect': pygame.Rect(550, 350, 50, 50), 'text': '.-'},
             {'rect': pygame.Rect(625, 350, 150, 50), 'text': '.Mute'},
-            {'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Start'},
-            {'rect': pygame.Rect(300, 500, 200, 50), 'text': 'Exit'}]
+            {'rect': pygame.Rect(50, 500, 300, 50), 'text': 'Start Game'},
+            {'rect': pygame.Rect(400, 500, 350, 50), 'text': 'Back to Start'},
+            {'rect': pygame.Rect(300, 600, 200, 50), 'text': 'Exit'}]
         screen.image = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert(),(width, height))
     
     def update(self, screen: GameScreen):
@@ -144,8 +148,10 @@ class settingsScreen(screenState):
                             screen.sound_volume = 0
                         screen.shoot_sound.set_volume(screen.sound_volume)
                         screen.death_sound.set_volume(screen.sound_volume)
-                        if button['text'] == 'Start':
+                        if button['text'] == 'Start Game':
                             screen.change_state(playScreen())
+                        if button['text'] == 'Back to Start':
+                            screen.change_state(startScreen())
                         if button['text'] == 'Exit':
                             pygame.quit()
                             sys.exit()
@@ -165,13 +171,46 @@ class settingsScreen(screenState):
 
 class pauseScreen(screenState):
     def enter(self, screen: GameScreen):
-        pass
+        screen.image = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert(),(width, height))
+        screen.buttons = [
+            {'rect': pygame.Rect(width/2 -125, 200, 250, 50), 'text': 'Continue'},
+            {'rect': pygame.Rect(width/ 2 -125, 300, 250, 50), 'text': 'Settings'},
+            {'rect': pygame.Rect(width/ 2 -125, 400, 250, 50), 'text': 'Restart'},
+            {'rect': pygame.Rect(width / 2 -175, 500, 350, 50), 'text': 'Back to Start'},
+            {'rect': pygame.Rect(width / 2 -125, 600, 250, 50), 'text': 'Exit Game'}
+        ]
     
     def update(self, screen: GameScreen):
-        pass
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in screen.buttons:
+                    if button['rect'].collidepoint(event.pos):
+                        if button['text'] == 'Continue':
+                            pass
+                        if button['text'] == 'Settings':
+                            screen.change_state(settingsScreen())
+                        screen.score.score = 0
+                        screen.timer.time = 0
+                        if button['text'] == 'Restart':
+                            screen.change_state(playScreen())
+                        if button['text'] == 'Back to Start':
+                            screen.change_state(startScreen())
+                        if button['text'] == 'Exit Game':
+                            exit_game()
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
     def render(self, screen: GameScreen):
-        pass
+        SCREEN.blit(screen.image, (0,0))
+        for button in screen.buttons:
+            rect = pygame.Rect(button['rect'])
+            pygame.draw.rect(SCREEN, cyan, rect, border_radius=10)
+            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
+            button_text = screen.font.render(button['text'], True, white)
+            text_rect = button_text.get_rect(center=rect.center)
+            SCREEN.blit(button_text, text_rect)
+
 
 class gameOverScreen(screenState):
     def enter(self, screen: GameScreen):
@@ -216,7 +255,3 @@ class GameScreen:
     def update(self):
         self.screen_state.update(self)
         
-
-
-    def run(self):
-        pass
