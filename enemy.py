@@ -68,8 +68,6 @@ class AsteroidSprite(pygame.sprite.Sprite):
         self.rect.y += self.vy
         self.rect.x += self.vx
 
-    def zustand(self):
-        pass
 
 class Asteroid():
 
@@ -96,9 +94,7 @@ class Asteroid():
                 self.asteroidslist.remove(asteroid)
                 
 class AsteroidCreator():
-
     def createAsteroid(self, x, y, vy ,vx):
-
         asteroid = AsteroidSprite(x, y ,vy ,vx)
         asteroid.__init__(x, y, vy ,vx)
         return asteroid
@@ -246,14 +242,8 @@ class Segment(ISegment, pygame.sprite.Sprite):
         elif self.rect.right >= width and isinstance(self.state, looksRight):
             self.state.collide_with_border(self)
 
-class CentipedeListCreator:
-    def createCentipedeList(self, centi_length):
-        if centi_length == 10:
-            self.segments = []
-            self.length = centi_length
-
 class Centipede:
-    def __init__(self, centi_length):
+    def __init__(self):
         self.segments = []
         self.length = 10
         self.x = width
@@ -274,16 +264,15 @@ class Centipede:
         for index, segment in enumerate(self.segments):
             segment.move()
             if segment.isAlive == "dead":
-                if index + 1 < len(self.segments) or index - 1 >= 0:
+                if index + 1 <= len(self.segments) or index - 1 >= 0:
                     if isinstance(segment.state, looksLeft):
                         segment_after = self.segments[index - 1]
                         segment_after.change_sprite_state(isHead())
-                        print(segment_after.sprite_state)
                     elif isinstance(segment.state, looksRight):
-                        segment_before = self.segments[index +1]
+                        segment_before = self.segments[index + 1]
                         segment_before.change_sprite_state(isHead())
                     elif isinstance(segment.state, looksDown):
-                        segment_after = self.segments[index -1]
+                        segment_after = self.segments[index - 1]
                         segment_after.change_sprite_state(isHead())
                 self.segments.remove(segment)
                 self.score = 10
