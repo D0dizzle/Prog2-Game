@@ -6,6 +6,7 @@ from settings import *
 from sprites import *
 from enemy import *
 from player import *
+import math
 
 #### Interface und Zustand-Klassen für die verschiedenen Spiel-Abschnitte
 class screenState(ABC):
@@ -56,6 +57,25 @@ class startScreen(screenState):
         
         self.headline = screen.headline.render(f"Centipede", True, white)
         SCREEN.blit(self.headline, (width/2 -225, 170, 0, 0))
+
+        # Platzieren der Ellipse
+        angle = pygame.time.get_ticks() * 0.001
+        radius_x = 300
+        radius_y = 100
+        star_x = int(width / 2 + radius_x * math.cos(angle))
+        star_y = int(170 + radius_y * math.sin(angle))
+
+        star_image = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "headline-star.png"))
+        star_image = pygame.transform.scale(star_image, (60, 60))  # Anpassung der Sternengröße
+
+        # Größe und Position der Ellipse
+        ellipse_rect = pygame.Rect(star_x - 25, star_y + 8, 40, 20)
+
+        # Sternbild zeichnen
+        SCREEN.blit(star_image, ellipse_rect.topleft)
+
+        pygame.display.flip()
+
 
     def exit(self):
         pass    
