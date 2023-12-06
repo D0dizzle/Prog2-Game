@@ -74,9 +74,6 @@ class startScreen(screenState):
         # Sternbild zeichnen
         SCREEN.blit(star_image, ellipse_rect.topleft)
 
-        pygame.display.flip()
-
-
     def exit(self):
         pass    
 
