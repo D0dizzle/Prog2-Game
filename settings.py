@@ -42,6 +42,7 @@ img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "e
 img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
 img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "asteroid.png")),(2*seg_groesse,2*seg_groesse))
 img_dict["star_image"] = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "headline-star.png"))
+img_dict["Missile"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Missile.png"))
 
 tilemap_dict = {}
 tilemap_dict["TME"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapEasy.txt")
@@ -80,7 +81,7 @@ centipede_img_dict["Body"] = pygame.transform.scale(pygame.image.load(os.path.jo
 pygame.init()
 sound_dict = {}
 sound_dict["basic_shoot"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
-sound_dict["missile"] = "placeholder"
+sound_dict["missile"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","missile.wav"))
 sound_dict["death"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
 sound_dict["button"] = pygame.mixer.Sound(os.path.join(game_folder, "Assets", "sounds", "menu_select.wav"))
 

@@ -316,7 +316,7 @@ class GameScreen:
         pygame.mixer.music.set_volume(self.volume)
         self.shoot_sound = sound_dict["basic_shoot"] 
         self.death_sound = sound_dict["death"]  
-        self.missile_sound = print("Hier kommt ein Sound")
+        self.missile_sound = sound_dict["missile"]
         self.button_sound = sound_dict["button"]
         background = Hintergrund(hg_dict)
         self.image = background

@@ -28,7 +28,8 @@ class Projectile(pygame.sprite.Sprite):
 class Missile(pygame.sprite.Sprite):
     def __init__(self, x, y, vy):
         super().__init__()
-        self.image = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "rock.green-crystals.png")), (15, 25))
+        self.image1 = img_dict["Missile"]
+        self.image = pygame.transform.scale(self.image1, (10, 15))
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
