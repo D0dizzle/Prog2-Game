@@ -1,11 +1,11 @@
 #Diese Datei ist für Settings/Einstellungen gedacht!
-#### Imports:   ####
+# Imports:
 import pygame
 import os
 import sys
 from random import randint, choice
 
-#### Variablen: ####
+# Variablen: 
 black = (0, 0, 0)
 white = (255, 255, 255)
 cyan = (100, 100, 255)
@@ -18,8 +18,8 @@ FPS = 60                     #Anzahl FPS
 clock = pygame.time.Clock()           #Pygame.time.Clock Objekt
 seg_groesse = 25
 player_size = 50
-player_acc = 1.5 * 60 / FPS
-player_friction = -0.13
+player_acc = 1.8 * 60 / FPS
+player_friction = -0.2
 projectiles = []
 ufo_sprites = []
 game_folder = os.path.dirname(__file__)
@@ -49,7 +49,7 @@ tilemap_dict["TMM"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapMed
 tilemap_dict["TMH"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapHard.txt")
 tilemap_dict["TMVH"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapVeryHard.txt")
 
-player_img_dict = {}    #Spritequelle: https://opengameart.org/content/some-top-down-spaceships
+player_img_dict = {}
 player_img_dict["player-5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-5.png")),(player_size, player_size))
 player_img_dict["player-4"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-4.png")),(player_size, player_size))
 player_img_dict["player-3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-3.png")),(player_size, player_size))
@@ -72,13 +72,21 @@ ufo_animation_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.jo
 ufo_animation_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau2.png")),(seg_groesse,seg_groesse))
 ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau3.png")),(seg_groesse,seg_groesse))
 ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
-#ufo_animation_dict["ufo-1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
 
 centipede_img_dict = {}
 centipede_img_dict["Head"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-head.png")),(seg_groesse,seg_groesse))
 centipede_img_dict["Body"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-body part.png")),(seg_groesse,seg_groesse))
 
+pygame.init()
 sound_dict = {}
+sound_dict["basic_shoot"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","shoot.wav"))
+sound_dict["missile"] = "placeholder"
+sound_dict["death"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
+sound_dict["button"] = pygame.mixer.Sound(os.path.join(game_folder, "Assets", "sounds", "menu_select.wav"))
+
+font_dict = {}
+font_dict["font_small"] = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 35)
+font_dict["font_big"] = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 65)
 
 
 #### Funktionen: ####
@@ -164,12 +172,10 @@ class Collider():
                 projectiles.pop(index)
 
     def collidePlayer(self, sprite, player1):
-   
         index = player1.rect.collidelist(sprite)
         if index != -1:
             sprite.pop(index)
-            player1.status("hit")
-            
+            player1.status("hit")        
         
     def collideCentipede(self, projectiles, enemysprites):
         for enemy in enemysprites:
