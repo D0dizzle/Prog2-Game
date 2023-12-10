@@ -65,8 +65,7 @@ class startScreen(screenState):
         star_x = int(width / 2 + radius_x * math.cos(angle))
         star_y = int(170 + radius_y * math.sin(angle))
 
-        star_image = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "headline-star.png"))
-        star_image = pygame.transform.scale(star_image, (60, 60))  # Anpassung der Sternengröße
+        star_image = pygame.transform.scale(img_dict["star_image"], (60, 60))  # Anpassung der Sternengröße
 
         # Größe und Position der Ellipse
         ellipse_rect = pygame.Rect(star_x - 25, star_y + 8, 40, 20)
