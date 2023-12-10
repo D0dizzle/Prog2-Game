@@ -10,22 +10,20 @@ from abc import ABC, abstractclassmethod
 from settings import *
 from sprites import *
 
-##### Interfaces für verschiedene Sachen #####
+# Interface für die einzelnen Segmente
 class ISegment(ABC):
     def update(self):
         pass
    
-###########################################################
-
+# Factory Pattern für die Ufo-Obstacles
 class ObstacleCreator:
     def createObstacle(self, x, y, style):
-        if style == "Pilz":
-            hindernis = ObstacleUfo(x, y)
-        elif style == "Cyan":
-            hindernis = ObstacleCyan(x, y)
+       # if style == "Ufo":
+        hindernis = ObstacleUfo(x, y)
         hindernis.__init__(x, y)
         return hindernis
 
+# Klasse zum Erstellen der Ufo-Obstacles
 class ObstacleOnScreen(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -37,7 +35,7 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
             for row, tile in enumerate(tiles):
                 if tile == '1':
                     obstacleCreator = ObstacleCreator()
-                    ufo_sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Pilz"))
+                    ufo_sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Ufo"))
 
     def delete(self, ufo_sprites: list):
         self.score = 0
@@ -46,8 +44,14 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
                 self.score = 10
                 ufo_sprites.remove(sprite)
 
-
-
+# Factory Pattern für die Asteroids
+class AsteroidCreator():
+    def createAsteroid(self, x, y, vy ,vx):
+        asteroid = AsteroidSprite(x, y ,vy ,vx)
+        asteroid.__init__(x, y, vy ,vx)
+        return asteroid
+     
+# Klasse zum Zeichnen der Asteroids
 class AsteroidSprite(pygame.sprite.Sprite):
     def __init__(self, x , y , vy , vx):
         super().__init__()
@@ -63,14 +67,13 @@ class AsteroidSprite(pygame.sprite.Sprite):
             self.image = pygame.transform.rotate(self.image, 45)  
 
     def update(self):
-
         SCREEN.blit(self.image,self.rect)
         self.rect.y += self.vy
         self.rect.x += self.vx
 
-
+# Klasse zum Generieren der einzelnen Asteroid Objekte in einer Liste und zum Auslösen der 
+# update-Methode der einzelnen Asteroid Objekte in der Asteroid Liste
 class Asteroid():
-
     def __init__(self):
         self.max_asteroids = 2
         self.current_asteroids = 0
@@ -79,7 +82,6 @@ class Asteroid():
         self.cooldown = randint(3000,5000)
 
     def render(self):
-
         creator = AsteroidCreator()
         current_time = pygame.time.get_ticks()
         if current_time - self.last_asteroid > self.cooldown and self.current_asteroids < self.max_asteroids:
@@ -93,12 +95,7 @@ class Asteroid():
             if asteroid.rect.y  > height+50 or asteroid.rect.x < -50 or asteroid.rect.x > width+50:
                 self.asteroidslist.remove(asteroid)
                 
-class AsteroidCreator():
-    def createAsteroid(self, x, y, vy ,vx):
-        asteroid = AsteroidSprite(x, y ,vy ,vx)
-        asteroid.__init__(x, y, vy ,vx)
-        return asteroid
-     
+# Interface für den Sprite State der einzelnen Segmente
 class segSpriteState(ABC):
     def enter(self):
         pass
@@ -109,6 +106,7 @@ class segSpriteState(ABC):
     def swap_head_and_body(self):
         pass
 
+# Klassen für die konkreten Zustände der Sprite States
 class isHead(segSpriteState):
     def enter(self, seg: ISegment):
         seg.image = centipede_img_dict["Head"]
@@ -129,8 +127,8 @@ class isBody(segSpriteState):
     def exit(self, seg: ISegment):
         pass
 
+# Interface für den State der Segmente
 class segState(ABC):
-
     def exit(self):
         pass
 
@@ -149,6 +147,7 @@ class segState(ABC):
     def counter_reached(self):
         pass
 
+# Klassen für die konkrete Umsetzung der States
 class looksLeft(segState):
     def collide_with_border(self, seg: ISegment):
         if seg.rect.left < 0:
@@ -161,7 +160,6 @@ class looksLeft(segState):
 
     def move(self, seg: ISegment):
         seg.rect.x -= 2  
-
 
 class looksRight(segState):
     def collide_with_border(self, seg: ISegment):
@@ -196,6 +194,7 @@ class looksDown(segState):
         seg.state_before = looksDown()
         seg.counter = 0
 
+# Klasse für die einzelnen Segment-Objekte
 class Segment(ISegment, pygame.sprite.Sprite):
     def __init__(self, x, y, seg_sprite: segSpriteState):
         super().__init__()
@@ -242,6 +241,7 @@ class Segment(ISegment, pygame.sprite.Sprite):
         elif self.rect.right >= width and isinstance(self.state, looksRight):
             self.state.collide_with_border(self)
 
+# Klasse für den ganzen Centipede (Liste von Segment Objekten)
 class Centipede:
     def __init__(self):
         self.segments = []

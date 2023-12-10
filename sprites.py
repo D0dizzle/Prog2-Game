@@ -8,6 +8,7 @@ from abc import ABC, abstractclassmethod
 from settings import *
 from random import choice
 
+# Klasse für die einzelnen Projectile Objekte 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, vy):
         super().__init__()
@@ -23,6 +24,7 @@ class Projectile(pygame.sprite.Sprite):
     def update(self):
         self.rect.y -= self.vy
 
+# Klasse für das Missile Objekt
 class Missile(pygame.sprite.Sprite):
     def __init__(self, x, y, vy):
         super().__init__()
@@ -36,15 +38,7 @@ class Missile(pygame.sprite.Sprite):
     def update(self):
         self.rect.y -= self.vy
 
-class ObstacleCyan(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__()
-        self.image = pygame.Surface((seg_groesse, seg_groesse))
-        self.image.fill(cyan)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-
+# Klasse für das Ufo-Obstacle Objekt
 class ObstacleUfo(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
