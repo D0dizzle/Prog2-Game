@@ -4,8 +4,6 @@
 #imports:
 from __future__ import annotations
 import pygame
-import os
-import random
 from abc import ABC, abstractclassmethod
 from settings import *
 from sprites import *

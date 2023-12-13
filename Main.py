@@ -1,12 +1,7 @@
-#Diese Datei ist dafür da, Code in sinnvollen Design Patterns zu schreiben
+#Dies ist die Main-Datei, hier wird der GameLoop ausgeführt
 
-from settings import *
-from sprites import *
-from player import *
-from enemy import *
 from game import *
 import pygame
-
 
 game_screen = GameScreen()
 while True:

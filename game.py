@@ -1,9 +1,8 @@
 #### Datei für Kollision usw.
 from __future__ import annotations
 import pygame
-from abc import ABC, abstractclassmethod
+from abc import ABC
 from settings import *
-from sprites import *
 from enemy import *
 from player import *
 import math
@@ -191,9 +190,8 @@ class settingsScreen(screenState):
                             screen.shoot_sound.play()
                         if button['text'] == '.Mute':
                             screen.sound_volume = 0
-                        screen.shoot_sound.set_volume(screen.sound_volume)
-                        screen.death_sound.set_volume(screen.sound_volume)
-                        screen.button_sound.set_volume(screen.sound_volume)
+                        for sound in screen.sound_list:
+                            sound.set_volume(screen.sound_volume)
                         if button['text'] == 'Arrow Keys':
                             screen.controller = screen.controllerCreator.createController("arrow")
                             screen.button_sound.play()
@@ -250,6 +248,7 @@ class pauseScreen(screenState):
                         if button['text'] == 'Restart':
                             screen.score.points = 0
                             screen.timer.time = 0
+                            screen.pause = False
                             screen.change_state(playScreen())
                         if button['text'] == 'Back to Start':
                             screen.score.points = 0
@@ -323,6 +322,7 @@ class GameScreen:
         self.death_sound = sound_dict["death"]  
         self.missile_sound = sound_dict["missile"]
         self.button_sound = sound_dict["button"]
+        self.sound_list = [self.shoot_sound, self.death_sound, self.missile_sound, self.button_sound]
         background = Hintergrund(hg_dict)
         self.image = background
         self.screen_state = startScreen()
