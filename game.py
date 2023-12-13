@@ -22,14 +22,14 @@ class screenState(ABC):
     def render(self):
         pass
 
-# Klasse für den Zustand des GameScreen Objektes -> Startbildschirm
 class startScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
-            {'rect': pygame.Rect(width/2 -100, 400, 200, 50), 'text': 'Start'}, # beide hinteren Werte für die Größe
-            {'rect': pygame.Rect(width/2 -150, 500, 300, 50), 'text': 'Settings'},
-            {'rect': pygame.Rect(width/2 -100, 600, 200, 50), 'text': 'Exit'}]
-    
+            create_button(width/2 -100, 400, 200, 50, 'text', 'Start'),
+            create_button(width/2 -150, 500, 300, 50, 'text', 'Settings'),
+            create_button(width/2 -100, 600, 200, 50, 'text', 'Exit')
+        ]
+
     def update(self, screen: GameScreen):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -37,10 +37,10 @@ class startScreen(screenState):
                     if button['rect'].collidepoint(event.pos):
                         if button['text'] == 'Start':
                             screen.change_state(playScreen())
-                        if button['text'] == 'Settings':
+                        elif button['text'] == 'Settings':
                             screen.change_state(settingsScreen())
                             screen.button_sound.play()
-                        if button['text'] == 'Exit':
+                        elif button['text'] == 'Exit':
                             pygame.quit()
                             sys.exit()
             if event.type == pygame.QUIT:
@@ -55,7 +55,7 @@ class startScreen(screenState):
             button_text = screen.font.render(button['text'], True, white)
             text_rect = button_text.get_rect(center=rect.center)
             SCREEN.blit(button_text, text_rect)
-        
+
         self.headline = screen.headline.render(f"Centipede", True, white)
         SCREEN.blit(self.headline, (width/2 -225, 170, 0, 0))
 
@@ -75,7 +75,12 @@ class startScreen(screenState):
         SCREEN.blit(star_image, ellipse_rect.topleft)
 
     def exit(self):
-        pass    
+        pass
+
+def create_button(x, y, h, w, key, text):
+    button_rect = pygame.Rect(x, y, h, w)
+    button_dict = {'rect': button_rect, key: text}
+    return button_dict  
 
 # Klasse für den Zustand des GameScreens -> Spielbildschirm
 class playScreen(screenState):
