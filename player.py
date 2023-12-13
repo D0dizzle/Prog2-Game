@@ -94,23 +94,6 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.dir = 0
         
     def move(self):  
-        """self.ax = 0
-        self.ay = 0
-        self.dir = 0"""
-        """        key_press = pygame.key.get_pressed()         
-        if (key_press[pygame.K_UP] or key_press[pygame.K_w]) and self.rect.top > height*0.75:
-            self.ay = -player_acc                          #wenn ja: bewegen wir den Spieler um -5 Pixel nach oben
-        if (key_press[pygame.K_DOWN] or key_press[pygame.K_s]) and self.rect.bottom < height -10:                     # hier 5 pixel nach unten
-            self.ay = player_acc
-        if (key_press[pygame.K_LEFT] or key_press[pygame.K_a]) and self.rect.left > 10:                 #-5 pixel nach links
-            self.ax = -player_acc
-            self.dir = -player_acc
-        if (key_press[pygame.K_RIGHT] or key_press[pygame.K_d]) and self.rect.right < width -10:                #5 pixel nach rechts
-            self.ax = player_acc
-            self.dir = player_acc
-        if (key_press[pygame.K_RIGHT] and key_press[pygame.K_LEFT]) or (key_press[pygame.K_a] and key_press[pygame.K_s]):
-            self.ax = 0
-            self.dir = 0"""
         # Wenn ax und ay nicht 0 sind (also sowohl nach links/rechts als auch nach oben/unten bewegt wird),
         # muss ax und ay mit 0.7071 multipliziert werden
         if self.ax != 0 and self.ay != 0:
@@ -139,7 +122,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             
         if key_press[pygame.K_m] and self.missile_cd == 300:
             projectiles.append(projectileCreator.createProjectile(self.rect.centerx, self.rect.centery-20, 10, "missile"))
-            self.missile_sound
+            self.missile_sound.play()
             self.missile_cd = 0
         elif self.missile_cd < 300:
             self.missile_cd += 1      

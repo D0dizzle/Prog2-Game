@@ -139,6 +139,12 @@ class Hintergrund():
 
         for particle in self.particles:
             particle.update()
+    
+
+def create_button(x, y, h, w, key, text):
+    button_rect = pygame.Rect(x, y, h, w)
+    button_dict = {'rect': button_rect, key: text}
+    return button_dict  
 
 class Particles(pygame.sprite.Sprite):
     def __init__(self, x, y, vy, img):

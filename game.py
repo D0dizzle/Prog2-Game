@@ -1,9 +1,8 @@
 #### Datei für Kollision usw.
 from __future__ import annotations
 import pygame
-from abc import ABC, abstractclassmethod
+from abc import ABC
 from settings import *
-from sprites import *
 from enemy import *
 from player import *
 import math
@@ -22,14 +21,14 @@ class screenState(ABC):
     def render(self):
         pass
 
-# Klasse für den Zustand des GameScreen Objektes -> Startbildschirm
 class startScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
-            {'rect': pygame.Rect(width/2 -100, 400, 200, 50), 'text': 'Start'}, # beide hinteren Werte für die Größe
-            {'rect': pygame.Rect(width/2 -150, 500, 300, 50), 'text': 'Settings'},
-            {'rect': pygame.Rect(width/2 -100, 600, 200, 50), 'text': 'Exit'}]
-    
+            create_button(width/2 -100, 400, 200, 50, 'text', 'Start'),
+            create_button(width/2 -150, 500, 300, 50, 'text', 'Settings'),
+            create_button(width/2 -100, 600, 200, 50, 'text', 'Exit')
+        ]
+
     def update(self, screen: GameScreen):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -37,10 +36,10 @@ class startScreen(screenState):
                     if button['rect'].collidepoint(event.pos):
                         if button['text'] == 'Start':
                             screen.change_state(playScreen())
-                        if button['text'] == 'Settings':
+                        elif button['text'] == 'Settings':
                             screen.change_state(settingsScreen())
                             screen.button_sound.play()
-                        if button['text'] == 'Exit':
+                        elif button['text'] == 'Exit':
                             pygame.quit()
                             sys.exit()
             if event.type == pygame.QUIT:
@@ -55,7 +54,7 @@ class startScreen(screenState):
             button_text = screen.font.render(button['text'], True, white)
             text_rect = button_text.get_rect(center=rect.center)
             SCREEN.blit(button_text, text_rect)
-        
+
         self.headline = screen.headline.render(f"Centipede", True, white)
         SCREEN.blit(self.headline, (width/2 -225, 170, 0, 0))
 
@@ -75,7 +74,7 @@ class startScreen(screenState):
         SCREEN.blit(star_image, ellipse_rect.topleft)
 
     def exit(self):
-        pass    
+        pass
 
 # Klasse für den Zustand des GameScreens -> Spielbildschirm
 class playScreen(screenState):
@@ -151,20 +150,23 @@ class playScreen(screenState):
 
 class settingsScreen(screenState):
     def enter(self, screen: GameScreen):
-        screen.buttons = [{'rect': pygame.Rect(25, 100, 400, 50), 'text': 'Music-Volume:'}, # beide hinteren Werte für die Größe
-            {'rect': pygame.Rect(475, 100, 50, 50), 'text': '+'},
-            {'rect': pygame.Rect(550, 100, 50, 50), 'text': '-'},
-            {'rect': pygame.Rect(625, 100, 150, 50), 'text': 'Mute'},
-            {'rect': pygame.Rect(25, 200, 400, 50), 'text': 'Sound-Volume'},
-            {'rect': pygame.Rect(475, 200, 50, 50), 'text': '.+'},
-            {'rect': pygame.Rect(550, 200, 50, 50), 'text': '.-'},
-            {'rect': pygame.Rect(625, 200, 150, 50), 'text': '.Mute'},
-            {'rect': pygame.Rect(25, 300, 275, 50), 'text': 'Controls:'},
-            {'rect': pygame.Rect(425, 300, 325, 50), 'text': 'Arrow Keys'},
-            {'rect': pygame.Rect(425, 375, 350, 50), 'text': 'W A S D Keys'},
-            {'rect': pygame.Rect(25, 500, 300, 50), 'text': 'Start Game'},
-            {'rect': pygame.Rect(425, 500, 350, 50), 'text': 'Back to Start'},
-            {'rect': pygame.Rect(300, 600, 200, 50), 'text': 'Exit'}]
+        screen.buttons = [
+            create_button(25, 100, 400, 50, 'text', 'Music-Volume:'),
+            create_button(475, 100, 50, 50, 'text', '+'),
+            create_button(550, 100, 50, 50, 'text', '-'),
+            create_button(625, 100, 150, 50, 'text', 'Mute'),
+            create_button(25, 200, 400, 50, 'text', 'Sound-Volume'),
+            create_button(475, 200, 50, 50, 'text', '.+'),
+            create_button(550, 200, 50, 50, 'text', '.-'),
+            create_button(625, 200, 150, 50, 'text', '.Mute'),
+            create_button(25, 300, 275, 50, 'text', 'Controls:'),
+            create_button(425, 300, 325, 50, 'text', 'Arrow Keys'),
+            create_button(425, 375, 350, 50, 'text', 'W A S D Keys'),
+            create_button(25, 500, 300, 50, 'text', 'Start Game'),
+            create_button(425, 500, 350, 50, 'text', 'Back to Start'),
+            create_button(300, 600, 200, 50, 'text', 'Exit')
+        ]
+
     
     def update(self, screen: GameScreen):
         for event in pygame.event.get():
@@ -188,9 +190,8 @@ class settingsScreen(screenState):
                             screen.shoot_sound.play()
                         if button['text'] == '.Mute':
                             screen.sound_volume = 0
-                        screen.shoot_sound.set_volume(screen.sound_volume)
-                        screen.death_sound.set_volume(screen.sound_volume)
-                        screen.button_sound.set_volume(screen.sound_volume)
+                        for sound in screen.sound_list:
+                            sound.set_volume(screen.sound_volume)
                         if button['text'] == 'Arrow Keys':
                             screen.controller = screen.controllerCreator.createController("arrow")
                             screen.button_sound.play()
@@ -223,12 +224,13 @@ class settingsScreen(screenState):
 class pauseScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
-            {'rect': pygame.Rect(width/2 -125, 200, 250, 50), 'text': 'Continue'},
-            {'rect': pygame.Rect(width/ 2 -125, 300, 250, 50), 'text': 'Settings'},
-            {'rect': pygame.Rect(width/ 2 -125, 400, 250, 50), 'text': 'Restart'},
-            {'rect': pygame.Rect(width / 2 -175, 500, 350, 50), 'text': 'Back to Start'},
-            {'rect': pygame.Rect(width / 2 -125, 600, 250, 50), 'text': 'Exit Game'}
+            create_button(width/2 -125, 200, 250, 50, 'text', 'Continue'),
+            create_button(width/2 -125, 300, 250, 50, 'text', 'Settings'),
+            create_button(width/2 -125, 400, 250, 50, 'text', 'Restart'),
+            create_button(width/2 -175, 500, 350, 50, 'text', 'Back to Start'),
+            create_button(width/2 -125, 600, 250, 50, 'text', 'Exit Game')
         ]
+
         screen.pause = True
         self.timer = 0
     
@@ -247,6 +249,7 @@ class pauseScreen(screenState):
                         if button['text'] == 'Restart':
                             screen.score.points = 0
                             screen.timer.time = 0
+                            screen.pause = False
                             screen.change_state(playScreen())
                         if button['text'] == 'Back to Start':
                             screen.score.points = 0
@@ -271,10 +274,11 @@ class pauseScreen(screenState):
 
 
 class gameOverScreen(screenState):
-
     def enter(self, screen: GameScreen):
-        screen.buttons = [{'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Restart'},
-        {'rect': pygame.Rect(550, 500, 200, 50), 'text': 'Exit'}]
+        screen.buttons = [
+            create_button(50, 500, 200, 50, 'text', 'Restart'),
+            create_button(550, 500, 200, 50, 'text', 'Exit')
+        ]
     
     def update(self, screen: GameScreen):
         for event in pygame.event.get():
@@ -320,6 +324,7 @@ class GameScreen:
         self.death_sound = sound_dict["death"]  
         self.missile_sound = sound_dict["missile"]
         self.button_sound = sound_dict["button"]
+        self.sound_list = [self.shoot_sound, self.death_sound, self.missile_sound, self.button_sound]
         background = Hintergrund(hg_dict)
         self.image = background
         self.screen_state = startScreen()
