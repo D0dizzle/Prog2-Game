@@ -1,12 +1,9 @@
 # Datei um alle Klassen mit Sprites zu bündeln (Spieler, Gegner, Hindernisse, Sonstiges)
 # die relevanten Imports:
 import pygame
-import os
-from abc import ABC, abstractclassmethod
-
-#from pygame.sprite import _Group
-from settings import *
 from random import choice
+
+from settings import *
 
 # Klasse für die einzelnen Projectile Objekte 
 class Projectile(pygame.sprite.Sprite):
