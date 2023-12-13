@@ -356,7 +356,7 @@ class Life_Display:
         self.length = 50
         self.x = 10
         self.y = 55
-        self.createLife_Display()  # Initialisiere die Leben beim Erstellen der Instanz
+        self.createLife_Display()
 
     def createLife_Display(self):
         heart_image = pygame.transform.scale(img_dict["Herz"], (30, 30))
@@ -370,6 +370,5 @@ class Life_Display:
             SCREEN.blit(lives[0], lives[1])
 
     def loseLife(self):
-        # Entferne ein Leben, wenn der Spieler getroffen wird
         if self.lives:
             self.lives.pop()
