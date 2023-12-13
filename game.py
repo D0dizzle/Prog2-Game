@@ -84,7 +84,7 @@ class playScreen(screenState):
         screen.buttons = []
         if screen.pause == False:
             del ufo_sprites[0:]
-            screen.player1 = Player1(player_img_dict, width /2, height - height /6, screen.shoot_sound, screen.death_sound, screen.missile_sound)
+            screen.player1 = Player1(player_img_dict, width /2, height - height /6, screen.shoot_sound, screen.death_sound, screen.missile_sound, screen.life_display)
             screen.new_map = ObstacleOnScreen()
             screen.new_map.new(ufo_sprites)
             screen.centipede = Centipede()
@@ -98,7 +98,6 @@ class playScreen(screenState):
         elif screen.pause == True:
             screen.pause = False
 
-    
     def update(self, screen: GameScreen):
         exit_game()
         #update der Logik
@@ -121,6 +120,9 @@ class playScreen(screenState):
         screen.collider.collidePlayer(screen.centipede.segments, screen.player1)
         screen.new_map.delete(ufo_sprites)
         screen.centipede.update()
+        if Player1.status == "hit":
+            screen.life_display.loseLife()
+        screen.life_display.render()
         screen.timer.count_time()
         screen.score.update_score(screen.new_map, screen.centipede)
         screen.score.update_highscore()
@@ -325,6 +327,8 @@ class GameScreen:
         self.screen_state.enter(self)
         self.font = font_dict["font_small"]
         self.headline = font_dict["font_big"]
+        self.life_display = Life_Display()
+        self.life_display.createLife_Display()
 
     def change_state(self, newState: screenState):
         if (self.screen_state != None):
@@ -334,8 +338,33 @@ class GameScreen:
     
     def render(self):
         self.screen_state.render(self)
+        self.life_display.render()
+
 
     def update(self):
         self.key_pressed = pygame.key.get_pressed()
         self.screen_state.update(self)
         
+class Life_Display:
+    def __init__(self):
+        self.lives = []
+        self.length = 50
+        self.x = 10
+        self.y = 55
+        self.createLife_Display()  # Initialisiere die Leben beim Erstellen der Instanz
+
+    def createLife_Display(self):
+        heart_image = pygame.transform.scale(img_dict["Herz"], (30, 30))
+        for i in range(3):
+            if i in [0, 1, 2]:
+                self.lives.append((heart_image, (self.x + i * 40, self.y)))
+                
+
+    def render(self):
+        for lives in self.lives:
+            SCREEN.blit(lives[0], lives[1])
+
+    def loseLife(self):
+        # Entferne ein Leben, wenn der Spieler getroffen wird
+        if self.lives:
+            self.lives.pop()

@@ -43,6 +43,7 @@ img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(gam
 img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "asteroid.png")),(2*seg_groesse,2*seg_groesse))
 img_dict["star_image"] = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "headline-star.png"))
 img_dict["Missile"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Missile.png"))
+img_dict["Herz"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Herz.png"))
 
 tilemap_dict = {}
 tilemap_dict["TME"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapEasy.txt")
