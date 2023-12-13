@@ -77,11 +77,6 @@ class startScreen(screenState):
     def exit(self):
         pass
 
-def create_button(x, y, h, w, key, text):
-    button_rect = pygame.Rect(x, y, h, w)
-    button_dict = {'rect': button_rect, key: text}
-    return button_dict  
-
 # Klasse für den Zustand des GameScreens -> Spielbildschirm
 class playScreen(screenState):
     def enter(self, screen: GameScreen):
@@ -154,20 +149,23 @@ class playScreen(screenState):
 
 class settingsScreen(screenState):
     def enter(self, screen: GameScreen):
-        screen.buttons = [{'rect': pygame.Rect(25, 100, 400, 50), 'text': 'Music-Volume:'}, # beide hinteren Werte für die Größe
-            {'rect': pygame.Rect(475, 100, 50, 50), 'text': '+'},
-            {'rect': pygame.Rect(550, 100, 50, 50), 'text': '-'},
-            {'rect': pygame.Rect(625, 100, 150, 50), 'text': 'Mute'},
-            {'rect': pygame.Rect(25, 200, 400, 50), 'text': 'Sound-Volume'},
-            {'rect': pygame.Rect(475, 200, 50, 50), 'text': '.+'},
-            {'rect': pygame.Rect(550, 200, 50, 50), 'text': '.-'},
-            {'rect': pygame.Rect(625, 200, 150, 50), 'text': '.Mute'},
-            {'rect': pygame.Rect(25, 300, 275, 50), 'text': 'Controls:'},
-            {'rect': pygame.Rect(425, 300, 325, 50), 'text': 'Arrow Keys'},
-            {'rect': pygame.Rect(425, 375, 350, 50), 'text': 'W A S D Keys'},
-            {'rect': pygame.Rect(25, 500, 300, 50), 'text': 'Start Game'},
-            {'rect': pygame.Rect(425, 500, 350, 50), 'text': 'Back to Start'},
-            {'rect': pygame.Rect(300, 600, 200, 50), 'text': 'Exit'}]
+        screen.buttons = [
+            create_button(25, 100, 400, 50, 'text', 'Music-Volume:'),
+            create_button(475, 100, 50, 50, 'text', '+'),
+            create_button(550, 100, 50, 50, 'text', '-'),
+            create_button(625, 100, 150, 50, 'text', 'Mute'),
+            create_button(25, 200, 400, 50, 'text', 'Sound-Volume'),
+            create_button(475, 200, 50, 50, 'text', '.+'),
+            create_button(550, 200, 50, 50, 'text', '.-'),
+            create_button(625, 200, 150, 50, 'text', '.Mute'),
+            create_button(25, 300, 275, 50, 'text', 'Controls:'),
+            create_button(425, 300, 325, 50, 'text', 'Arrow Keys'),
+            create_button(425, 375, 350, 50, 'text', 'W A S D Keys'),
+            create_button(25, 500, 300, 50, 'text', 'Start Game'),
+            create_button(425, 500, 350, 50, 'text', 'Back to Start'),
+            create_button(300, 600, 200, 50, 'text', 'Exit')
+        ]
+
     
     def update(self, screen: GameScreen):
         for event in pygame.event.get():
@@ -226,12 +224,13 @@ class settingsScreen(screenState):
 class pauseScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
-            {'rect': pygame.Rect(width/2 -125, 200, 250, 50), 'text': 'Continue'},
-            {'rect': pygame.Rect(width/ 2 -125, 300, 250, 50), 'text': 'Settings'},
-            {'rect': pygame.Rect(width/ 2 -125, 400, 250, 50), 'text': 'Restart'},
-            {'rect': pygame.Rect(width / 2 -175, 500, 350, 50), 'text': 'Back to Start'},
-            {'rect': pygame.Rect(width / 2 -125, 600, 250, 50), 'text': 'Exit Game'}
+            create_button(width/2 -125, 200, 250, 50, 'text', 'Continue'),
+            create_button(width/ 2 -125, 300, 250, 50, 'text', 'Settings'),
+            create_button(width/ 2 -125, 400, 250, 50, 'text', 'Restart'),
+            create_button(width / 2 -175, 500, 350, 50, 'text', 'Back to Start'),
+            create_button(width / 2 -125, 600, 250, 50, 'text', 'Exit Game')
         ]
+
         screen.pause = True
         self.timer = 0
     
@@ -274,10 +273,11 @@ class pauseScreen(screenState):
 
 
 class gameOverScreen(screenState):
-
     def enter(self, screen: GameScreen):
-        screen.buttons = [{'rect': pygame.Rect(50, 500, 200, 50), 'text': 'Restart'},
-        {'rect': pygame.Rect(550, 500, 200, 50), 'text': 'Exit'}]
+        screen.buttons = [
+            create_button(50, 500, 200, 50, 'text', 'Restart'),
+            create_button(550, 500, 200, 50, 'text', 'Exit')
+        ]
     
     def update(self, screen: GameScreen):
         for event in pygame.event.get():
