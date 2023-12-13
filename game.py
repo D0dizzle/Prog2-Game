@@ -223,10 +223,10 @@ class pauseScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
             create_button(width/2 -125, 200, 250, 50, 'text', 'Continue'),
-            create_button(width/ 2 -125, 300, 250, 50, 'text', 'Settings'),
-            create_button(width/ 2 -125, 400, 250, 50, 'text', 'Restart'),
-            create_button(width / 2 -175, 500, 350, 50, 'text', 'Back to Start'),
-            create_button(width / 2 -125, 600, 250, 50, 'text', 'Exit Game')
+            create_button(width/2 -125, 300, 250, 50, 'text', 'Settings'),
+            create_button(width/2 -125, 400, 250, 50, 'text', 'Restart'),
+            create_button(width/2 -175, 500, 350, 50, 'text', 'Back to Start'),
+            create_button(width/2 -125, 600, 250, 50, 'text', 'Exit Game')
         ]
 
         screen.pause = True
