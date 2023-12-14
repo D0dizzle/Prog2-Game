@@ -65,15 +65,15 @@ player_img_dict["player4"] = pygame.transform.scale(pygame.image.load(os.path.jo
 player_img_dict["player5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship5.png")),(player_size, player_size))
 
 ufo_img_dict = {}
-ufo_img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_gelb.png")),(seg_groesse,seg_groesse))
-ufo_img_dict["ufo_lila"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_lila.png")),(seg_groesse,seg_groesse))
-ufo_img_dict["ufo_rot"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_rot.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_lila"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_rot"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
 
 ufo_animation_dict = {}
-ufo_animation_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
-ufo_animation_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau2.png")),(seg_groesse,seg_groesse))
-ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau3.png")),(seg_groesse,seg_groesse))
-ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum2.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum3.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum4.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
 
 centipede_img_dict = {}
 centipede_img_dict["Head"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-head.png")),(seg_groesse,seg_groesse))
