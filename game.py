@@ -340,11 +340,13 @@ class GameScreen:
             self.screen_state.exit()
         self.screen_state = newState
         self.screen_state.enter(self)
+        if isinstance(self.screen_state, playScreen):
+            self.life_display.reset()
     
     def render(self):
         self.screen_state.render(self)
-        self.life_display.render()
-
+        if isinstance(self.screen_state, playScreen):
+            self.life_display.render()
 
     def update(self):
         self.key_pressed = pygame.key.get_pressed()
@@ -359,12 +361,12 @@ class Life_Display:
         self.createLife_Display()
 
     def createLife_Display(self):
-        heart_image = pygame.transform.scale(img_dict["Herz"], (30, 30))
-        for i in range(3):
-            if i in [0, 1, 2]:
-                self.lives.append((heart_image, (self.x + i * 40, self.y)))
+        if len(self.lives) == 0:
+            heart_image = pygame.transform.scale(img_dict["Herz"], (30, 30))
+            for i in range(3):
+                if i in [0, 1, 2]:
+                    self.lives.append((heart_image, (self.x + i * 40, self.y)))
                 
-
     def render(self):
         for lives in self.lives:
             SCREEN.blit(lives[0], lives[1])
@@ -372,3 +374,7 @@ class Life_Display:
     def loseLife(self):
         if self.lives:
             self.lives.pop()
+    
+    def reset(self):
+        self.lives = []
+        self.createLife_Display()
