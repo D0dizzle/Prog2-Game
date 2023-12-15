@@ -143,7 +143,7 @@ class playScreen(screenState):
         screen.timer.render()
         screen.score.display_scores()
         if screen.player1.missile_cd >= 300:
-            SCREEN.blit(img_dict['bullet'], (500, 500))
+            SCREEN.blit(img_dict['satellite'], (500, 500))
 
     def exit(self):
         pass
