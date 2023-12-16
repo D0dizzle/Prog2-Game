@@ -33,7 +33,7 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
             for row, tile in enumerate(tiles):
                 if tile == '1':
                     obstacleCreator = ObstacleCreator()
-                    ufo_sprites.append(obstacleCreator.createObstacle(row * 25, (col) * 25, "Ufo"))
+                    ufo_sprites.append(obstacleCreator.createObstacle(row * seg_groesse, (col) * seg_groesse, "Ufo"))
 
     def delete(self, ufo_sprites: list):
         self.score = 0
@@ -157,7 +157,7 @@ class looksLeft(segState):
         seg.state_before = looksLeft()
 
     def move(self, seg: ISegment):
-        seg.rect.x -= 2  
+        seg.rect.x -= seg.velx
 
 class looksRight(segState):
     def collide_with_border(self, seg: ISegment):
@@ -172,21 +172,20 @@ class looksRight(segState):
         seg.state_before = looksRight()
 
     def move(self, seg: ISegment):
-        seg.rect.x += 2
+        seg.rect.x += seg.velx
 
 class looksDown(segState): 
     def counter_reached(self, seg: ISegment):
-        self.counter = 0
-        if isinstance(seg.state_before, looksLeft):
-            seg.change_state(looksRight())
-            seg.counter = 0
-        elif isinstance(seg.state_before, looksRight):
+        if isinstance(seg.state_before, looksRight):
             seg.change_state(looksLeft())
+            seg.counter = 0
+        elif isinstance(seg.state_before, looksLeft):
+            seg.change_state(looksRight())
             seg.counter = 0
 
     def move(self, seg: ISegment):
-        seg.rect.y += 1
-        seg.counter += 1
+        seg.rect.y += seg.vely
+        seg.counter += seg.vely
     
     def exit(self, seg: ISegment):
         seg.state_before = looksDown()
@@ -202,6 +201,8 @@ class Segment(ISegment, pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y 
+        self.velx = 2
+        self.vely = 1
         self.obstacleCreator = ObstacleCreator()
         self.counter = 0
         self.state = looksLeft()
@@ -214,6 +215,8 @@ class Segment(ISegment, pygame.sprite.Sprite):
             self.state.exit(self)
         self.state = newState
         self.state.enter(self)
+        print("state before", self.state_before)
+        print("new state", self.state)
 
     def change_sprite_state(self, newSpriteState):
         if (self.sprite_state != None):
@@ -232,7 +235,7 @@ class Segment(ISegment, pygame.sprite.Sprite):
 
     def move(self):
         self.state.move(self)
-        if self.counter == 25:
+        if self.counter == seg_groesse:
             self.state.counter_reached(self)
         elif self.rect.x <= 0 and isinstance(self.state, looksLeft):
             self.state.collide_with_border(self)
@@ -251,18 +254,18 @@ class Centipede:
     def createCentipede(self):
         for i in range(10):
             if i == 0:
-                self.segments.append(Segment(self.x - (25*i), i * self.y, isBody()))
+                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody()))
             elif i < 10 - 1:
-                self.segments.append(Segment(self.x - (25*i), i * self.y, isBody()))
+                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody()))
             elif i == 10 - 1:
-                self.segments.append(Segment(self.x - (25*i), i * self.y, isHead()))
+                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isHead()))
 
     def update(self):
         self.score = 0
         for index, segment in enumerate(self.segments):
             segment.move()
             if segment.isAlive == "dead":
-                if index + 1 <= len(self.segments) or index - 1 >= 0:
+                if index + 2 < len(self.segments) or index - 1 >= 0:
                     if isinstance(segment.state, looksLeft):
                         segment_after = self.segments[index - 1]
                         segment_after.change_sprite_state(isHead())
