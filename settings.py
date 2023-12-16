@@ -13,10 +13,10 @@ red = (205, 51, 51)
 green = (0, 255, 0)
 dark_green = (100, 255, 100)
 height = 700
-width = 800
+width = 768
 FPS = 60                     #Anzahl FPS
 clock = pygame.time.Clock()           #Pygame.time.Clock Objekt
-seg_groesse = 25
+seg_groesse = 24
 player_size = 50
 player_acc = 1.8 * 60 / FPS
 player_friction = -0.2
@@ -84,10 +84,12 @@ sound_dict["basic_shoot"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets"
 sound_dict["missile"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","missile.wav"))
 sound_dict["death"] = pygame.mixer.Sound(os.path.join(game_folder,"Assets","sounds","death_player.ogg"))
 sound_dict["button"] = pygame.mixer.Sound(os.path.join(game_folder, "Assets", "sounds", "menu_select.wav"))
+sound_dict["centipede"] = pygame.mixer.Sound(os.path.join(game_folder, "Assets", "sounds", "death_snake.ogg"))
 
 font_dict = {}
 font_dict["font_small"] = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 35)
 font_dict["font_big"] = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 65)
+font_dict["font_tiny"] = pygame.font.Font(os.path.join(game_folder, "Assets", "fonts", "Boxy-Bold.ttf"), 25)
 
 
 #### Funktionen: ####
@@ -184,11 +186,12 @@ class Collider():
             sprite.pop(index)
             player1.status("hit")        
         
-    def collideCentipede(self, projectiles, enemysprites):
+    def collideCentipede(self, projectiles, enemysprites, sound):
         for enemy in enemysprites:
             index = enemy.rect.collidelist(projectiles)
             if index != -1:    #-1 bedeutet keine Kollision deswegen muss es exkludiert werden
                 enemy.status("hit", ufo_sprites)
+                sound.play()
                 projectiles.pop(index)
 
     def collideWithWall(self, centipede, obstacles):
