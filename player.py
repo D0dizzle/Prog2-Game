@@ -53,7 +53,7 @@ class PlayerMoveDown(PlayerCommand):
         self.player.ay = player_acc
 
 class Player1(pygame.sprite.Sprite, iPlayer):
-    def __init__(self, dict, x , y, shoot_sound, death_sound, missile_sound):
+    def __init__(self, dict, x , y, shoot_sound, death_sound, missile_sound, life_display):
         super().__init__()
         pygame.mixer.init()
         self.dict = dict
@@ -65,7 +65,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.state = "alive"
-        self.hp = 1
+        self.hp = 3
         self.shoot_cd = 400
         self.missile_cd = False
         self.missile_shoot_rate = 0
@@ -75,6 +75,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.missile_sound = missile_sound
         self.timer = 0
         self.dir = 0
+        self.life_display = life_display
 
     def update(self):
         self.move() 
@@ -135,6 +136,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         if state == "hit":
             self.death_sound.play()
             self.hp -= 1
+            self.life_display.loseLife()
         if self.hp == 0:
             self.state = "dead"
  
