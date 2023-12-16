@@ -66,7 +66,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.rect.center = (x, y)
         self.state = "alive"
         self.hp = 3
-        self.shoot_cd = 200
+        self.shoot_cd = 400
         self.missile_cd = False
         self.missile_shoot_rate = 0
         self.last_shot = 0
@@ -94,8 +94,8 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         self.dir = 0
         
     def move(self):  
-        # Wenn ax und ay nicht 0 sind (also sowohl nach links/rechts als auch nach oben/unten bewegt wird),
-        # muss ax und ay mit 0.7071 multipliziert werden
+        # Wenn ax und ay nicht 0 sind (also sowohl nach links oder rechts als auch nach oben oder unten bewegt wird),
+        # muss ax und ay mit 0.7071 multipliziert werden, sonst hätte man zu hohe acceleration
         if self.ax != 0 and self.ay != 0:
             self.ax *= 0.7071
             self.ay *= 0.7071
@@ -139,7 +139,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
             self.life_display.loseLife()
         if self.hp == 0:
             self.state = "dead"
-
+ 
 # Generalisierte Klasse, um per Polymorphismus gleiche Key-Methoden für verschiedene Tastaturbelegungen
 # zu definieren
 class Controller:
