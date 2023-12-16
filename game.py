@@ -94,6 +94,8 @@ class playScreen(screenState):
             screen.controller.set_right_key(PlayerMoveRight(screen.player1))
             screen.controller.set_up_key(PlayerMoveUp(screen.player1))
             screen.controller.set_down_key(PlayerMoveDown(screen.player1))
+            screen.life_display.reset()
+            screen.life_display.createLife_Display()
         elif screen.pause == True:
             screen.pause = False
 
@@ -121,7 +123,6 @@ class playScreen(screenState):
         screen.centipede.update()
         if Player1.status == "hit":
             screen.life_display.loseLife()
-        screen.life_display.render()
         screen.timer.count_time()
         screen.score.update_score(screen.new_map, screen.centipede)
         screen.score.update_highscore()
@@ -142,6 +143,7 @@ class playScreen(screenState):
         screen.asteroids.update()
         screen.timer.render()
         screen.score.display_scores()
+        screen.life_display.render()
         if screen.player1.missile_cd >= 300:
             SCREEN.blit(img_dict['satellite'], (500, 500))
 
@@ -333,20 +335,15 @@ class GameScreen:
         self.font = font_dict["font_small"]
         self.headline = font_dict["font_big"]
         self.life_display = Life_Display()
-        self.life_display.createLife_Display()
 
     def change_state(self, newState: screenState):
         if (self.screen_state != None):
             self.screen_state.exit()
         self.screen_state = newState
         self.screen_state.enter(self)
-        if isinstance(self.screen_state, playScreen):
-            self.life_display.reset()
     
     def render(self):
         self.screen_state.render(self)
-        if isinstance(self.screen_state, playScreen):
-            self.life_display.render()
 
     def update(self):
         self.key_pressed = pygame.key.get_pressed()
