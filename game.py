@@ -172,7 +172,7 @@ class playScreen(screenState):
         screen.player1.update()
         screen.player1.shoot(projectiles)
         screen.asteroids.render()
-        screen.collider.collideObstacle(projectiles, ufo_sprites)
+        screen.collider.collideObstacle(projectiles, ufo_sprites, Missile)
         screen.collider.collideCentipede(projectiles, screen.centipede.segments, screen.centipede_hit_sound)
         screen.collider.collideWithWall(screen.centipede.segments, ufo_sprites)
         screen.collider.collidePlayer(screen.asteroids.asteroidslist, screen.player1)
