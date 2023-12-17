@@ -211,11 +211,14 @@ class TileMap:
 
 class Collider():
 
-    def collideObstacle(self, projectiles, enemysprites):
+    def collideObstacle(self, projectiles, enemysprites, Missile):
         for enemy in enemysprites:
             index = enemy.rect.collidelist(projectiles)
             if index != -1:    #-1 bedeutet keine Kollision deswegen muss es exkludiert werden
-                enemy.status("hit")
+                if isinstance(projectiles[index], Missile):
+                    enemy.status("hit", damage = 4)
+                else:
+                    enemy.status("hit", damage = 1)
                 projectiles.pop(index)
 
     def collidePlayer(self, sprite, player1):
@@ -253,7 +256,7 @@ class Time:
     
     def render(self):
         self.time_on_screen = self.font.render(f"Time:  {self.time}", True, white)
-        SCREEN.blit(self.time_on_screen, (680, 10))
+        SCREEN.blit(self.time_on_screen, (664, 10))
 
 class Score:
     def __init__(self):
