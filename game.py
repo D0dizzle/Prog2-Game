@@ -44,6 +44,7 @@ class startScreen(screenState):
                             screen.change_state(settingsScreen())
                             screen.button_sound.play()
                         elif button['text'] == 'Exit':
+                            screen.button_sound.play()
                             pygame.quit()
                             sys.exit()
             if event.type == pygame.QUIT:
@@ -238,6 +239,7 @@ class settingsScreen(screenState):
                             if screen.volume > 0:
                                 screen.volume -= 0.2
                         if button['text'] == 'Mute':
+                            screen.button_sound.play()
                             screen.volume = 0
                         pygame.mixer.music.set_volume(screen.volume)
                         if button['text'] == 'Arrow Keys':
@@ -255,13 +257,17 @@ class settingsScreen(screenState):
                             else:
                                 screen.change_state(playScreen())
                         if button['text'] == 'Back to Start':
+                            screen.button_sound.play()
                             screen.change_state(startScreen())
                         if button['text'] == 'Exit':
+                            screen.button_sound.play()
                             pygame.quit()
                             sys.exit()
                         if button['text'] == 'ON':
+                            screen.button_sound.play()
                             screen.style = "Tree"
                         if button['text'] == 'OFF':
+                            screen.button_sound.play()
                             screen.style = "Ufo"
                 for button in screen.buttons2:
                     if button['rect'].collidepoint(event.pos):
@@ -272,6 +278,7 @@ class settingsScreen(screenState):
                             screen.sound_volume -= 0.2
                             screen.shoot_sound.play()
                         if button['text'] == 'Mute':
+                            screen.button_sound.play()
                             screen.sound_volume = 0
                         for sound in screen.sound_list:
                             sound.set_volume(screen.sound_volume)
