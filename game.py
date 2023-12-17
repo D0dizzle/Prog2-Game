@@ -35,7 +35,11 @@ class startScreen(screenState):
                 for button in screen.buttons:
                     if button['rect'].collidepoint(event.pos):
                         if button['text'] == 'Start':
-                            screen.change_state(storyScreen())
+                            if screen.story_screen_shown == False:
+                                screen.change_state(storyScreen())
+                                screen.story_screen_shown = True
+                            else:
+                                screen.change_state(playScreen())
                         elif button['text'] == 'Settings':
                             screen.change_state(settingsScreen())
                             screen.button_sound.play()
@@ -47,13 +51,7 @@ class startScreen(screenState):
 
     def render(self, screen: GameScreen):
         screen.image.render()
-        for button in screen.buttons:
-            rect = pygame.Rect(button['rect'])
-            pygame.draw.rect(SCREEN, red, rect, border_radius=10)
-            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
-            button_text = screen.font.render(button['text'], True, white)
-            text_rect = button_text.get_rect(center=rect.center)
-            SCREEN.blit(button_text, text_rect)
+        render_button(screen, screen.buttons, 'text')
 
         self.headline = screen.headline.render(f"Centipede", True, white)
         SCREEN.blit(self.headline, (width/2 -225, 170, 0, 0))
@@ -78,27 +76,33 @@ class startScreen(screenState):
 
 class storyScreen(screenState):
     def enter(self, screen: GameScreen):
-        screen.buttons = [create_button(width/3, 650, 300, 50, 'text', 'Start Game')]
-        screen.story = [{'text': "You are the Commander of the",'rect': (50, 100, 500, 50)},  
-                        {'text': "USS Space Splitter. You are on", 'rect': (50, 150, 500, 50)},
-                        {'text': "the mission to hunt and destroy", 'rect': (50, 200, 500, 50)},
-                        {'text': "the Space Centipedes", 'rect': (50, 250, 500, 50)},
-                        {'text':"to save our home planet.", 'rect': (50, 300, 500, 50)},
-                        {'text': "Good Luck Commander!", 'rect': (50, 375, 500, 50)}]
+        screen.buttons = [create_button(width/3, 600, 300, 50, 'text', 'Start Game')]
+        screen.story = [
+            create_text(50, 50, 500, 50, 'text', 'You are the Commander of the'),
+            create_text(50, 100, 500, 50, 'text', 'USS Space Splitter. You are on'),
+            create_text(50, 150, 500, 50, 'text', 'the mission to hunt and destroy'),
+            create_text(50, 200, 500, 50, 'text', 'the Space Centipedes.'),
+            create_text(50,250, 500, 50, 'text', 'to save our home planet.'),
+            create_text(50, 325, 500, 50, 'text', 'Good Luck Commander!'),
+            create_text(575, 400, 200, 50, 'text', 'Space Bar'),
+            create_text(575, 450, 200, 50, 'text', 'M')]
+        
         if isinstance(screen.controller, ArrowKey):
-            screen.controll_text = [{'text': "Controls:       Up", 'rect': (50, 450, 400, 50)},
-                                    {'text': "Left                  Right", 'rect': (200, 500, 500, 50)},
-                                    {'text': "Down", 'rect': (400, 550, 500, 50)}
+            screen.control_text = [{'text': "Controls:   Up", 'rect': (50, 400, 400, 50)},
+                                    {'text': "Left                  Right", 'rect': (150, 450, 500, 50)},
+                                    {'text': "Down", 'rect': (325, 500, 500, 50)}
                                     ]
         if isinstance(screen.controller, WASDKey):
-            screen.controll_text = [{'text': "Controls:          W", 'rect': (50, 450, 400, 50)},
-                                    {'text': "A                  D", 'rect': (250, 500, 500, 50)},
-                                    {'text': "S", 'rect': (400, 550, 500, 50)}
+            screen.control_text = [{'text': "Controls:      W", 'rect': (50, 400, 400, 50)},
+                                    {'text': "A                 D", 'rect': (225, 450, 500, 50)},
+                                    {'text': "S", 'rect': (325, 500, 500, 50)}
                                     ]
-        screen.controll_image = [{'image': img_dict["bullet"], 'rect': (350, 450, 25, 50)},
-                                     {'image': img_dict["bullet"], 'rect': (300, 500, 25, 50)},
-                                     {'image': img_dict["bullet"], 'rect': (400, 500, 25, 50)},
-                                     {'image': img_dict["bullet"], 'rect': (350, 550, 25, 50)}
+        screen.control_image = [{'image': ui_img_dict["up"], 'rect': (300, 400, 25, 50)},
+                                     {'image': ui_img_dict["left"], 'rect': (250, 450, 25, 50)},
+                                     {'image': ui_img_dict["right"], 'rect': (350, 450, 25, 50)},
+                                     {'image': ui_img_dict["down"], 'rect': (300, 500, 25, 50)},
+                                     {'image': img_dict["bullet"], 'rect': (525, 400, 50, 50)},
+                                     {'image': img_dict["Missile"], 'rect': (525, 450, 50, 50)}
                                      ]
 
     def update(self, screen: GameScreen):
@@ -113,27 +117,14 @@ class storyScreen(screenState):
 
     def render(self, screen: GameScreen):
         screen.image.render()
-        for button in screen.buttons:
-            rect = pygame.Rect(button['rect'])
-            pygame.draw.rect(SCREEN, red, rect, border_radius=10)
-            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
-            button_text = screen.font.render(button['text'], True, white)
-            text_rect = button_text.get_rect(center=rect.center)
-            SCREEN.blit(button_text, text_rect)
-        for storyline in screen.story:
-            rect = pygame.Rect(storyline['rect'])
-            text = screen.story_font.render(storyline['text'], True, white)
-            SCREEN.blit(text, rect)
-        for control in screen.controll_text:
-            rect = pygame.Rect(control['rect'])
-            text = screen.story_font.render(control['text'], True, white)
-            SCREEN.blit(text, rect)
-        for image in screen.controll_image:
+        render_button(screen, screen.buttons, 'text')
+        render_text(screen.story, 'text', screen.story_font)
+        render_text(screen.control_text, 'text', screen.story_font)
+        for image in screen.control_image:
             rect = pygame.Rect(image['rect'])
             image = image['image']
             SCREEN.blit(image, rect)
         
-
 # Klasse für den Zustand des GameScreens -> Spielbildschirm
 class playScreen(screenState):
     def enter(self, screen: GameScreen):
@@ -143,9 +134,9 @@ class playScreen(screenState):
             del ufo_sprites[0:]
             screen.player1 = Player1(player_img_dict, width /2, height - height /6, screen.shoot_sound, screen.death_sound, screen.missile_sound, screen.life_display)
             screen.new_map = ObstacleOnScreen()
-            screen.new_map.new(ufo_sprites)
+            screen.new_map.new(ufo_sprites, screen.style)
             screen.centipede = Centipede()
-            screen.centipede.createCentipede()
+            screen.centipede.createCentipede(screen.style)
             screen.collider = Collider()
             screen.asteroids = Asteroid()
             screen.controller.set_left_key(PlayerMoveLeft(screen.player1))
@@ -210,21 +201,28 @@ class playScreen(screenState):
 
 class settingsScreen(screenState):
     def enter(self, screen: GameScreen):
+        screen.text = [
+            create_text(25, 100, 400, 50, 'text', 'Music-Volume:'),
+            create_text(25, 200, 400, 50, 'text', 'Sound-Volume:'),
+            create_text(25, 300, 275, 50, 'text', 'Controls:'),
+            create_text(350, 603, 200, 50, 'text', 'Secret:')
+        ]
         screen.buttons = [
-            create_button(25, 100, 400, 50, 'text', 'Music-Volume:'),
-            create_button(475, 100, 50, 50, 'text', '+'),
-            create_button(550, 100, 50, 50, 'text', '-'),
-            create_button(625, 100, 150, 50, 'text', 'Mute'),
-            create_button(25, 200, 400, 50, 'text', 'Sound-Volume'),
-            create_button(475, 200, 50, 50, 'text', '.+'),
-            create_button(550, 200, 50, 50, 'text', '.-'),
-            create_button(625, 200, 150, 50, 'text', '.Mute'),
-            create_button(25, 300, 275, 50, 'text', 'Controls:'),
-            create_button(425, 300, 325, 50, 'text', 'Arrow Keys'),
-            create_button(425, 375, 350, 50, 'text', 'W A S D Keys'),
+            create_button(450, 100, 50, 50, 'text', '+'),
+            create_button(525, 100, 50, 50, 'text', '-'),
+            create_button(600, 100, 150, 50, 'text', 'Mute'),
+            create_button(400, 300, 325, 50, 'text', 'Arrow Keys'),
+            create_button(400, 375, 350, 50, 'text', 'W A S D Keys'),
             create_button(25, 500, 300, 50, 'text', 'Start Game'),
-            create_button(425, 500, 350, 50, 'text', 'Back to Start'),
-            create_button(300, 600, 200, 50, 'text', 'Exit')
+            create_button(400, 500, 350, 50, 'text', 'Back to Start'),
+            create_button(100, 600, 200, 50, 'text', 'Exit'),
+            create_button(550, 600, 75, 50, 'text', 'ON'),
+            create_button(650, 600, 100, 50, 'text', 'OFF')
+        ]
+        screen.buttons2 = [
+            create_button(450, 200, 50, 50, 'text', '+'),
+            create_button(525, 200, 50, 50, 'text', '-'),
+            create_button(600, 200, 150, 50, 'text', 'Mute')
         ]
 
     
@@ -242,16 +240,6 @@ class settingsScreen(screenState):
                         if button['text'] == 'Mute':
                             screen.volume = 0
                         pygame.mixer.music.set_volume(screen.volume)
-                        if button['text'] == '.+':
-                            screen.sound_volume += 0.2
-                            screen.shoot_sound.play()
-                        if button['text'] == '.-':
-                            screen.sound_volume -= 0.2
-                            screen.shoot_sound.play()
-                        if button['text'] == '.Mute':
-                            screen.sound_volume = 0
-                        for sound in screen.sound_list:
-                            sound.set_volume(screen.sound_volume)
                         if button['text'] == 'Arrow Keys':
                             screen.controller = screen.controllerCreator.createController("arrow")
                             screen.button_sound.play()
@@ -261,26 +249,41 @@ class settingsScreen(screenState):
                         if button['text'] == 'Start Game':
                             screen.score.points = 0
                             screen.timer.time = 0
-                            screen.change_state(playScreen())
+                            if screen.story_screen_shown == False:
+                                screen.change_state(storyScreen())
+                                screen.story_screen_shown = True
+                            else:
+                                screen.change_state(playScreen())
                         if button['text'] == 'Back to Start':
                             screen.change_state(startScreen())
                         if button['text'] == 'Exit':
                             pygame.quit()
                             sys.exit()
+                        if button['text'] == 'ON':
+                            screen.style = "Tree"
+                        if button['text'] == 'OFF':
+                            screen.style = "Ufo"
+                for button in screen.buttons2:
+                    if button['rect'].collidepoint(event.pos):
+                        if button['text'] == '+':
+                            screen.sound_volume += 0.2
+                            screen.shoot_sound.play()
+                        if button['text'] == '-':
+                            screen.sound_volume -= 0.2
+                            screen.shoot_sound.play()
+                        if button['text'] == 'Mute':
+                            screen.sound_volume = 0
+                        for sound in screen.sound_list:
+                            sound.set_volume(screen.sound_volume)
             if event.type == pygame.QUIT:
                 sys.exit()
 
     def render(self, screen: GameScreen):
         screen.image.render()
-        for button in screen.buttons:
-            rect = pygame.Rect(button['rect'])
-            pygame.draw.rect(SCREEN, red, rect, border_radius=10)
-            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
-            button_text = screen.font.render(button['text'], True, white)
-            text_rect = button_text.get_rect(center=rect.center)
-            SCREEN.blit(button_text, text_rect)
+        render_button(screen, screen.buttons, 'text')
+        render_button(screen, screen.buttons2, 'text')
+        render_text(screen.text, 'text', screen.font)
         
-
 class pauseScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.buttons = [
@@ -324,13 +327,7 @@ class pauseScreen(screenState):
 
     def render(self, screen: GameScreen):
         screen.image.render()
-        for button in screen.buttons:
-            rect = pygame.Rect(button['rect'])
-            pygame.draw.rect(SCREEN, red, rect, border_radius=10)
-            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
-            button_text = screen.font.render(button['text'], True, white)
-            text_rect = button_text.get_rect(center=rect.center)
-            SCREEN.blit(button_text, text_rect)
+        render_button(screen, screen.buttons, 'text')
 
 class gameOverScreen(screenState):
     def enter(self, screen: GameScreen):
@@ -357,14 +354,7 @@ class gameOverScreen(screenState):
         screen.image.render()
         self.gameovertext = screen.headline.render("Game Over", True, white)
         SCREEN.blit(self.gameovertext, (175, 100))
-        
-        for button in screen.buttons:
-            rect = pygame.Rect(button['rect'])
-            pygame.draw.rect(SCREEN, red, rect, border_radius=10)
-            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
-            button_text = screen.font.render(button['text'], True, white)
-            text_rect = button_text.get_rect(center=rect.center)
-            SCREEN.blit(button_text, text_rect)
+        render_button(screen, screen.buttons, 'text')
 
 class GameScreen:
     def __init__(self):
@@ -395,6 +385,8 @@ class GameScreen:
         self.headline = font_dict["font_big"]
         self.story_font = font_dict["font_tiny"]
         self.life_display = Life_Display()
+        self.style = "Ufo"
+        self.story_screen_shown = False
 
     def change_state(self, newState: screenState):
         if (self.screen_state != None):

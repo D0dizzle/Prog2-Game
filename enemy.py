@@ -16,8 +16,10 @@ class ISegment(ABC):
 # Factory Pattern für die Ufo-Obstacles
 class ObstacleCreator:
     def createObstacle(self, x, y, style):
-       # if style == "Ufo":
-        hindernis = ObstacleUfo(x, y)
+        if style == "Ufo":
+            hindernis = ObstacleUfo(x, y)
+        elif style == "Tree":
+            hindernis = ObstacleTree(x, y)
         hindernis.__init__(x, y)
         return hindernis
 
@@ -27,13 +29,13 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
         super().__init__()
         self.score = 0
     
-    def new(self, ufo_sprites: list):
+    def new(self, ufo_sprites: list, style):
         self.map = TileMap(choice(list(tilemap_dict.values())))
         for col, tiles in enumerate(self.map.data):
             for row, tile in enumerate(tiles):
                 if tile == '1':
                     obstacleCreator = ObstacleCreator()
-                    ufo_sprites.append(obstacleCreator.createObstacle(row * seg_groesse, (col) * seg_groesse, "Ufo"))
+                    ufo_sprites.append(obstacleCreator.createObstacle(row * seg_groesse, (col) * seg_groesse, style))
 
     def delete(self, ufo_sprites: list):
         self.score = 0
@@ -193,8 +195,9 @@ class looksDown(segState):
 
 # Klasse für die einzelnen Segment-Objekte
 class Segment(ISegment, pygame.sprite.Sprite):
-    def __init__(self, x, y, seg_sprite: segSpriteState):
+    def __init__(self, x, y, seg_sprite: segSpriteState, obstacle_style):
         super().__init__()
+        self.obstacle_style = obstacle_style
         self.sprite_state = seg_sprite
         self.image = None
         self.sprite_state.enter(self)
@@ -215,8 +218,6 @@ class Segment(ISegment, pygame.sprite.Sprite):
             self.state.exit(self)
         self.state = newState
         self.state.enter(self)
-        print("state before", self.state_before)
-        print("new state", self.state)
 
     def change_sprite_state(self, newSpriteState):
         if (self.sprite_state != None):
@@ -228,7 +229,7 @@ class Segment(ISegment, pygame.sprite.Sprite):
         if status_change == "hit":
             self.hp -= 1
             if self.hp == 0:
-                ufo_sprites.append(self.obstacleCreator.createObstacle(self.rect.x, self.rect.y, "Pilz"))
+                ufo_sprites.append(self.obstacleCreator.createObstacle(self.rect.x, self.rect.y, self.obstacle_style))
                 self.isAlive = "dead"
         elif status_change == "collideWithWall" and self.counter == 0 and isinstance(self.state, looksDown) == False:
             self.state.collide_with_obstacle(self)
@@ -251,14 +252,14 @@ class Centipede:
         self.y = 0
         self.score = 0
 
-    def createCentipede(self):
+    def createCentipede(self, obstacle_style):
         for i in range(10):
             if i == 0:
-                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody()))
+                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody(), obstacle_style))
             elif i < 10 - 1:
-                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody()))
+                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody(), obstacle_style))
             elif i == 10 - 1:
-                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isHead()))
+                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isHead(), obstacle_style))
 
     def update(self):
         self.score = 0

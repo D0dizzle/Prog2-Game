@@ -56,3 +56,22 @@ class ObstacleUfo(pygame.sprite.Sprite):
         if self.hp == 0:
             self.isAlive = "dead"
 
+# Klasse für das Tree-Obstacle Objekt
+class ObstacleTree(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.hp = 4
+        self.image = tree_img_dict["tree"]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.isAlive = "alive"
+
+    def status(self, status_change: str):
+        if status_change == "hit":
+            self.hp -= 1
+            if self.hp == -1:
+                self.hp = 0
+            self.image = tree_animation_dict["tree"+ str(self.hp)]
+        if self.hp == 0:
+            self.isAlive = "dead"

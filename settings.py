@@ -42,7 +42,7 @@ img_dict["satellite"] = pygame.image.load(os.path.join(game_folder, "Assets", "e
 img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "ufo_gelb.png")),(seg_groesse,seg_groesse))
 img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "asteroid.png")),(2*seg_groesse,2*seg_groesse))
 img_dict["star_image"] = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "headline-star.png"))
-img_dict["Missile"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Missile.png"))
+img_dict["Missile"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder,"Assets","ship","Missile.png")),(20, 45))
 img_dict["Herz"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Herz.png"))
 
 tilemap_dict = {}
@@ -50,6 +50,12 @@ tilemap_dict["TME"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapEas
 tilemap_dict["TMM"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapMedium.txt")
 tilemap_dict["TMH"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapHard.txt")
 tilemap_dict["TMVH"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapVeryHard.txt")
+
+ui_img_dict = {}
+ui_img_dict["left"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ui", "arrow_left_white.png")),(seg_groesse, seg_groesse))
+ui_img_dict["right"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ui", "arrow_right_white.png")),(seg_groesse, seg_groesse))
+ui_img_dict["down"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ui", "arrow_down_white.png")),(seg_groesse, seg_groesse))
+ui_img_dict["up"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ui", "arrow_up_white.png")),(seg_groesse, seg_groesse))
 
 player_img_dict = {}
 player_img_dict["player-5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship-5.png")),(player_size, player_size))
@@ -65,15 +71,25 @@ player_img_dict["player4"] = pygame.transform.scale(pygame.image.load(os.path.jo
 player_img_dict["player5"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "ship", "ship5.png")),(player_size, player_size))
 
 ufo_img_dict = {}
-ufo_img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
-ufo_img_dict["ufo_lila"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
-ufo_img_dict["ufo_rot"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_gelb"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_lila.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_lila"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_rot.png")),(seg_groesse,seg_groesse))
+ufo_img_dict["ufo_rot"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_gelb.png")),(seg_groesse,seg_groesse))
 
 ufo_animation_dict = {}
-ufo_animation_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum2.png")),(seg_groesse,seg_groesse))
-ufo_animation_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum3.png")),(seg_groesse,seg_groesse))
-ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum4.png")),(seg_groesse,seg_groesse))
-ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau2.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau3.png")),(seg_groesse,seg_groesse))
+ufo_animation_dict["ufo0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Ufo_grau.png")),(seg_groesse,seg_groesse))
+
+tree_img_dict = {}
+tree_img_dict["tree"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
+
+tree_animation_dict = {}
+tree_animation_dict["tree3"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum2.png")),(seg_groesse,seg_groesse))
+tree_animation_dict["tree2"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum3.png")),(seg_groesse,seg_groesse))
+tree_animation_dict["tree1"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum4.png")),(seg_groesse,seg_groesse))
+tree_animation_dict["tree0"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "enemies", "Weihnachtsbaum1.png")),(seg_groesse,seg_groesse))
+
 
 centipede_img_dict = {}
 centipede_img_dict["Head"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "snake", "snake.blue-head.png")),(seg_groesse,seg_groesse))
@@ -100,6 +116,33 @@ def exit_game():
         if event.type == pygame.QUIT:
             pygame.quit()                       #Quelle für pygame.quit(): coderslegacy.com/python/python-pygame-tutorial
             sys.exit()
+
+
+def create_button(x, y, h, w, key, text):
+    button_rect = pygame.Rect(x, y, h, w)
+    button_dict = {'rect': button_rect, key: text}
+    return button_dict  
+
+def render_button(screen_object, button_list, text_key):
+	for button in button_list:
+            rect = pygame.Rect(button['rect'])
+            pygame.draw.rect(SCREEN, red, rect, border_radius=10)
+            pygame.draw.rect(SCREEN, white, rect, width=2, border_radius=10)
+            button_text = screen_object.font.render(button[text_key], True, white)
+            text_rect = button_text.get_rect(center=rect.center)
+            SCREEN.blit(button_text, text_rect)	
+
+def create_text(x, y, h, w, key, text):
+    text_dict = {'rect': (x, y, h, w), key: text}
+    return text_dict
+
+def render_text(text_list, text_key, font_type):
+    for text_element in text_list:
+        rect = pygame.Rect(text_element['rect'])
+        text = font_type.render(text_element[text_key], True, white)
+        SCREEN.blit(text, rect)
+
+
 
 #### Klassen für Settings: ####
 class Hintergrund():     
@@ -140,13 +183,7 @@ class Hintergrund():
             self.cooldown = randint(0,60)
 
         for particle in self.particles:
-            particle.update()
-    
-
-def create_button(x, y, h, w, key, text):
-    button_rect = pygame.Rect(x, y, h, w)
-    button_dict = {'rect': button_rect, key: text}
-    return button_dict  
+            particle.update() 
 
 class Particles(pygame.sprite.Sprite):
     def __init__(self, x, y, vy, img):
