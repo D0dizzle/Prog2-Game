@@ -44,6 +44,10 @@ img_dict["asteroid"] = pygame.transform.scale(pygame.image.load(os.path.join(gam
 img_dict["star_image"] = pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "headline-star.png"))
 img_dict["Missile"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder,"Assets","ship","Missile.png")),(20, 45))
 img_dict["Herz"] = pygame.image.load(os.path.join(game_folder,"Assets","ship","Herz.png"))
+img_dict["background"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert(),(width, height))
+img_dict["space_stars"] = pygame.transform.scale(pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha(),(width, height))
+img_dict["particle"] = pygame.image.load(os.path.join(game_folder,"Assets","enemies" ,"particle.png")).convert_alpha()
+img_dict["particle2"] = pygame.image.load(os.path.join(game_folder,"Assets","enemies" ,"particle2.png")).convert_alpha()
 
 tilemap_dict = {}
 tilemap_dict["TME"] = os.path.join(game_folder, "Assets","Tilemaps", "TileMapEasy.txt")
@@ -147,14 +151,14 @@ def render_text(text_list, text_key, font_type):
 #### Klassen für Settings: ####
 class Hintergrund():     
     def __init__(self, dict):
-        self.background = pygame.transform.scale(pygame.image.load(os.path.join(game_folder, "Assets", "hintergrund", "parallax-background.png")).convert(),(width, height))
-        self.space_stars = pygame.transform.scale(pygame.image.load(os.path.join(game_folder,"Assets","hintergrund" ,"parallax-space-stars.png")).convert_alpha(),(width, height))
+        self.background = img_dict["background"]
+        self.space_stars = img_dict["space_stars"]
         self.dict = dict
         self.max_particles = 50
         self.current_particles = 0
         self.last_particles = 0
         self.particles = []
-        self.animated_background = [pygame.image.load(os.path.join(game_folder,"Assets","enemies" ,"particle.png")).convert_alpha(), pygame.image.load(os.path.join(game_folder,"Assets","enemies" ,"particle2.png")).convert_alpha()]
+        self.animated_background = [img_dict["particle"],img_dict["particle2"]]
         self.cooldown = 1
 
         for i in self.dict:
