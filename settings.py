@@ -239,6 +239,7 @@ class Collider():
             if segment.rect.collidelist(obstacles) != -1:
                 segment.status("collideWithWall", ufo_sprites)
 
+# Klasse für Spielzeit und Anzeige
 class Time:
     def __init__(self):
         pygame.init()
@@ -257,6 +258,7 @@ class Time:
         self.time_on_screen = self.font.render(f"Time:  {self.time}", True, white)
         SCREEN.blit(self.time_on_screen, (664, 10))
 
+# Klassen für Score und Highscore. Highscore wird in einer erstellten txt.Datei aufgerufen, gespeichert und geändert bei neuem Highscore
 class Score:
     def __init__(self):
         pygame.init()

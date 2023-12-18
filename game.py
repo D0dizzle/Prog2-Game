@@ -407,21 +407,20 @@ class GameScreen:
     def update(self):
         self.key_pressed = pygame.key.get_pressed()
         self.screen_state.update(self)
-        
+
+# Player-Lebensanzeige mit Aktualisierung    
 class Life_Display:
     def __init__(self):
         self.lives = []
         self.length = 50
         self.x = 10
         self.y = 55
-        self.createLife_Display()
 
     def createLife_Display(self):
         if len(self.lives) == 0:
             heart_image = pygame.transform.scale(img_dict["Herz"], (30, 30))
             for i in range(3):
-                if i in [0, 1, 2]:
-                    self.lives.append((heart_image, (self.x + i * 40, self.y)))
+                self.lives.append((heart_image, (self.x + i * 40, self.y)))
                 
     def render(self):
         for lives in self.lives:
@@ -433,4 +432,3 @@ class Life_Display:
     
     def reset(self):
         self.lives = []
-        self.createLife_Display()
