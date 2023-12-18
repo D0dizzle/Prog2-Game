@@ -210,7 +210,6 @@ class TileMap:
         self.height = len(self.data)
 
 class Collider():
-
     def collideObstacle(self, projectiles, enemysprites, Missile):
         for enemy in enemysprites:
             index = enemy.rect.collidelist(projectiles)

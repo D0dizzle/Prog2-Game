@@ -16,12 +16,11 @@ class iPlayer(ABC):
 
 # Factory Pattern für die Projectiles der Player Klasse
 class ProjectileCreator:
-    def createProjectile(self,x, y, vy, proj_kind):
-        if proj_kind == "basic":
+    def createProjectile(self,x, y, vy, projectile_type):
+        if projectile_type == "basic":
             projectile = Projectile(x, y, vy)
-        elif proj_kind == "missile":
+        elif projectile_type == "missile":
             projectile = Missile(x, y, vy)
-        projectile.__init__(x, y, vy)
         return projectile
 
 # Interface des Commands
