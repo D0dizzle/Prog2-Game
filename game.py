@@ -136,6 +136,7 @@ class playScreen(screenState):
             screen.player1 = Player1(player_img_dict, width /2, height - height /6, screen.shoot_sound, screen.death_sound, screen.missile_sound, screen.life_display)
             screen.new_map = ObstacleOnScreen()
             screen.new_map.new(ufo_sprites, screen.style)
+            del projectiles[0:]
             screen.centipede = Centipede()
             screen.centipede.createCentipede(screen.style)
             screen.collider = Collider()
@@ -352,7 +353,7 @@ class gameOverScreen(screenState):
                         if button['text'] == 'Restart':
                             screen.score.points = 0
                             screen.timer.time = 0
-                            del projectiles[:0]
+                            del projectiles[0:]
                             screen.button_sound.play()
                             screen.change_state(playScreen())
                         if button['text'] == 'Exit':
