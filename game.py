@@ -82,7 +82,7 @@ class storyScreen(screenState):
             create_text(50, 50, 500, 50, 'text', 'You are the Commander of the'),
             create_text(50, 100, 500, 50, 'text', 'USS Space Splitter. You are on'),
             create_text(50, 150, 500, 50, 'text', 'the mission to hunt and destroy'),
-            create_text(50, 200, 500, 50, 'text', 'the Space Centipedes.'),
+            create_text(50, 200, 500, 50, 'text', 'the Space Centipedes'),
             create_text(50,250, 500, 50, 'text', 'to save our home planet.'),
             create_text(50, 325, 500, 50, 'text', 'Good Luck Commander!'),
             create_text(575, 400, 200, 50, 'text', 'Space Bar'),
@@ -192,7 +192,7 @@ class playScreen(screenState):
         screen.score.display_scores()
         screen.life_display.render()
         if screen.player1.missile_cd >= 300:
-            SCREEN.blit(img_dict['satellite'], (500, 500))
+            SCREEN.blit(img_dict['satellite'], (10, 100))
 
     def exit(self):
         pass

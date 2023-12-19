@@ -17,11 +17,11 @@ class ISegment(ABC):
 class ObstacleCreator:
     def createObstacle(self, x, y, style):
         if style == "Ufo":
-            hindernis = ObstacleUfo(x, y)
+            obstacle = ObstacleUfo(x, y)
         elif style == "Tree":
-            hindernis = ObstacleTree(x, y)
-        hindernis.__init__(x, y)
-        return hindernis
+            obstacle = ObstacleTree(x, y)
+        obstacle.__init__(x, y)
+        return obstacle
 
 # Klasse zum Erstellen der Ufo-Obstacles
 class ObstacleOnScreen(pygame.sprite.Sprite):
@@ -35,7 +35,7 @@ class ObstacleOnScreen(pygame.sprite.Sprite):
             for row, tile in enumerate(tiles):
                 if tile == '1':
                     obstacleCreator = ObstacleCreator()
-                    ufo_sprites.append(obstacleCreator.createObstacle(row * seg_groesse, (col) * seg_groesse, style))
+                    ufo_sprites.append(obstacleCreator.createObstacle(row * seg_size, (col) * seg_size, style))
 
     def delete(self, ufo_sprites: list):
         self.score = 0
@@ -236,7 +236,7 @@ class Segment(ISegment, pygame.sprite.Sprite):
 
     def move(self):
         self.state.move(self)
-        if self.counter == seg_groesse:
+        if self.counter == seg_size:
             self.state.counter_reached(self)
         elif self.rect.x <= 0 and isinstance(self.state, looksLeft):
             self.state.collide_with_border(self)
@@ -255,11 +255,11 @@ class Centipede:
     def createCentipede(self, obstacle_style):
         for i in range(10):
             if i == 0:
-                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody(), obstacle_style))
+                self.segments.append(Segment(self.x - (seg_size*i), i * self.y, isBody(), obstacle_style))
             elif i < 10 - 1:
-                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isBody(), obstacle_style))
+                self.segments.append(Segment(self.x - (seg_size*i), i * self.y, isBody(), obstacle_style))
             elif i == 10 - 1:
-                self.segments.append(Segment(self.x - (seg_groesse*i), i * self.y, isHead(), obstacle_style))
+                self.segments.append(Segment(self.x - (seg_size*i), i * self.y, isHead(), obstacle_style))
 
     def update(self):
         self.score = 0
