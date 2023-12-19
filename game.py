@@ -171,8 +171,6 @@ class playScreen(screenState):
         screen.collider.collidePlayer(screen.centipede.segments, screen.player1)
         screen.new_map.delete(ufo_sprites)
         screen.centipede.update()
-        if Player1.status == "hit":
-            screen.life_display.loseLife()
         screen.timer.count_time()
         screen.score.update_score(screen.new_map, screen.centipede)
         screen.score.update_highscore()
@@ -187,7 +185,6 @@ class playScreen(screenState):
 
     def render(self, screen: GameScreen):    
         screen.image.render()
-        #hier Objekte die ge"draw"ed werden sollen
         sprites = pygame.sprite.Group(screen.player1, projectiles, ufo_sprites, screen.centipede.segments)
         sprites.draw(SCREEN)
         screen.asteroids.update()
