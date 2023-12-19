@@ -121,12 +121,12 @@ def exit_game():
             pygame.quit()                       #Quelle für pygame.quit(): coderslegacy.com/python/python-pygame-tutorial
             sys.exit()
 
-
+# Funktion um einen Button zu erzeugen
 def create_button(x, y, h, w, key, text):
     button_rect = pygame.Rect(x, y, h, w)
     button_dict = {'rect': button_rect, key: text}
     return button_dict  
-
+# und zu rendern
 def render_button(screen_object, button_list, text_key):
 	for button in button_list:
             rect = pygame.Rect(button['rect'])
@@ -135,11 +135,11 @@ def render_button(screen_object, button_list, text_key):
             button_text = screen_object.font.render(button[text_key], True, white)
             text_rect = button_text.get_rect(center=rect.center)
             SCREEN.blit(button_text, text_rect)	
-
+# Funktion um ein Text-Feld zu erzeugen
 def create_text(x, y, h, w, key, text):
     text_dict = {'rect': (x, y, h, w), key: text}
     return text_dict
-
+# und zu rendern
 def render_text(text_list, text_key, font_type):
     for text_element in text_list:
         rect = pygame.Rect(text_element['rect'])
@@ -148,7 +148,7 @@ def render_text(text_list, text_key, font_type):
 
 
 
-#### Klassen für Settings: ####
+# Klasse für den Hintergrund
 class Hintergrund():     
     def __init__(self, dict):
         self.background = img_dict["background"]
@@ -189,6 +189,7 @@ class Hintergrund():
         for particle in self.particles:
             particle.update() 
 
+# Klasse für die Particles, die in der Hintergrund-Klasse verwendet werden
 class Particles(pygame.sprite.Sprite):
     def __init__(self, x, y, vy, img):
         super().__init__()
@@ -203,7 +204,7 @@ class Particles(pygame.sprite.Sprite):
         if self.y  > height+50:
                 self.y = -10
 
-
+# Klasse zum Einlesen der Tilemap aus einer .txt Datei
 class TileMap:
     def __init__(self, filename):
         self.data = []
@@ -213,7 +214,9 @@ class TileMap:
         self.width = len(self.data[0])
         self.height = len(self.data)
 
+# Klasse für die verschiedenen Collider
 class Collider():
+    # Collider für projectiles-Liste mit obstacle-Liste 
     def collideObstacle(self, projectiles, enemysprites, Missile):
         for enemy in enemysprites:
             index = enemy.rect.collidelist(projectiles)
@@ -224,12 +227,14 @@ class Collider():
                     enemy.status("hit", damage = 1)
                 projectiles.pop(index)
 
+    # Collider für Player mit den verschiedenen Enemy-Sprites
     def collidePlayer(self, sprite, player1):
         index = player1.rect.collidelist(sprite)
         if index != -1:
             sprite.pop(index)
-            player1.status("hit")        
-        
+            player1.status("hit") 
+
+    # Collider für Centipede-Liste mit projectiles-Liste
     def collideCentipede(self, projectiles, enemysprites, sound):
         for enemy in enemysprites:
             index = enemy.rect.collidelist(projectiles)
@@ -238,6 +243,7 @@ class Collider():
                 sound.play()
                 projectiles.pop(index)
 
+    # Collider für Centipede-Liste mit obstacle-Liste
     def collideWithWall(self, centipede, obstacles):
         for segment in centipede:
             if segment.rect.collidelist(obstacles) != -1:
