@@ -249,6 +249,7 @@ class settingsScreen(screenState):
                         if button['text'] == 'Start Game':
                             screen.score.points = 0
                             screen.timer.time = 0
+                            screen.button_sound.play()
                             if screen.story_screen_shown == False:
                                 screen.change_state(storyScreen())
                                 screen.story_screen_shown = True
@@ -318,10 +319,12 @@ class pauseScreen(screenState):
                             screen.score.points = 0
                             screen.timer.time = 0
                             screen.pause = False
+                            screen.button_sound.play()
                             screen.change_state(playScreen())
                         if button['text'] == 'Back to Start':
                             screen.score.points = 0
                             screen.timer.time = 0
+                            screen.button_sound.play()
                             screen.change_state(startScreen())
                         if button['text'] == 'Exit Game':
                             pygame.quit()
@@ -350,6 +353,7 @@ class gameOverScreen(screenState):
                             screen.score.points = 0
                             screen.timer.time = 0
                             del projectiles[:0]
+                            screen.button_sound.play()
                             screen.change_state(playScreen())
                         if button['text'] == 'Exit':
                             pygame.quit()
