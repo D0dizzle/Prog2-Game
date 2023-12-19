@@ -197,6 +197,7 @@ class playScreen(screenState):
     def exit(self):
         pass
 
+
 class settingsScreen(screenState):
     def enter(self, screen: GameScreen):
         screen.text = [
@@ -223,7 +224,7 @@ class settingsScreen(screenState):
             create_button(600, 200, 150, 50, 'text', 'Mute')
         ]
 
-    
+    #anpassbare Einstellungen
     def update(self, screen: GameScreen):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
