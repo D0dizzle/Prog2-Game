@@ -114,7 +114,7 @@ class Player1(pygame.sprite.Sprite, iPlayer):
         key_press = pygame.key.get_pressed()
         current_time = pygame.time.get_ticks()
 
-        if key_press[pygame.K_SPACE] and current_time - self.last_shot > self.shoot_cd:
+        if key_press[pygame.K_SPACE] and current_time - self.last_shot > self.shoot_cd: #Keypress wird freigeschaltet über den Vergleich von Pygame Ticks und einer festen Variable
             projectiles.append(projectileCreator.createProjectile(self.rect.centerx, self.rect.centery-20, 10, "basic"))
             self.last_shot = current_time
             self.shoot_sound.play()
